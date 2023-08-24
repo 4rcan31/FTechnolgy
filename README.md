@@ -19,7 +19,7 @@ Croquette es un dispensador de comida para mascotas que va más allá de lo conv
 ## Archivos de Diseño de Croquette
 En este repositorio, encontrarás los archivos de diseño de Croquette (El dispensador) en formato .blend y .stl
 
-### **Croquette/designs.tls/allDesing.stl  Croquette/designs.tls/allDesing.stl**
+### **Croquette/designs.tls/allDesing.stl  Croquette/designs.tls/allDesing.blend**
 ![AllDesingns](Croquette/images/designs/All.png)
 
 

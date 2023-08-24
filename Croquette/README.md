@@ -11,8 +11,8 @@ Croquette es un dispensador de comida para mascotas que va más allá de lo conv
 ## Archivos de Diseño de Croquette
 En este repositorio, encontrarás los archivos de diseño de Croquette (El dispensador) en formato .blend y .stl
 
-### **Croquette/designs.tls/allDesing.stl  Croquette/designs.tls/allDesing.stl**
-![AllDesingns](Croquette/images/designs/All.png)
+### **Croquette/designs.tls/allDesing.stl  Croquette/designs.tls/allDesing.blend**
+![AllDesingns](../Croquette/images/designs/All.png)
 
 
 Explicación de diseño 
@@ -23,24 +23,24 @@ Explicación de diseño
 - **Líneas Azules:** Dimensión de la imagen
 
 ### **Dimensión en menos X (-x)**
-![Explicacion](Croquette/images/-X.png)
+![Explicacion](../Croquette/images/-X.png)
 
 ### **Dimensión en X (x)**
-![Explicacion](Croquette/images/X.png)
+![Explicacion](../Croquette/images/X.png)
 
 ### **Dimensión en Y (Y)**
-![ImageTechY](Croquette/images/Y.png)
+![ImageTechY](../Croquette/images/Y.png)
 
 ### **Dimensión en menos Y (-Y)**
-![ImageTech-Y](Croquette/images/-Y.png)
+![ImageTech-Y](../Croquette/images/-Y.png)
 
 ### **Costado de todo el diseño**
-![ImageTechAll](Croquette/images/Costado.png)
+![ImageTechAll](../Croquette/images/Costado.png)
 ### **Case eléctrico**
-![ImageTechCaseElectric](Croquette/images/CaseElectrico.png)
+![ImageTechCaseElectric](../Croquette/images/CaseElectrico.png)
 
 ### **Soporte y botones del case**
-![ImageTechSoporteAndButtons](Croquette/images/SoportesYBotononesCase.png)
+![ImageTechSoporteAndButtons](../Croquette/images/SoportesYBotononesCase.png)
 
 
 ## Tech
@@ -48,32 +48,32 @@ Explicación de diseño
 Estos son todos los archivos .tls en el proyecto para imprimir
 
 - **Croquette/designs.tls/Button_Ok.tls** Es el botón de OK 
-![ButtonOk](Croquette/images/designs/buttonOk.png)
+![ButtonOk](../Croquette/images/designs/buttonOk.png)
 - **Croquette/designs.tls/Button_Up.tls** Es el botón para subir o bajar selecciones
-![ButtonUp](Croquette/images/designs/buttonUp.png)
+![ButtonUp](../Croquette/images/designs/buttonUp.png)
 - **Croquette/designs.tls/Case_Cover_Leg.tls** Soporte de caja eléctrica (x4)
-![LegCasex4](Croquette/images/designs/Case_Cover_Leg.png)
+![LegCasex4](../Croquette/images/designs/Case_Cover_Leg.png)
 
 ```
 Nota: El archivo Case_Cover_Leg.tls se imprimirá 4 veces, ya que son 4 soportes para la caja (en cada esquina un soporte) 
 ```
 - **Croquette/designs.tls/Extruder_P1.tls** Este es el case para el espiral
-![CaseDrill](Croquette/images/designs/Extruder_P1.png)
+![CaseDrill](../Croquette/images/designs/Extruder_P1.png)
 - **Croquette/designs.tls/Extruder_P2.tls** Esta pieza es donde entra la comida
-![TopCaseDrill](Croquette/images/designs/Extruder_P2.png)
+![TopCaseDrill](../Croquette/images/designs/Extruder_P2.png)
 - **Croquette/designs.tls/UNO+PW_Case.tls** Este es el case eléctrico
-![CaseElectrico](Croquette/images/designs/CaseElectrico.png)
+![CaseElectrico](../Croquette/images/designs/CaseElectrico.png)
 - **Croquette/designs.tls/UNO+PW_Case.tls** La tapadera del case eléctrico
-![CaseElectrico](Croquette/images/designs/TopCaseElectrico.png)
+![CaseElectrico](../Croquette/images/designs/TopCaseElectrico.png)
 
 - **Croquette/designs.tls/Tray.tls** EL plato donde se dispensara la comida
-![Tray](Croquette/images/designs/Tray.png)
+![Tray](../Croquette/images/designs/Tray.png)
 
 - **Croquette/designs.tls/Tray_Left.tls** Plato del lado izquierdo
-![Tray](Croquette/images/designs/TrayLeft.png)
+![Tray](../Croquette/images/designs/TrayLeft.png)
 
 - **Croquette/designs.tls/Tray_Right.tls** Plato del lado Derecho
-![Tray](Croquette/images/designs/TrayRight.png)
+![Tray](../Croquette/images/designs/TrayRight.png)
 
 ```
 Nota: Hay 3 archivos para el plato: Tray_left.tls, Tray_Right.tls & Tray.tls
@@ -82,27 +82,27 @@ Se imprimirá solo Tray.tls, ya que el de izquierda y derecha no son ensamblable
 ```
 
 - **Croquette/designs.tls/LCD_Pin.tls** Pines para sostener la pantalla LCD (x3)
-![pinx3](Croquette/images/designs/LCDPIN.png)
+![pinx3](../Croquette/images/designs/LCDPIN.png)
 ```
 Nota: El archivo LCD_Pin.tls se imprimirá 3 veces, ya que son 3 soportes para la pantalla LCD
 ```
 
 - **Croquette/designs.tls/Motor_plate.tls** Placa para sujetar el motor y hacer girar el espiral
-![plateMotor](Croquette/images/designs/MotorPlate.png)
+![plateMotor](../Croquette/images/designs/MotorPlate.png)
 
 - **Croquette/designs.tls/Support_Feeder.tls** Soporte para mantener la case del espiral (x2)
-![SupporteCaseDrill](Croquette/images/designs/Support_Feeder.png)
+![SupporteCaseDrill](../Croquette/images/designs/Support_Feeder.png)
 ```
 Nota: El archivo Support_Feeder.tls se imprimira 2 veces, ya que son 2 soportes para el case del espiral
 ```
 - **Croquette/designs.tls/Wormgear.tls** Espiral normal (a imprimir)
-![DrillNormal](Croquette/images/designs/EspiralNormal.png)
+![DrillNormal](../Croquette/images/designs/EspiralNormal.png)
 
 - **Croquette/designs.tls/Wormgear_short_pitch.tls** Espiral con un espacio mas largo 
-![DrillShort](Croquette/images/designs/SpiralCorto.png)
+![DrillShort](../Croquette/images/designs/SpiralCorto.png)
 
 - **Croquette/designs.tls/Wormgear_long_pitch.tls** Espiral con un espacio mas corto 
-![DrillLong](Croquette/images/designs/SpiralLargo.png)
+![DrillLong](../Croquette/images/designs/SpiralLargo.png)
 
 ```
 Nota: Hay 3 archivos para el espiral: Wormgear.tls, Wormgear_short_pitch.tls & Wormgear_long_pitch.tls
