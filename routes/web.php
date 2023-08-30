@@ -2,5 +2,33 @@
 
 
 Route::root(function(){
-    res("Esto esta funcionando!");
+   view("home");
+});
+
+Route::get('/contact', function(){
+    view('contact');
+});
+
+Route::get('/aboutus', function(){
+   view('aboutus');
+});
+
+Route::get('/faq', function(){
+   view('faq');
+});
+
+Route::get('/store', function(){
+    view('store');
+});
+
+Route::get('/see/%productID', function($request){
+  view('see');
+});
+
+Route::get('/login', function(){
+   view('Auth/login');
+});
+
+Route::get('/register', function(){
+   view('Auth/register');
 });
