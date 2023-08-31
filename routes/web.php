@@ -32,3 +32,16 @@ Route::get('/login', function(){
 Route::get('/register', function(){
    view('Auth/register');
 });
+
+
+
+
+Route::group(function(){
+
+
+   Route::get('/dashboard', function(){
+      view('dashboard/home');
+   });
+
+
+})->prefix('/panel')->middlewares(['AuthMiddleware@session']);
