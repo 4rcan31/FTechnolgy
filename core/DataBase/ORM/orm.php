@@ -181,9 +181,16 @@ class DataBase extends Connection{
 
     public function all($type = 'fetch'){
         if($type == 'fetch'){
-            return arrayToObject($this->responseSQL->fetch(PDO::FETCH_ASSOC));
+
+            $response = $this->responseSQL->fetch(PDO::FETCH_ASSOC);
+            return is_array($response) ?
+            arrayToObject($response) :  
+            $response;
         }else if($type == 'fetchAll'){
-            return arrayToObject($this->responseSQL->fetchAll(PDO::FETCH_ASSOC));
+            $response = $this->responseSQL->fetchAll(PDO::FETCH_ASSOC);
+            return is_array($response) ?
+            arrayToObject($response) :  
+            $response;
         }
     }
 

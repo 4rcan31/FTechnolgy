@@ -35,18 +35,26 @@ Jenu::command('make:migration', function($argrs){
     return;
 });
 
+
+
 Jenu::command('execute:migrations', function(){
-    $files = getDirsFilesByDirectory(dirname(__DIR__, 2).'/app/DataBase/migrations/');
-    for($i = 0; $i < count($files); $i++){
-        require_once $files[$i];
-        $nameClass = explode("/", explode("_", $files[$i])[0])[count(explode("/", explode("_", $files[$i])[0])) - 1];
-        $new = new $nameClass;
-        method_exists($new, 'down') ? $new->down() : Jenu::warn("In the migration called '".$nameClass."' dont exist method down");
-        method_exists($new, 'up') ? $new->up() : Jenu::warn("In the migration called '".$nameClass."' dont exist method up");
-        Jenu::success("The migration '".getFilesByDirectory(dirname(__DIR__, 2).'/app/DataBase/migrations/')[$i]."' was execute");
+    $migrationFiles = getDirsFilesByDirectory(Jenu::baseDir().'/app/DataBase/migrations/');
+    foreach ($migrationFiles as $file) {
+        require_once $file;
+        $declaredClasses = get_declared_classes();
+        foreach ($declaredClasses as $class) {
+            if (method_exists($class, 'up') && is_subclass_of($class, 'Migration')) {
+                $migrationInstance = new $class();
+                method_exists($migrationInstance, 'down') ? 
+                $migrationInstance->down() : Jenu::warn("In the migration called '".$class."' dont exist method down");
+                method_exists($migrationInstance, 'up') ? 
+                $migrationInstance->up() : Jenu::warn("In the migration called '".$class."' dont exist method up");
+                Jenu::success("The migration '".basename($file)."' was executed");
+            }
+        }
     }
-    return;
 });
+
 
 Jenu::command('migrations:fresh', function(){
     if(!Jenu::condition("Are you sure that delete all the tables? (type YES or NOT)")){ 

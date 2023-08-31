@@ -25,8 +25,11 @@ class TokenCsrf{
     
     public static function validateToken($request) {
         if(isset($request['csrf_token'])){
-            session_start();
-            return isset($_SESSION['csrf_token']) && $_SESSION['csrf_token'] === $request['csrf_token'];
+           // session_start();
+            if(isset($_SESSION['csrf_token']) && $_SESSION['csrf_token'] === $request['csrf_token']){
+                unset($_SESSION['csrf_token']);
+                return true;
+            }
         }
         return false;
     }

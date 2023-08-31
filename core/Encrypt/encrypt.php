@@ -1,7 +1,35 @@
 <?php 
 
 
-class Encrypt{
+
+/* class Encrypt {
+    protected $keyDefault = '123';
+
+    public function encrypt($string, $key) {
+        $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('AES-128-CBC'));
+        $ciphertext = openssl_encrypt($string, 'AES-128-CBC', $key, OPENSSL_RAW_DATA, $iv);
+        $hmac = hash_hmac('sha256', $ciphertext, $key, true);
+        return base64_encode($iv . $hmac . $ciphertext);
+    }
+
+    public function decrypt($string, $key) {
+        $decoded = base64_decode($string);
+        $ivlen = openssl_cipher_iv_length('AES-128-CBC');
+        $iv = substr($decoded, 0, $ivlen);
+        $hmac = substr($decoded, $ivlen, 32);
+        $ciphertext = substr($decoded, $ivlen + 32);
+        $original_plaintext = openssl_decrypt($ciphertext, 'AES-128-CBC', $key, OPENSSL_RAW_DATA, $iv);
+        $calcmac = hash_hmac('sha256', $ciphertext, $key, true);
+        if (hash_equals($hmac, $calcmac)) {
+            return $original_plaintext;
+        } else {
+            return "¿Que intentas?";
+        }
+    }
+}
+ */
+
+ class Encrypt{
     protected $keyDefault = '123';
 
     
@@ -59,17 +87,4 @@ class Encrypt{
             }
     }
     //end decrypt
-
-
-
-    function salt($length) {
-        $rand_string = '';
-        for($i = 0; $i < $length; $i++) {
-            $number = random_int(0, 36);
-            $character = base_convert($number, 10, 36);
-            $rand_string .= $character;
-        }
-     
-        return $rand_string;
-    }
-}
+} 

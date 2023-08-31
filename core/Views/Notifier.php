@@ -3,6 +3,8 @@
 
 class NotifierPHP{
 
+    public static $inputs;
+    public static $data;
 
     public static function send(string $rute, array $data, $type){
         $data = base64_encode(json_encode([
@@ -11,17 +13,25 @@ class NotifierPHP{
             ],
             'body' => $data
         ]));
-        header('Location: '.$rute."?resnp=$data");
+        session_start();
+        $_SESSION['senddata'] = $data;
+        header('Location: '.$rute);
         exit;
     }
+    
+    
 
     public static function isThere(){
-        return isset(Request::$data['resnp']) && Request::$method == 'GET' ? true : false;
+        if(isset($_SESSION['senddata'])){
+            self::$data = $_SESSION['senddata'];
+            return true;
+        }
+        return false;
     }
 
     public static function get($json = false){
         if(self::isThere()){
-            return $json ? base64_decode(Request::$data['resnp']) : json_decode(base64_decode(Request::$data['resnp']));
+            return $json ? base64_decode(self::$data) : json_decode(base64_decode(self::$data));
         }
         return null;
     }
@@ -33,7 +43,6 @@ class NotifierPHP{
             $delay = 300; // Milisegundos de retraso entre toasts
             $verticalOffset = 0;
             $i = 0;
-    
             foreach($body as $data){
                 $i++;
                 $toastHeight = self::getToastHeight($data); // Obtener la altura de la notificación
@@ -41,6 +50,32 @@ class NotifierPHP{
                 $verticalOffset += $toastHeight + 20; // Incrementar el offset vertical según la altura de la notificación
             }
         }
+    }
+
+    public static function setValuesInputs() {
+        unset($_SESSION['inputs']['csrf_token']);
+        if(isset($_SESSION['inputs'])){
+            foreach ($_SESSION['inputs'] as $name => $value) {
+                ?> 
+                <script>
+                    var inputElement = document.querySelector('input[name=' + <?php echo json_encode($name) ?> + ']');
+                    inputElement.value = <?php echo json_encode($value) ?>;
+                </script>
+                <?php
+            }
+        }
+    }
+    
+
+    public static function destroyData(){
+        unset($_SESSION['senddata']);
+        unset($_SESSION['inputs']);
+    }
+
+    public static function setInputs($inputs){
+        session_start();
+        $_SESSION['inputs'] = $inputs;
+        return 0;
     }
     
     public static function toast(string $title, string $body, $id, $delay, $verticalOffset, $toastHeight, $time = 'now', $img = ''){
@@ -78,6 +113,4 @@ class NotifierPHP{
             return 200;
         }
     }
-    
-    
 }

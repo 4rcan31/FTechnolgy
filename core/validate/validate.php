@@ -40,6 +40,11 @@ class Validate{
         return true;
     }
 
+    public function equals(string ...$data) {
+        return count(array_unique($data)) === 1;
+    }
+    
+
     public function contain($sentenses, $contains){
         foreach($sentenses as $sentense){
             $input = $this->input($sentense);
