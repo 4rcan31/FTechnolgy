@@ -116,3 +116,19 @@ Se imprimirá solamente uno, creería que el mas optimo es Wormgear.tls
 - El archivo **LCD_Pin.tls** se imprimirá 3 veces
 - El archivo **Support_Feeder.tls** se imprimirá 2 veces
 - Por optimización, se imprimirá solamente el archivo **Wormgear.tls**
+
+
+# Componentes electricos
+- 1x Arduino Nano V3
+- 1x Stepper Motor: 28BYJ-48; Driver: ULN2003A
+- 1x Load Cell 1Kg with ADC HX711
+- 1x LCD Display: LCD1602A
+- 2x Tact button
+- 1x Micro USB 1A 18650 Lithium Battery Charging Board
+- 1x 18650 battery
+- 1x Capacitor 330uF 35V 
+- 2x M3x10 Screws (motor plate)
+- 4x M4x10 Screws (case)
+- 2x M4x15 Screws (load cell_tray)
+- 2x M5x15 Screws (case_load cell)
+- Cables
