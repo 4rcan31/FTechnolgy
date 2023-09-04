@@ -17,7 +17,7 @@ class users extends Migration {
             )');
             import('Encrypt/hasher.php', false, '/core');
             $this->insert('users')->values([
-                'email' => 'admin@a.com',
+                'email' => 'admin@a.co',
                 'password' => Hasher::make('123'),
                 'name' => 'Admin',
                 'user' => 'Admin'
