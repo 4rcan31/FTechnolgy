@@ -29,4 +29,10 @@ class UserModel extends BaseModel{
         $this->select(['email', 'password', 'id'])->from('users')->where('email', $email);
         return $this->execute()->all();
     }
+
+    public function getByEmail($email){
+        $this->prepare();
+        $this->select(['*'])->from('users')->where('email', $email);
+        return $this->execute()->all();
+    }
 }

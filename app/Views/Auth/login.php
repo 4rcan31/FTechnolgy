@@ -15,16 +15,14 @@ layouts();
             <!-- Primera fila -->
             <div class="row">
                 <form class="form-login" method="POST" action="<?php route('/api/v1/auth/login') ?>">
-                    <?php TokenCsrf::input(); ?>
-                    <b><label for="Emal">Email</label></b>
-                    <input class="form-control" type="text" name="email" id="User" placeholder="Enter your email" />
-                    <br />
-                    <b><label for="Emal">Contraseña</label></b>
-                    <input class="form-control" type="password" name="password" id="Password" placeholder="Enter your Password" />
-                    <br />
-                    <label for="register">Si no tienes cuenta,
-                        <a href="<?Php route('/register') ?>">registrate</a></label>
-                    <br /><br />
+                    <?php 
+                        TokenCsrf::input(); 
+                        NotifierPHP::addInput('email', 'text', 'Email', 'form-control', 'Escribe tu email');
+                        NotifierPHP::addInput('password', 'password', 'Contraseña', 'form-control', 'Escribe tu contraseña');
+                        NotifierPHP::PrintInputs();
+                    ?>
+                      <label for="register">Si no tienes cuenta,
+                        <a href="<?php route('/register') ?>">registrate</a></label> <br><br>
                     <button type="submit" class="btn btn-secondary">
                         Iniciar sesión
                     </button>
@@ -42,8 +40,3 @@ layouts();
 
 </html>
 
-<?php 
-NotifierPHP::print(); 
-NotifierPHP::setValuesInputs();
-NotifierPHP::destroyData();
-?>

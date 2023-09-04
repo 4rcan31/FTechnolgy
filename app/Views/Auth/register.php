@@ -54,9 +54,3 @@ NotifierPHP();
 </body>
 
 </html>
-
-<?php 
-NotifierPHP::print(); 
-NotifierPHP::setValuesInputs();
-NotifierPHP::destroyData();
-?>

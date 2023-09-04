@@ -22,13 +22,16 @@ class AuthController extends BaseController{
             $validate->input('user'),
             Hasher::make($validate->input('password'))
         );
+        $row = $user->getByEmail($validate->input('email'));
         /* 
             To do: Poder crear tiempos de session ya que por el momento la session dura tan solo 7 dias, pero por cookie
         */
         Sauth::NewAuthServerSave('users', 'remember_token', $idUser);
         /* Si quiere un Auth en el cliente guardando el token ya sea firmado o guardado */
         Sauth::NewAuthClient([
-            'id' => $idUser
+            'id' => $idUser,
+            'name' => $row->name,
+            'avatar' => $row->avatar_serve.$row->avatar_rute
         ],$_ENV['APP_KEY']);
         NotifierPHP::send('/panel/dashboard', ['Se ha registrado correctamente!'], 'Notice');
         return;
@@ -49,14 +52,16 @@ class AuthController extends BaseController{
         $validate = validate($request);
         $validate->rule('required', ['email', 'password']); 
         $validate->rule('email', ['email']);
-        if(!$validate->validate()){ NotifierPHP::send('/register', $validate->err(), 'Error'); }
+        if(!$validate->validate()){ NotifierPHP::send('/login', $validate->err(), 'Error'); }
         $user = model('UserModel');
         if(!$user->existUserByEmail($validate->input('email'))){ NotifierPHP::send('/register', ['Aun no estas registrado, registrate!'], 'Error');}
-        $row = $user->selectEmailAndPassword($validate->input('email'));
+        $row = $user->getByEmail($validate->input('email'));
         if(!Hasher::verify($validate->input('password'), $row->password)){ NotifierPHP::send('/login', ['Las credenciales no son correctas'], 'Error'); }
         Sauth::NewAuthServerSave('users', 'remember_token', $row->id);
         Sauth::NewAuthClient([
-            'id' => $row->id
+            'id' => $row->id,
+            'name' => $row->name,
+            'avatar' => $row->avatar_serve.$row->avatar_rute
         ],$_ENV['APP_KEY']);
         NotifierPHP::send('/panel/dashboard', ['Te has logeado correctamente!'], 'Notice');
         return;

@@ -7,8 +7,6 @@ class AuthMiddleware{
 
     public function session(){
         return $this->middlewareAuthServerAndClient();
-
-        
     }
 
     public function middlewareAuthServerAndClient(){
