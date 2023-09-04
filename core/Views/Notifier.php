@@ -13,7 +13,6 @@ class NotifierPHP{
             ],
             'body' => $data
         ]));
-        session_start();
         $_SESSION['senddata'] = $data;
         header('Location: '.$rute);
         exit;
@@ -55,13 +54,19 @@ class NotifierPHP{
     public static function setValuesInputs() {
         unset($_SESSION['inputs']['csrf_token']);
         if(isset($_SESSION['inputs'])){
-            foreach ($_SESSION['inputs'] as $name => $value) {
-                ?> 
-                <script>
-                    var inputElement = document.querySelector('input[name=' + <?php echo json_encode($name) ?> + ']');
-                    inputElement.value = <?php echo json_encode($value) ?>;
-                </script>
-                <?php
+         
+            foreach ($_SESSION['inputs'] as $data) {
+                $data = arrayToObject($data);
+                if($data->type != 'password'){
+                 
+                    ?> 
+                    <script>
+                        var inputElement = document.querySelector('input[name=' + <?php echo json_encode($data->name) ?> + ']');
+                        inputElement.value = <?php echo json_encode($data->value) ?>;
+                    </script>
+                    <?php
+                }
+
             }
         }
     }
@@ -73,8 +78,7 @@ class NotifierPHP{
     }
 
     public static function setInputs($inputs){
-        session_start();
-        $_SESSION['inputs'] = $inputs;
+        $_SESSION['inputs'] = self::processInputs($inputs);
         return 0;
     }
     
@@ -112,5 +116,52 @@ class NotifierPHP{
         }else{
             return 200;
         }
+    }
+
+
+    public static function addInput($name, $type, $label, $class, $placeholder = '', $id = '', $value = '') {
+        self::$inputs[$name] = [
+            'type' => $type,
+            'value' => $value,
+            'label' => $label,
+            'class' => $class,
+            'placeholder' => $placeholder,
+            'id' => $id
+        ];
+    }
+
+    public static function PrintInputs() {
+        foreach (self::$inputs as $name => $data) {
+            $data = arrayToObject($data);
+            echo '<b><label for="'.$data->label.'">'.$data->label.'</label></b>';
+            echo '<input type="hidden" name="type_' . $name . '" value="' . $data->type . '">';
+            echo $data->value != '' ? 
+            '<input class="'.$data->class.'" type="'.$data->type.'" name="'.$name.'" id="'.$data->id.'" placeholder="'.$data->placeholder.'" value="' . $data->value . '" />' :
+            '<input class="'.$data->class.'" type="'.$data->type.'" name="'.$name.'" id="'.$data->id.'" placeholder="'.$data->placeholder.'" />';
+            echo '<br />';
+        }
+    }
+
+    public static function processInputs($request) {
+        $processedData = [];
+
+        foreach ($request as $key => $value) {
+            if (strpos($key, 'type') === 0) {
+                // Encuentra el nombre de campo correspondiente (elimina 'tipo_')
+                $fieldName = substr($key, 5);
+
+                if (isset($request[$fieldName])) {
+                    $tipoCampo = $value;
+                    $valorCampo = $request[$fieldName];
+                    $processedData[$fieldName] = [
+                        'name' => $fieldName,
+                        'value' => $valorCampo,
+                        'type' => $tipoCampo,
+                    ];
+                }
+            }
+        }
+
+        return $processedData;
     }
 }

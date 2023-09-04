@@ -20,7 +20,12 @@ class Route extends Request{
     private static $groups = []; //Contiene temporalmente los grupos de rutas
 
 
-    private static $err = [];
+    //Errores
+    private static $err = []; //Se guarda que hacer en el caso de un error, estos valores se guardan desde el servidor
+
+
+    //Datos (para respuestas o vistas)
+    public static $data = []; //Se guarda toda la data de alguna ruta, data definida por el servidor, no por el cliente
 
 
     //NOTA: Si existen grupos anidados, el agoritmo empieza a contar desde el grupo "mas anidado" hacia afuera
@@ -32,38 +37,35 @@ class Route extends Request{
     }
 
     public static function get(string $route, callable $function){
-        Route::addRoute($route, $function, 'GET');
-        return new Route($route, 'GET', Route::$idRoute);
+       return  Route::addRoute($route, $function, 'GET');
     }
 
     public static function post(string $route, callable $function){
-        Route::addRoute($route, $function, 'POST');
-        return new Route($route, 'POST', Route::$idRoute);
+       return  Route::addRoute($route, $function, 'POST');
     }
 
     public static function put(string $route, callable $function){
-        Route::addRoute($route, $function, 'PUT');
-        return new Route($route, 'PUT', Route::$idRoute);
+       return  Route::addRoute($route, $function, 'PUT');
     }
 
     public static function delete(string $route, callable $function){
-        Route::addRoute($route, $function, 'DELETE');
-        return new Route($route, 'DELETE', Route::$idRoute);
+       return  Route::addRoute($route, $function, 'DELETE');
     }
 
     public static function root(callable $callable, string $method = 'GET'){
-        Route::addRoute('/', $callable, $method);
-        return new Route('/', $method, Route::$idRoute);
+       return  Route::addRoute('/', $callable, $method);
     }
 
     public function middlewares(Array $middlewares){
-        $this->set('middlewares', $middlewares);
-        return new Route(Route::$executed, Route::$typeExecuted, Route::$idExecuted);
+        return $this->set('middlewares', $middlewares);
     }
 
     public function prefix(string $prefix){
-        $this->set('prefix', Route::setUri($prefix));
-        return new Route(Route::$executed, Route::$typeExecuted, Route::$idExecuted);
+        return $this->set('prefix', Route::setUri($prefix));
+    }
+
+    public function setData(array|object $data){
+        return $this->set('data', $data);
     }
 
     public static function setUri(string $uri){
@@ -88,12 +90,14 @@ class Route extends Request{
             'method' => $method,
             'middlewares' => [],
             'prefix' => [],
+            'data' => [],
             'idGroup' => []
         ]); 
+        return new Route($route, $method, Route::$idRoute);
     }
 
     public static function redirec(string $page){
-        header("Location: $page");
+        header("Location: ".routePublic($page));
         exit;
     }
 
@@ -161,6 +165,7 @@ class Route extends Request{
                 }
             }
         }
+        return new Route(Route::$executed, Route::$typeExecuted, Route::$idExecuted);
     }
 
     public static function doPrefix(Array $prefixs){
@@ -178,11 +183,20 @@ class Route extends Request{
                 $file = $data[0]; $function = $data[1];
                 $middleware = import("middlewares/$file.php");
                 if($middleware->{$function}() === false){
+                    foreach (Route::$err as $index => $errorInfo) {
+                        if ($errorInfo['error'] == 403) {
+                            Route::$err[$index]['callable'](); exit;
+                        }
+                    }
                     res(403);
-            }
+                }
             }
 
         }
+    }
+
+    public static function getData($object = true){
+        return $object ? Route::$data[0] : objectToArray(Route::$data[0]);
     }
 
     public static function error(int $err, callable $callable){
@@ -193,25 +207,24 @@ class Route extends Request{
     }
 
     public static function run(){
-      // prettyPrint(Route::$routes);
+       // prettyPrint(Route::$routes); die;
         for($i = 0; count(Route::$routes) > $i; $i++){
             $route = Route::$routes[$i]['route'];
             $callback = Route::$routes[$i]['function'];
             $method = Route::$routes[$i]['method'];
             $prefixs = Route::$routes[$i]['prefix'];
             $middlewares = Route::$routes[$i]['middlewares'];
+            $dataView = Route::$routes[$i]['data'];
             !empty($prefixs) ? $route = Route::doPrefix($prefixs).$route : null;
             strpos($route, '%') !== false ? $route = preg_replace('/\%\w+/', '(\w+)', $route) : null;
             if(preg_match("@^" . $route . "$@", Request::$uri, $matches)){
                 $err = false;
                 if($method == Request::$method){
-                    !empty($middlewares) ? Route::doMiddlewares($middlewares) : null;
                     array_shift($matches); 
-                    if(!empty($matches)){
-                        $callback($matches, Request::$data); break;
-                    }else{
-                        $callback(Request::$data); break;
-                    }
+                    Route::$data = $dataView;
+                    !empty($middlewares) ? Route::doMiddlewares($middlewares) : null;
+                    !empty($matches) ? $callback($matches, Request::$data) :  $callback(Request::$data);
+                    break;
                 }else{
                     $err = 405;
                 }

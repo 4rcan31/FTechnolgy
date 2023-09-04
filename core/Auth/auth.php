@@ -35,6 +35,8 @@ class Sauth {
         );
     }
 
+
+
     public static function getPayLoadTokenClient(string $tokenRequest, string $key, string $input = ''){
         $tokenRequest = urldecode($tokenRequest);
         import('DataBase/ORM/orm.php', false, '/core');
@@ -81,6 +83,11 @@ class Sauth {
         return new getPayLoad($token, $signature, $algorithm);
     }
 
+    public static function authenticableClient($key, $cookieName = 'session'){
+        return !isset(Request::$cookies[$cookieName]) ? 
+                [] : 
+                json_decode(import('Encrypt/encrypt.php', true, '/core')->decrypt(urldecode(Request::$cookies[$cookieName]), $key))->payload;
+    }
 
 
     public static function logoutServer(string $table, string $column, int $id, string $idColumnName = 'id'){

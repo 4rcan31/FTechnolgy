@@ -38,18 +38,22 @@ Jenu::command('make:migration', function($argrs){
 
 
 Jenu::command('execute:migrations', function(){
+    $alredyExecuteClass = [];
     $migrationFiles = getDirsFilesByDirectory(Jenu::baseDir().'/app/DataBase/migrations/');
     foreach ($migrationFiles as $file) {
         require_once $file;
         $declaredClasses = get_declared_classes();
         foreach ($declaredClasses as $class) {
             if (method_exists($class, 'up') && is_subclass_of($class, 'Migration')) {
-                $migrationInstance = new $class();
-                method_exists($migrationInstance, 'down') ? 
-                $migrationInstance->down() : Jenu::warn("In the migration called '".$class."' dont exist method down");
-                method_exists($migrationInstance, 'up') ? 
-                $migrationInstance->up() : Jenu::warn("In the migration called '".$class."' dont exist method up");
-                Jenu::success("The migration '".basename($file)."' was executed");
+                if(!in_array($class, $alredyExecuteClass)){
+                    array_push($alredyExecuteClass, $class);
+                    $migrationInstance = new $class();
+                    method_exists($migrationInstance, 'down') ? 
+                    $migrationInstance->down() : Jenu::warn("In the migration called '".$class."' dont exist method down");
+                    method_exists($migrationInstance, 'up') ? 
+                    $migrationInstance->up() : Jenu::warn("In the migration called '".$class."' dont exist method up");
+                    Jenu::success("The migration '".basename($file)."' was executed");
+                }
             }
         }
     }
