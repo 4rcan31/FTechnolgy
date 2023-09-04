@@ -101,7 +101,7 @@ layouts();
 
 
 
-
+    <!-- scripts -->
     <?php scripts(); ?>
   </body>
 </html>
