@@ -24,3 +24,10 @@ Jenu::command('test', function(){
     $decryptTestToken = import('Encrypt/encrypt.php', true, '/core')->decrypt($token, $_ENV['APP_KEY']);
     Jenu::success("The token decrypt is: $decryptTestToken");
 });
+
+
+
+Jenu::command('make:token', function($args){
+    echo isset($args[0]) ?  Jenu::success("El token generado es: ".bin2hex(random_bytes($args[0]))) :
+                            Jenu::success("El token generado es: ".bin2hex(random_bytes(32)));
+});
