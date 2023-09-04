@@ -20,7 +20,7 @@ Croquette es un dispensador de comida para mascotas que va más allá de lo conv
 En este repositorio, encontrarás los archivos de diseño de Croquette (El dispensador) en formato .blend y .stl
 
 # Documentación de Croquette
-Si deseas ver la documentación de Mi Proyecto, por favor visita [aquí](/Croquette/README.md).
+Si deseas ver la documentación de Croquette, haz click [aquí](/Croquette/README.md).
 
 
 
