@@ -33,6 +33,10 @@ Route::get('/register', function(){
    view('Auth/register');
 });
 
+Route::get('/ws', function(){
+  view('Connectionws', [], 'test/');
+});
+
 
 
 
@@ -40,8 +44,28 @@ Route::group(function(){
 
 
    Route::get('/dashboard', function(){
-      view('dashboard/home');
+      controller('PanelViewsController', 'home');
    });
 
+   Route::get('/croquette', function(){
+      view('dashboard/croquette');
+   });
 
-})->prefix('/panel')->middlewares(['AuthMiddleware@session']);
+   Route::get('/logs', function(){
+      res('logs');
+   });
+
+   Route::get('/settings', function(){
+      res('Configuracion');
+   });
+
+   Route::get('/profile', function(){
+      res('Perfil');
+   });
+
+})->prefix('/panel')->middlewares(['AuthMiddleware@session'])->setData(controller('PanelViewsController', 'userProfileData'));
+
+
+Route::error(403, function(){
+   Server::redirect('/');
+});
