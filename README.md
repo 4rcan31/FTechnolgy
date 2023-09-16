@@ -22,9 +22,6 @@ En este repositorio, encontrarás los archivos de diseño de Croquette (El dispe
 # Documentación de Croquette
 Si deseas ver la documentación de Croquette, haz click [aquí](/Croquette/README.md).
 
-Tu guía de instalación se ve bien ahora, con la adición de las instrucciones para instalar las dependencias utilizando Composer. Aquí tienes el texto actualizado:
-
-
 # Instalación
 
 ## Cosas necesarias
