@@ -1,5 +1,3 @@
-# Ignorar la carpeta vendor de Composer
-/vendor/
-
-# Ignorar el archivo composer.lock
-/composer.lock
+/vendor
+/.vscode
+composer.lock
