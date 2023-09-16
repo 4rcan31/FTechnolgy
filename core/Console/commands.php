@@ -128,3 +128,16 @@ Jenu::command('serve', function($argrs){
 
     exec("php $serverAdress:$port $rute");
 });
+
+
+Jenu::command('comprobate:connection:mysql', function(){
+    try {
+        $db = new DataBase;
+        $db->query('SHOW DATABASES');
+        Jenu::success("The database connection is successful");
+    } catch (\PDOException $e) {
+        Jenu::error("Database error: " . $e->getMessage());
+    } catch (\Throwable $th) {
+        Jenu::error("An unexpected error occurred: " . $th->getMessage());
+    }
+});
