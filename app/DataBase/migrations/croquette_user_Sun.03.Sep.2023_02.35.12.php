@@ -7,6 +7,7 @@ class croquette_user extends Migration {
                 id INT PRIMARY KEY AUTO_INCREMENT,
                 id_croquette INT NOT NULL UNIQUE,
                 id_user INT NOT NULL,
+                state TINYINT(1) DEFAULT 0,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )');
         });
