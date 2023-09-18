@@ -130,6 +130,11 @@ class NotifierPHP{
         ];
     }
 
+    public static function addTextArea(string $name, $label, $class, $rows = 3, $classLabel = "form-label", $placeholder = '', $id='', $value=""){
+        print('<b><label for="message" class="'.$classLabel.'">'.$label.'</label></b>
+        <textarea name = "'.$name.'" class="'.$class.'" id="'.$id.'" rows="'.$rows.'" placeholder="'.$placeholder.'"></textarea>');
+    }
+
     public static function PrintInputs() {
         foreach (self::$inputs as $name => $data) {
             $data = arrayToObject($data);

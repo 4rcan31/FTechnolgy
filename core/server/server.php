@@ -27,6 +27,7 @@ class Server
     }
 
     public static function redirect($route){
+        $route = trim($route, '/');
         header("Location: ".self::RouteAbsoluteStatic($route, null));
         exit;
     }

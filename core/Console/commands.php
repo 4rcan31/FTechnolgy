@@ -1,8 +1,8 @@
 <?php 
 
 
-Jenu::command('make:migration', function($argrs){
-    $nameMigration = $argrs[0];
+Jenu::command('make:migration', function(){
+    $nameMigration = Jenu::get(0, "Fill the name of migration");
     $nameFile = explode(".", $nameMigration)[0]."_".(Jenu::getDate()).".php";
     $file = dirname(__DIR__, 2).'/app/DataBase/migrations/'.$nameFile;
     $file = fopen($file,"w+b");
@@ -107,7 +107,7 @@ Jenu::command('endinstall', function($argrs){
 
 Jenu::command('serve', function($argrs){
     $rute = '-t '.Jenu::baseDir().'/public';
-    $serverAdress = '-S localhost';
+    $serverAdress = '-S 127.0.0.1';
     $port = '8080';
     /* 
         php -S localhost:8080 -t /public
