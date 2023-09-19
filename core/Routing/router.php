@@ -11,7 +11,7 @@ class Route extends Request{
 
 
     //Configuracion de rutas
-    private static $routes = []; //Aca esta todas las rutas definidas con su configuracion
+    public static $routes = []; //Aca esta todas las rutas definidas con su configuracion
     private static $idRoute = 0; // Este numero es correlativo y dice el id de las rutas definidas
 
 
@@ -26,6 +26,9 @@ class Route extends Request{
 
     //Datos (para respuestas o vistas)
     public static $data = []; //Se guarda toda la data de alguna ruta, data definida por el servidor, no por el cliente
+
+    //Middleware config
+    public static $SeparatorMethodFile = "@";
 
 
     //NOTA: Si existen grupos anidados, el agoritmo empieza a contar desde el grupo "mas anidado" hacia afuera
@@ -177,7 +180,7 @@ class Route extends Request{
     }
 
     public static function doMiddlewares(Array $middlewares){
-        for($i = 0; count($middlewares) > $i; $i++){
+         for($i = 0; count($middlewares) > $i; $i++){
             for($j = 0; count($middlewares[$i]) > $j; $j++){
                 $data = explode('@', $middlewares[$i][$j]);
                 $file = $data[0]; $function = $data[1];
@@ -192,7 +195,7 @@ class Route extends Request{
                 }
             }
 
-        }
+        } 
     }
 
     public static function getData($object = true){
@@ -206,8 +209,20 @@ class Route extends Request{
         ]);
     }
 
+
+    public static function debug(){
+        print("Ruta ejecutada: ".Request::$uri."</br>");
+        print("Metodo ejecutado: ".Request::$method."</br>");
+        print("Arbol de rutas: </br>");
+        prettyPrint(Route::$routes);
+        exit;
+    }
+
+    public static function test(){
+        var_dump("Request URI desde test: ".Request::$uri);
+    }
+
     public static function run(){
-       // prettyPrint(Route::$routes); die;
         for($i = 0; count(Route::$routes) > $i; $i++){
             $route = Route::$routes[$i]['route'];
             $callback = Route::$routes[$i]['function'];
@@ -232,6 +247,7 @@ class Route extends Request{
                 $err = 404;
             }
         }
+      
 
         if($err !== false){
             for($i = 0; count(Route::$err) > $i; $i++){
