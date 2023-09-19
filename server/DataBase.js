@@ -18,9 +18,16 @@ const DataBase = new Map();
 
 // Crear el objeto ClientServer
 const ClientServer = new Map();
-ClientServer.set('token', 'tokenstringsecret');
+ClientServer.set('tokenAuth', '95259142cfdab11d7e29b93b0f6414d50313152e7d1d97cbd47f6ba0ff4c420f');
 ClientServer.set('name', 'nameServer');
-ClientServer.set('host', 'host');
+ClientServer.set('host', 'http://127.0.0.1');
+ClientServer.set('port', "8080");
+ClientServer.set('pathUrlApiCroquette', '/api/v1/signal/croquette/servercroquettemiddleware');
+ClientServer.set('pathUrlsetConnection', '/setStatusConnection');
+ClientServer.set('pathUrlsetDisconnection', '/newDisconnection');
+/* ClientServer.set('urlapi', `${ClientServer.get('host')}/api/v1`);
+ClientServer.set('urlApiSendToken', `${ClientServer.get('urlapi')}/signal/croquette/setStatusConnection`); */
+
 
 // Agregar el objeto ServerData al mapa principal
 DataBase.set('ClientServer', ClientServer);
@@ -32,7 +39,7 @@ DataBase.set('ClientServer', ClientServer);
     token -> socket
 */
 const connections = new Map;
-DataBase.set('Connections', connections);
+DataBase.set('connections', connections);
 
 //Objeto para congfiguracion de este servidor
 const ServerSettings = new Map;

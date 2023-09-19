@@ -1,60 +1,45 @@
 const DataBase = require('./DataBase');
-const Server = require('net');
+const { Server } = require("net");
+const { newConnectionToAppServer, newDisconnectionToAppServer, serverAppConnect } = require('./http');
 
 
-const listen = (port) => {
-    const Server = new Server();
+const listen = (host, port) => {
+  const server = new Server();
 
-    Server.on('connection', (client) => {
-        const clientAddress = `${client.remoteAddress}:${client.remotePort}`;
-        console.log(`New connection from: ${clientAddress}`);
-        client.setEncoding('utf-8');
+  server.on('connection', (client) => {
+    const clientAddress = `${client.remoteAddress}:${client.remotePort}`;
+    console.log(`New connection from: ${clientAddress}`);
+    client.setEncoding('utf-8');
 
-
-        client.on('data', (request) => {
-            //EL primer request debe de ser el type, ya sea crooquete or server
-            if(request == 'croquette'){
-                
-            }
-
-
-            if(!DataBase.get('Connections').has(request)){ // request se espera a que traiga un token
-                console.log(`New Croquette connected from ${clientAddress} with token: ${request}`);
-                DataBase.get()
-            }
-        });
+    client.on('data', (request) => {
+      console.log(`Received a new message from a connected client ${request}`);
+      request.startsWith('SERVER_APP') ? 
+      serverAppConnect(request) :  // Le manda el token con este formato SERVER_APP:stringTokenAppServer
+      newConnectionToAppServer(request, client);
     });
-  
-    server.on("connection", (socket) => {
-      const remoteSocket = `${socket.remoteAddress}:${socket.remotePort}`;
-      console.log(`New connection from ${remoteSocket}`);
-      socket.setEncoding("utf-8");
-  
-      socket.on("data", (message) => {
-        connections.values();
-        if (!connections.has(socket)) {
-          console.log(`Username ${message} set for connection ${remoteSocket}`);
-          connections.set(socket, message);
-        } else if (message === END) {
-          connections.delete(socket);
-          socket.end();
-        } else {
-          const fullMessage = `[${connections.get(socket)}]: ${message}`;
-          console.log(`${remoteSocket} -> ${fullMessage}`);
-          sendMessage(fullMessage, socket);
-        }
-      }); 
-  
-      socket.on("error", (err) => console.error(err));
-  
-      socket.on("close", () => {
-        console.log(`Connection with ${remoteSocket} closed`);
-      });
+
+    client.on("error", (err) => console.error(err));
+
+    client.on("close", () => {
+      newDisconnectionToAppServer(client);
+      console.log(`Connection with ${clientAddress} closed`);
     });
-  
-    server.listen({ port, host }, () => {
-      console.log(`Listening on ${host}:${port}`);
-    });
-  
-    server.on("error", (err) => error(err.message));
-  };
+  });
+
+  server.listen({ port, host }, () => {
+    console.log(`Croquette server middleware listening on ${host}:${port}`);
+  });
+
+  server.on("error", (err) => {
+    console.error(err.message);
+    process.exit(1);
+  });
+};
+
+const main = () => {
+  listen(DataBase.get('ServerSettings').get('host'), DataBase.get('ServerSettings').get('port'));
+};
+
+if (require.main === module) {
+  main();
+}

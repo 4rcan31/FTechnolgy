@@ -48,7 +48,11 @@ Route::group(function(){
    });
 
    Route::get('/croquette', function(){
-      view('dashboard/croquette');
+      view('dashboard/Croquette/dashboard');
+   });
+
+   Route::get('/statusservices', function(){
+      view('dashboard/statusServer');
    });
 
    Route::get('/logs', function(){

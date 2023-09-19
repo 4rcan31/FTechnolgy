@@ -19,6 +19,7 @@ function sidebar(){
     }
     divider();
     HeadingNavItem('Utilidades');
+    navItem('Estado Server', 'fas fa-fw fa-server', 'panel/statusservices');
     navItem('Logs', 'fas fa-fw fa-list', '/panel/logs');
     navItem('Configuracion', 'fas fa-fw fa-wrench', '/panel/settings');
     navItem('Profile', 'fas fa-fw fa-user', '/panel/profile');

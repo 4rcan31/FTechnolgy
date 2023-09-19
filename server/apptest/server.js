@@ -10,12 +10,21 @@ const error = (message) => {
   process.exit(1);
 };
 
-const sendMessage = (message, origin) => {
-  for (const socket of connections.keys()) {
-    if (socket !== origin) {
-      socket.write(message);
+const sendMessage = (message, origin, type = 'message') => {
+  if(type === 'message'){
+    for (const socket of connections.keys()) {
+      if (socket !== origin) {
+        socket.write(message);
+      }
+    }
+  }else if(type === 'userCommand'){
+    for (const socket of connections.keys()) {
+      if (socket === origin) {
+        socket.write(message);
+      }
     }
   }
+
 };
 
 const listen = (port) => {
@@ -34,7 +43,14 @@ const listen = (port) => {
       } else if (message === END) {
         connections.delete(socket);
         socket.end();
-      } else {
+      } else if(message === 'users'){
+        let counter = 1;
+        for (const user of connections.values()) {
+          sendMessage(`${counter} -> ${user}`, socket, 'userCommand');
+          console.log(`${counter} -> ${user}`);
+          counter++;
+        }
+      }else {
         const fullMessage = `[${connections.get(socket)}]: ${message}`;
         console.log(`${remoteSocket} -> ${fullMessage}`);
         sendMessage(fullMessage, socket);

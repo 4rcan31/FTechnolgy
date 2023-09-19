@@ -7,6 +7,7 @@ class croquettes_auths extends Migration {
             $this->query('CREATE TABLE croquettes_auths (
                 id INT PRIMARY KEY AUTO_INCREMENT,
                 token VARCHAR(255) NOT NULL UNIQUE,
+                in_use TINYINT(1) DEFAULT 0,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )');
 

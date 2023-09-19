@@ -1,4 +1,7 @@
 const { Socket } = require("net");
+// Desactivar el buffering de la entrada/salida estándar
+
+
 const readline = require("readline").createInterface({
   input: process.stdin,
   output: process.stdout,
@@ -20,7 +23,6 @@ const connect = (host, port) => {
 
   socket.on("connect", () => {
     console.log("Connected");
-
     readline.question("Choose your username: ", (username) => {
       socket.write(username);
       console.log(`Type any message to send it, type ${END} to finish`);
@@ -33,9 +35,10 @@ const connect = (host, port) => {
       }
     });
 
-    socket.on("data", (data) => {
-      console.log(data);
-    });
+  socket.on("data", (data) => {
+    console.log(data);
+  });
+
   });
 
   socket.on("error", (err) => error(err.message));

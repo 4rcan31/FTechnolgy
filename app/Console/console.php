@@ -28,6 +28,55 @@ Jenu::command('test', function(){
 
 
 Jenu::command('make:token', function($args){
-    echo isset($args[0]) ?  Jenu::success("El token generado es: ".bin2hex(random_bytes($args[0]))) :
+     isset($args[0]) ?  Jenu::success("El token generado es: ".bin2hex(random_bytes($args[0]))) :
                             Jenu::success("El token generado es: ".bin2hex(random_bytes(32)));
 });
+
+Jenu::command('serve:chat', function(){
+    $port = Jenu::get(0, "Fill the port");
+    Jenu::executeNodeProcess("Server/server.js $port");
+});
+
+Jenu::command('croquettes:onuse', function () {
+    $db = new DataBase;
+    $db->select(['*'])->from('croquettes_auths');
+    $croquettes = $db->execute()->all('fetchAll');
+    foreach ($croquettes as $croquette) {
+        $status = ($croquette->in_use === 0) ? 'No usado' : 'En uso';
+        Jenu::print("\n=============================================================================================================================");
+        Jenu::print("Croquette $croquette->id");
+        Jenu::print("Token: $croquette->token");
+        Jenu::print("created_at: $croquette->created_at");
+        Jenu::print("Estado: $status");
+        Jenu::print('Link: ' . serve('localhost:8080')."api/v1/signal/croquette/connect/" . "$croquette->token");
+        Jenu::print("=============================================================================================================================");
+       
+    }
+});
+
+Jenu::command('croquettes:online', function(){
+    
+});
+
+Jenu::command('serve:croquette', function(){ //Esto no esta funcionando a la prefeccion
+    $host = Jenu::get(0, "Fill Host", '127.0.0.1');
+    $port = Jenu::get(1, 'Fill port', '8081');
+    Jenu::executeNodeProcess("Server/croquette.js $host $port");
+});
+
+
+
+
+
+
+/* Jenu::command('serve:client', function(){
+    $host = Jenu::isset(0, 'Fill the host');
+    $port = Jenu::isset(1, 'Fill the port');
+ 
+
+
+    Jenu::executeNodeProcess("Server/client.js $host $port");
+}); */
+
+
+
