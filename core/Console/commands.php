@@ -1,12 +1,14 @@
-<?php 
-
+<?php
 
 Jenu::command('make:migration', function(){
-    $nameMigration = Jenu::get(0, "Fill the name of migration");
+    $nameMigration = Jenu::get(0, "Fill in the name of the migration");
     $nameFile = explode(".", $nameMigration)[0]."_".(Jenu::getDate()).".php";
-    $file = dirname(__DIR__, 2).'/app/DataBase/migrations/'.$nameFile;
-    $file = fopen($file,"w+b");
-    if(!$file){ Jenu::error('The migration: "'.$nameFile.'" was not created in the rute: '.$file); return; }
+    $file = dirname(__DIR__, 2).'/app/Database/migrations/'.$nameFile;
+    $file = fopen($file, "w+b");
+    if (!$file) { 
+        Jenu::error('The migration "'.$nameFile.'" was not created in the route: '.$file); 
+        return; 
+    }
     // Escribir en el archivo:
     $className = explode(".", $nameMigration)[0];        
     $content = <<<EOT
@@ -20,52 +22,52 @@ Jenu::command('make:migration', function(){
         }
             
         public function down() {
-            \$this->dropIfExist("$className");
+            \$this->dropIfExists("$className");
         }
             
     }
     EOT;
     fwrite($file, $content);
             
-    // Fuerza a que se escriban los datos pendientes en  el buffer:
+    // Forzar la escritura de los datos pendientes en el búfer:
     fflush($file);
     // Cerrar el archivo:
     fclose($file);
     Jenu::success("The migration $nameFile was created successfully");
     return;
-});
+}, 'Create a new migration file', 'Sao:Data Base');
 
 
 
 Jenu::command('execute:migrations', function(){
-    $alredyExecuteClass = [];
-    $migrationFiles = getDirsFilesByDirectory(Jenu::baseDir().'/app/DataBase/migrations/');
+    $alreadyExecutedClasses = [];
+    $migrationFiles = getDirsFilesByDirectory(Jenu::baseDir().'/app/Database/migrations/');
     foreach ($migrationFiles as $file) {
         require_once $file;
         $declaredClasses = get_declared_classes();
         foreach ($declaredClasses as $class) {
             if (method_exists($class, 'up') && is_subclass_of($class, 'Migration')) {
-                if(!in_array($class, $alredyExecuteClass)){
-                    array_push($alredyExecuteClass, $class);
+                if (!in_array($class, $alreadyExecutedClasses)) {
+                    array_push($alreadyExecutedClasses, $class);
                     $migrationInstance = new $class();
                     method_exists($migrationInstance, 'down') ? 
-                    $migrationInstance->down() : Jenu::warn("In the migration called '".$class."' dont exist method down");
+                    $migrationInstance->down() : Jenu::warn("In the migration called '".$class."' the 'down' method doesn't exist");
                     method_exists($migrationInstance, 'up') ? 
-                    $migrationInstance->up() : Jenu::warn("In the migration called '".$class."' dont exist method up");
+                    $migrationInstance->up() : Jenu::warn("In the migration called '".$class."' the 'up' method doesn't exist");
                     Jenu::success("The migration '".basename($file)."' was executed");
                 }
             }
         }
     }
-});
+}, 'Install Tables to the Database', 'Sao:Data Base');
 
 
 Jenu::command('migrations:fresh', function(){
-    if(!Jenu::condition("Are you sure that delete all the tables? (type YES or NOT)")){ 
-        Jenu::warn("The migrations fresh was canceled");
+    if(!Jenu::condition("Are you sure you want to delete all the tables? (type YES or NO)")){ 
+        Jenu::warn("The 'migrations:fresh' operation was canceled");
         die;
     }
-    $db = new DataBase;
+    $db = new Database;
     $tables = $db->query("SELECT GROUP_CONCAT('`', table_name, '`') AS tables
     FROM information_schema.tables
     WHERE table_schema = '".$_ENV['DB_DATABASE']."'")->fetch(PDO::FETCH_ASSOC)['tables'];
@@ -75,39 +77,12 @@ Jenu::command('migrations:fresh', function(){
     }
     $db->query("DROP TABLE IF EXISTS $tables");
     Jenu::execute('execute:migrations');
-});
+}, 'Reinstall the database', 'Sao:Data Base');
 
-Jenu::command('install', function(){
-    Jenu::print('==================================================');
-    Jenu::print("======== Welcome to the Sao setup program ========");
-    Jenu::print('==================================================');
-    Jenu::print("Type the name of the App: ");
-    $sep = DIRECTORY_SEPARATOR;
-    $nameApp = readline();
-    $ruteProject = dirname(Jenu::baseDir()) . $sep . $nameApp . $sep;
-    mkdir($ruteProject, 0777);
-    copyDirectory(Jenu::baseDir(), $ruteProject);
-    foreach(getFilesByDirectory(Jenu::baseDir().$sep."core") as $libsSao){ Jenu::success("Lib '".$libsSao."' was installed"); }
-    Jenu::success("Core Sao was installed");
-    deleteDirectory($ruteProject.$sep.".git");
-    exec("php $ruteProject"."jenu endinstall $nameApp ".Jenu::baseDir(), $output);
-    foreach ($output as $line) {
-        Jenu::print($line);
-    }
-    return;
-});
 
-Jenu::command('endinstall', function($argrs){
-    Jenu::print("In the new project command");
-    $nameApp = $argrs[0];
-    $dirOldApp = $argrs[1];
-    deleteDirectory($dirOldApp);
-    Jenu::success("The project '$nameApp' was created correctily");
-});
-
-Jenu::command('serve', function($argrs){
-    $rute = '-t '.Jenu::baseDir().'/public';
-    $serverAdress = '-S 127.0.0.1';
+Jenu::command('serve', function($args){
+    $route = '-t '.Jenu::baseDir().'/public';
+    $serverAddress = '-S 127.0.0.1';
     $port = '8080';
     /* 
         php -S localhost:8080 -t /public
@@ -115,24 +90,24 @@ Jenu::command('serve', function($argrs){
         php jenu 127.0.0.1:8081 /public/test
         php jeny 127.0.0.1:8081
 
-        el primer argumento siempre se espera que sea la ruta, y el segundo es opcional
-        y se espera que sea la direccion ip del servidor
+        El primer argumento siempre se espera que sea la ruta, y el segundo es opcional
+        y se espera que sea la dirección IP del servidor.
     */
-    if(isset($argrs[0])){
-        $rute = '-t '.Jenu::baseDir().$argrs[0];
+    if(isset($args[0])){
+        $route = '-t '.Jenu::baseDir().$args[0];
     }
-    if(isset($argrs[1])){
-        $serverAdress = "-S ".explode(':', $argrs[1]);
-        $port = explode(':', $argrs[1]);
+    if(isset($args[1])){
+        $serverAddress = "-S ".explode(':', $args[1]);
+        $port = explode(':', $args[1]);
     }
 
-    exec("php $serverAdress:$port $rute");
-});
+    exec("php $serverAddress:$port $route");
+}, 'Run the development server', 'Sao:Http');
 
 
-Jenu::command('comprobate:connection:mysql', function(){
+Jenu::command('check:connection:mysql', function(){
     try {
-        $db = new DataBase;
+        $db = new Database;
         $db->query('SHOW DATABASES');
         Jenu::success("The database connection is successful");
     } catch (\PDOException $e) {
@@ -140,4 +115,65 @@ Jenu::command('comprobate:connection:mysql', function(){
     } catch (\Throwable $th) {
         Jenu::error("An unexpected error occurred: " . $th->getMessage());
     }
-});
+}, 'Check MySQL database connection', 'Sao:Data Base');
+
+
+
+Jenu::command('make:token', function($args){
+    isset($args[0]) ?  Jenu::success("The generated token is: ".bin2hex(random_bytes($args[0]))) :
+                           Jenu::success("The generated token is: ".bin2hex(random_bytes(32)));
+}, 'Generate tokens string', 'Sao:String');
+
+
+
+Jenu::command('help', function(){
+    $apps = [];
+    $others = [];
+
+    foreach (Jenu::$commands as $command) {
+        $parts = explode(":", $command['type']);
+        
+        if (count($parts) === 2) {
+            list($type, $group) = $parts;
+
+            // Agrupar comandos por tipo y grupo
+            if (!isset($apps[$type][$group])) {
+                $apps[$type][$group] = [];
+            }
+
+            $apps[$type][$group][] = [
+                'command' => $command['command'],
+                'message' => $command['help']
+            ];
+        } else {
+            // Comandos que no siguen el formato type:group
+            $others[] = [
+                'command' => $command['command'],
+                'message' => $command['help']
+            ];
+        }
+    }
+
+    // Imprimir comandos en el formato deseado
+
+    foreach ($apps as $type => $groups) {
+        Jenu::warn("\n$type:", false);
+        foreach ($groups as $group => $commands) {
+            foreach ($commands as $cmd) {
+                printf("\033[32m%-30s %-15s %s\033[0m\n", $cmd['command'], "(".$group.")", $cmd['message']);
+            }
+        }
+    }
+
+    // Imprimir comandos "Otros"
+    if(!empty($others)){
+        Jenu::warn("\nOtros:", false);
+        foreach ($others as $other) {
+            printf("\033[32m%-30s %-15s %s\033[0m\n", $other['command'], "", $other['message']);
+        }
+        print("\n");
+    }
+
+
+}, "Help command", 'Sao:Help');
+

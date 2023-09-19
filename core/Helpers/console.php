@@ -10,7 +10,7 @@ function consoleError($err){
 }
 
 function consoleWarning(string $warn, bool $start = true){
-    $start ? printColor("Warning: ".$warn, '0;32') : printColor($warn, '1;33');
+    $start ? printColor("Warning: ".$warn, '1;33') : printColor($warn, '1;33');
 }
 
 function consoleSuccess($messaje, $start = true){

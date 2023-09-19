@@ -35,6 +35,14 @@ class Jenu{
         $newLine ?  print($text."\n") :  print($text);
     }
 
+    public static function printRow(int $len = 100){
+        $row = "";
+        for($i = 0; $i < $len; $i++){
+            $row = "=$row";
+        }
+        echo "\n$row\n";
+    }
+
     public static function success(string $text, bool $start = true){
         consoleSuccess($text, $start);
     }
@@ -48,10 +56,12 @@ class Jenu{
         consoleWarning($text, $start);
     }
 
-    public static function command(string $command, callable $execute){
+    public static function command(string $command, callable $execute, string $help = "undefained", $type = "undefained"){
         array_push(self::$commands, [
             'command' => $command,
-            'executed' => $execute
+            'executed' => $execute,
+            'help' => $help,
+            'type' => $type
         ]);
     }
 
