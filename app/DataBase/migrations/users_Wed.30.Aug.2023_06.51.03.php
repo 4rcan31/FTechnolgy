@@ -11,7 +11,7 @@ class users extends Migration {
                 user VARCHAR(255) NOT NULL,
                 password VARCHAR(255) NOT NULL,
                 remember_token VARCHAR(255),
-                avatar_serve VARCHAR(255) DEFAULT "' . serve('localhost:8080') . '",
+                avatar_serve VARCHAR(255) DEFAULT "' . serve($_ENV['APP_ADDRESS'].":".$_ENV['APP_PORT']) . '",
                 avatar_rute VARCHAR(255) DEFAULT "assets/images/panel/undraw_profile_2.svg",
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )');
