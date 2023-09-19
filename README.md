@@ -115,9 +115,25 @@ El programa debería estar en funcionamiento en:
 http://localhost:8080
 ```
 
-## Otros comandos
+## Comandos FTecnology
+FTecnology aún no cuenta con una interfaz gráfica para un panel de administración del CEO, pero sí cuenta con un CLI para ello, y hay algunos comandos que me han resultado útiles. Para ver los comandos de FTecnology, simplemente ejecuta:
+```sh
+php jenu help
+```
+Aparecerán todos los comandos disponibles:
+```
+FTechnology:
+serve:chat                     (Test)          Run chat server test
+croquettes:auth                (Croquette)     See all authenticated Croquette clients
+croquettes:onuse               (Croquette)     See all Croquettes that belong to a user (because they are in use)
+croquettes:unused              (Croquette)     See all unused Croquettes (not belonging to anybody)
+croquettes:online              (Croquette)     See all Croquettes connected to the Croquette server (online Croquettes)
+croquettes:offline             (Croquette)     See all Croquettes disconnected from the Croquette server (offline Croquettes)
+serve:croquette                (Croquette)     Run Croquette server with Node.js (Still in development) WARNING: This command doesn't work fine
+```
+## Comandos Sao
 
-Si deseas reiniciar la base de datos ejecutando nuevamente las migraciones, esto dará un error, ya que no puedes ejecutar `php jenu execute:migrations` dos veces, ya que intentaría duplicar las tablas. Para solucionar este error, ejecuta:
+Si deseas reiniciar la base de datos ejecutando nuevamente las migraciones, esto dará un error, ya que no puedes ejecutar `php jenu execute:migrations` dos veces, ya que intentarías duplicar las tablas. Para solucionar este error, ejecuta:
 
 ```sh
 php jenu migrations:fresh
@@ -125,8 +141,18 @@ php jenu migrations:fresh
 
 Este comando eliminará todas las tablas de la base de datos y las reinstalará.
 
-
-
-
-
-
+Para ver todos los comandos de Sao, simplemente ejecuta:
+```sh
+php jenu help
+```
+Que son los siguientes:
+```
+Sao:
+make:migration                 (Data Base)     Create a new migration file
+execute:migrations             (Data Base)     Install Tables to the Database
+migrations:fresh               (Data Base)     Reinstall the database
+check:connection:mysql         (Data Base)     Check MySQL database connection
+serve                          (Http)          Run the development server
+make:token                     (String)        Generate tokens string
+help                           (Help)          Help command
+```
