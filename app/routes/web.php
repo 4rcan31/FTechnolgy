@@ -14,15 +14,15 @@ Route::get('/aboutus', function(){
 });
 
 Route::get('/faq', function(){
-   view('faq');
+   controller('ViewsUserAoutSessionController', 'seeFaq');
 });
 
 Route::get('/store', function(){
-    view('store');
+   controller('ViewsUserAoutSessionController', 'seeStore');
 });
 
 Route::get('/see/%productID', function($request){
-  view('see');
+   controller('ViewsUserAoutSessionController', 'seeProduct', $request[0]);
 });
 
 Route::get('/login', function(){
