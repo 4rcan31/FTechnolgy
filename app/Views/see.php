@@ -1,11 +1,13 @@
 <?php
 layouts();
+$app = ViewData::get();
+ViewData::unsetData();
 ?>
 
 
 <!DOCTYPE html>
 <html lang="es">
-<?php head('Product - ') ?>
+<?php head('Product - '.$app->name) ?>
 <body>
     <?php headerhtml() ?>
     <!-- Inicio de todo el contenido de la app -->
@@ -20,15 +22,13 @@ layouts();
             <hr class="divider" />
             <div class="row featurette">
                 <div class="col-md-7">
-                    <h2 class="featurette-heading">Croquette</h2>
+                    <h2 class="featurette-heading"><?php echo $app->name ?></h2>
                     <p class="lead">
-                        Croquette o Croquette Control es un dispensador de comida para
-                        mascotas, el cual permite al dueño brindar un cuidado alimenticio
-                        personalizado a través de una aplicación
+                        <?php echo $app->description ?>
                     </p>
                 </div>
                 <div class="col-md-5">
-                    <img  src="<?php echo routePublic('assets/images/GatoDeHecho.png') ?>" alt="" class="img-fluid" width="350" height="350" />
+                    <img  src="<?php echo routePublic($app->avatar_rute) ?>" alt="" class="img-fluid" width="350" height="350" />
                 </div>
             </div>
             <hr class="divider" />

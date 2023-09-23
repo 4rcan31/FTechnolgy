@@ -1,7 +1,7 @@
 <?php
 layouts();
-/* Esto es solamente para prueba*/
-$idProdcut = 2;
+$apps = ViewData::get();
+ViewData::unsetData();
 ?>
 
 
@@ -20,19 +20,25 @@ $idProdcut = 2;
       <div class="container marketing">
         <!-- Primera fila -->
         <div class="row">
-          <div class="card">
+
+ 
+        <?php foreach($apps as $app):  ?>
+          <div class="card" >
             <img
-              src="<?php echo routePublic('assets/images/GatoDeHecho.png') ?>"
+              src="<?php echo routePublic($app->avatar_rute) ?>"
               class="img-card-store"
             />
             <div class="card-body">
-              <h5 class="card-title">Croquette</h5>
+              <h5 class="card-title"><?php echo $app->name ?></h5>
               <p class="card-text">
-                Croquette o Croquette Control es un dispensador de comid....
+                <?php echo  substr($app->description, 0, 56)."..."; ?>
               </p>
-              <a href="<?php route('/see/'.$idProdcut) ?>" class="btn btn-primary">ir a ver</a>
+              <a href="<?php route('/see/'.$app->id) ?>" class="btn btn-primary">Leer mas</a>
             </div>
           </div>
+          <?php endforeach; ?>
+
+
         </div>
         <!-- Fin de la primera fila -->
       </div>

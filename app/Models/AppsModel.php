@@ -9,4 +9,22 @@ class AppsModel extends BaseModel{
         $this->select(['name'])->from('apps')->where('id', $id);
         return $this->execute()->all();
     }
+
+    public function getAppsByIdApp($id){   
+        $this->prepare();
+        $this->select(['*'])->from('apps')->where('id', $id);
+        return $this->execute()->all();
+    }
+
+    public function existById(int $id){
+        $this->prepare();
+        $this->select(['id'])->from('apps')->where('id', $id);
+        return $this->execute()->exist();
+    }
+
+    public function get(){   
+        $this->prepare();
+        $this->select(['*'])->from('apps');
+        return $this->execute()->all('fetchAll');
+    }
 }
