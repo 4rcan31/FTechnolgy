@@ -99,10 +99,8 @@ class Jenu{
                 return;
             }
         }
-        Jenu::print("\nAll the commands: ");
-        foreach(Jenu::$commands as $command){
-            Jenu::print($command['command']);
-        }
+        Jenu::print("Help");
+        Jenu::execute('help');
         Jenu::print("\n");
         self::error("The command '".Jenu::$command."' not is definied");
 

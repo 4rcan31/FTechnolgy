@@ -92,7 +92,7 @@ class Sao{
     private function runAppRoutes(){
         //NOTA: No puede existir un grupo que no contenga por lo menos una ruta, o que contega solamente un grupo
         Route::group(function(){ // Hay un grupo por default que engloba todas las rutas que se definen por el usuario, esto es por que da error si no lo hago
-            import('routes', false, '/'); //Aca se importan todas las rutas definidas
+            import('routes', false, '/app'); //Aca se importan todas las rutas definidas
         });
         Route::run(); // Ejecuto la app de ruteo con todas las rutas ya definidas
     }

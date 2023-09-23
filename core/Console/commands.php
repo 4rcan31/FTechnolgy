@@ -22,7 +22,7 @@ Jenu::command('make:migration', function(){
         }
             
         public function down() {
-            \$this->dropIfExists("$className");
+            \$this->dropIfExist("$className");
         }
             
     }

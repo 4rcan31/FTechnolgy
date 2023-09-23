@@ -3,11 +3,11 @@
 
 function view($html, $data = [], $route = '', $format = 'php'){
     try {
-       // import('Views', false, '/core');
-        core('Views', false); //Importamos todo el core de las vistas
+        core('Views', false);
         ViewData::setData($data);
-        //Esto luego hay que cambiarlo para que se pueda settear desde los settings
-        empty($route) ? import("Views/$html.$format", false) :   import("$route/$html.$format", false, '/'); 
+        // Asegúrate de que $route esté configurado correctamente según tus necesidades.
+        $viewPath = empty($route) ? "Views/$html.$format" : "$route/$html.$format";
+        import($viewPath, false);
         return true;
     } catch (\Throwable $th) {
         return false;

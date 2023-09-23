@@ -10,13 +10,15 @@ class Validate{
         $this->datos = $datos;    
     }
 
-    public function rule($rule, $campos, $otros = []){
+    public function rule($rule, $campos, mixed $otros = null){
         if($rule === 'required'){
             array_push($this->validates, $this->required($campos));
         }else if($rule === 'contain'){
             array_push($this->validates, $this->contain($campos, $otros));
         }else if($rule == 'email'){
             array_push($this->validates, $this->email($campos));
+        }else if($rule == 'is'){
+            array_push($this->validates, $this->is($campos, $otros));
         }else{
             res('Not validate named: '.$rule);
         }
@@ -25,6 +27,15 @@ class Validate{
     private function email($campos){
         return $this->contain($campos, ['@']);
     }
+
+    private function is(mixed $data, string $type): bool {
+        if ($type === 'number') {
+            return is_numeric($data);
+        }
+        return gettype($data) === $type;
+    }
+    
+    
 
     public function required($campos){
         foreach($campos as $campo){
@@ -72,7 +83,6 @@ class Validate{
         if(isset($this->datos[$index])){
             return $this->datos[$index];
         }
-        echo 'El indice: "'.$index.'" no existe.';
         throw new Exception('El indice: "'.$index.'" no existe.'); 
     }  
 
