@@ -52,24 +52,31 @@ Route::group(function(){
    });
 
    Route::get('/statusservices', function(){
-      view('dashboard/statusServer');
+      controller('PanelViewsController', 'statusServer');
    });
 
    Route::get('/logs', function(){
-      res('logs');
+      view('dashboard/logs');
    });
 
    Route::get('/settings', function(){
-      res('Configuracion');
+      view('dashboard/settins');
    });
 
    Route::get('/profile', function(){
-      res('Perfil');
+      view('dashboard/profile');
    });
+
 
 })->prefix('/panel')->middlewares(['AuthMiddleware@session'])->setData(controller('PanelViewsController', 'userProfileData'));
 
 
 Route::error(403, function(){
    Server::redirect('/');
+});
+
+Route::error(404, function(){
+   import('middlewares/AuthMiddleware.php')->session() ?
+   view('404', arrayToObject(['redirect' => '/panel/dashboard'])) : 
+   view('404', arrayToObject(['redirect' => '/']));
 });
