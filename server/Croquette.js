@@ -12,9 +12,8 @@ const listen = (host, port) => {
     client.setEncoding('utf-8');
 
     client.on('data', (request) => {
-      console.log(`Received a new message from a connected client ${request}`);
-      request.startsWith('SERVER_APP') ? 
-      serverAppConnect(request) :  // Le manda el token con este formato SERVER_APP:stringTokenAppServer
+      request.startsWith('SERVER_APP')  ? 
+      serverAppConnect(request, client) : 
       newConnectionToAppServer(request, client);
     });
 

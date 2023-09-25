@@ -21,30 +21,33 @@ const headers = {
 
 function newDisconnectionToAppServer(clientCroquetteSocket, end = false){
     const token = DataBase.get('connections').get(clientCroquetteSocket);
-    axios.post(`${setDisconnectionUrl}/${token}`, {}, {headers})
-    .then((response) => {
-        console.log(response.data);
-        if(response.data.state === true){
-            DataBase.get('connections').has(clientCroquetteSocket) ? 
-            DataBase.get('connections').delete(clientCroquetteSocket) : 
-            console.error(`Se intento eliminar un cliente que no existe, su token es: ${token}`);
-            if(end){
-                clientCroquetteSocket.end();
-            }
-            console.log("El cliente croquette se desconecto con exito!");
+    if(token){
+        axios.post(`${setDisconnectionUrl}/${token}`, {}, {headers})
+        .then((response) => {
             console.log(response.data);
-        }
-
-    }).catch((error) => {
-        console.error('Error making the request:', error);
-    })
-
+            if(response.data.state === true){
+                DataBase.get('connections').has(clientCroquetteSocket) ? 
+                DataBase.get('connections').delete(clientCroquetteSocket) : 
+                console.error(`Se intento eliminar un cliente que no existe, su token es: ${token}`);
+                if(end){
+                    clientCroquetteSocket.end();
+                }
+                console.log("El cliente croquette se desconecto con exito!");
+                console.log(response.data);
+            }
     
+        }).catch((error) => {
+            console.error('Error making the request:', error);
+        });
+    }else{
+        console.log("The sever app disconnected");
+    }
 }
                               
 
 
 function newConnectionToAppServer(requestToken, clientCroquetteSocket){
+    console.log("New Croquette connected to Server Middleware Croquette, token: " + requestToken);
     axios.post(setConnectionUrl, { token: requestToken },  {headers} )
     .then((response) => {
         if(response.data.state === true){ //Eso significa que todo ha ido bien, asi que tengo que guardar la conexion de croquette
@@ -60,9 +63,13 @@ function newConnectionToAppServer(requestToken, clientCroquetteSocket){
     });
 }
 
-function serverAppConnect(stringToken){
-    let token = stringToken.split(":")[1];
-    console.log(`Server App Connected with token ${token}`);
+function serverAppConnect(stringToken, serverAppClientSocket){
+    let request = stringToken.split(":")[1];
+    console.log("new command from Server App: " + request);
+    if(request == 'ping'){
+        serverAppClientSocket.write('pong');
+        console.log("Send pong to Server App");
+    }
 }
 
 module.exports = { newConnectionToAppServer, newDisconnectionToAppServer, serverAppConnect};
