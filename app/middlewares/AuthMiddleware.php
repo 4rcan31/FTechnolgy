@@ -27,6 +27,6 @@ class AuthMiddleware{
 
     public function middlewareServerCroquette() {
         return isset(Request::$headers['Auth-Token-Server-Middleware-Croquette']) && 
-                Request::$headers['Auth-Token-Server-Middleware-Croquette'] === $_ENV['APP_SERVER_CROQUETTE_MIDDLEWARE_KEY'];
+                Request::$headers['Auth-Token-Server-Middleware-Croquette'] === $_ENV['APP_SERVER_CROQUETTE_KEY'];
     }
 }

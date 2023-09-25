@@ -19,10 +19,11 @@ function sidebar(){
     }
     divider();
     HeadingNavItem('Utilidades');
-    navItem('Estado Server', 'fas fa-fw fa-server', 'panel/statusservices');
     navItem('Logs', 'fas fa-fw fa-list', '/panel/logs');
     navItem('Configuracion', 'fas fa-fw fa-wrench', '/panel/settings');
     navItem('Profile', 'fas fa-fw fa-user', '/panel/profile');
+    navItem('Estado Server', 'fas fa-fw fa-server', 'panel/statusservices');
+    navItem('doctemplate', 'fas fa-fw fa-test', 'panel/template');
     sidebarToggler();
     //sidebarMessage('Conecta a croquette', 'BOTON', 'TES');
     ?> </ul> <?php
@@ -63,7 +64,7 @@ function HeadingNavItem($name){
 }
 
 function collapse($name, $subName, $links, $ico, $id = 1){
-    $id = str_replace(' ', '', $name).randomString(10).$id;
+    $id = str_replace(' ', '', $name).token(10).$id;
  ?> 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#<?php echo $id ?>"

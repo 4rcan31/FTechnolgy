@@ -1,13 +1,14 @@
 <?php
-
 layouts();
+$data = ViewData::get();
+ViewData::unsetData();
 ?>
 
 
 <!DOCTYPE html>
 <html lang="en">
 
-<?php headPanel('Croquette - Home') ?>
+<?php headPanel('Estados servidor - Ftecnology') ?>
 
 <body id="page-top">
 
@@ -32,14 +33,36 @@ layouts();
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <?php pageHending('Croquette'); ?>
+                    <?php pageHending('Estados de servidores y clientes'); ?>
 
                     <!-- Content Row -->
                     <div class="row">
-
-                        <!-- Earnings (Monthly) Card Example -->
                         <?php 
-                            card('Server App', '50 kg', 'cat', 'primary', 1);
+
+                        // Client Croquette
+                        if(!$data->client_user_holds_client_croquette){
+                            card('Client Croquette : ' . $data->messages->client_user_holds_client_croquette, 'Desconectado', 'signal', 'danger', 1);
+                        }else{
+                            $data->client_croquette ? 
+                            card('Client Croquette : ' . $data->messages->client_croquette, 'Conectado', 'signal', 'success', 1) : 
+                            card('Client Croquette : ' . $data->messages->client_croquette, 'Desconectado', 'signal', 'danger', 1);
+                        }
+
+
+                        // Client User
+                        $data->client_user ? 
+                        card('Client User : ' . $data->messages->client_user, 'Conectado', 'signal', 'success', 1) : 
+                        card('Client User : ' . $data->messages->client_user, 'Desconectado', 'signal', 'danger', 1);
+
+                        // Server Croquette
+                        $data->server_croquette ? 
+                        card('Server Croquette : ' . $data->messages->server_croquette, 'Conectado', 'signal', 'success', 1) : 
+                        card('Server Croquette : ' . $data->messages->server_croquette, 'Desconectado', 'signal', 'danger', 1);
+
+                        // Server App
+                        $data->server_app ? 
+                        card('Server App : ' . $data->messages->server_app, 'Conectado', 'signal', 'success', 1) : 
+                        card('Server App : ' . $data->messages->server_app, 'Desconectado', 'signal', 'danger', 1);
                         ?>
                     </div>
                 </div>

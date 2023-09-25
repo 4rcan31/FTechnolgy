@@ -90,9 +90,9 @@ layouts();
       <form action="<?php route('api/v1/sendMessage'); ?>" method="post">
         <?php
         TokenCsrf::input();
-        NotifierPHP::addInput('address', 'email', 'Tu Direccion de correo', 'form-control', 'name@example.com');
-        NotifierPHP::PrintInputs();
-        NotifierPHP::addTextArea('message', 'Message', 'form-control');
+        Form::addInput('address', 'email', 'Tu Direccion de correo', 'form-control', 'name@example.com');
+        Form::PrintInputs();
+        Form::addTextArea('message', 'Message', 'form-control');
         ?>
         <br>
         <button type="submit" class="btn btn-primary">

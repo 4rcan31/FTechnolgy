@@ -1,8 +1,6 @@
 <?php
 
-use function PHPSTORM_META\type;
-
-NotifierPHP();
+Form();
 
 
 class CroquetteController extends BaseController{
@@ -21,10 +19,30 @@ class CroquetteController extends BaseController{
         return model('CroquetteUserModel');
     }
 
+    public function host(){
+        return $_ENV['APP_SERVER_CROQUETTE_HOST'].":".$_ENV['APP_SERVER_CROQUETTE_PORT'];
+    }
+
+    public function clientAuth(){
+        return Sauth::getPayLoadTokenClient(Request::$cookies['session'], $_ENV['APP_KEY']);
+    }
+
+    public function useHoldClientCroquette(){
+        return $this->CroquetteModelUser()->userHoldsCroquette(
+            $this->clientAuth()->id
+        );
+    }
+
+    public function getStateCroquetteClientAuth(){
+        return $this->CroquetteModelUser()->stateByIdUser(
+            $this->clientAuth()->id
+        );
+    }
+
 
     public function connect($token){
         $croquette = $this->CroquetteModel();
-        if(!$croquette->existByToken($token)){ NotifierPHP::send('/', ["El codigo QR esta alterado, o esta roto, comuniquenos a nosotros si cree que se trata de un error"], 'Error');}
+        if(!$croquette->existByToken($token)){ Form::send('/', ["El codigo QR esta alterado, o esta roto, comuniquenos a nosotros si cree que se trata de un error"], 'Error');}
         $row = $croquette->getByToken($token);
         model('AppsUserModel')->insertNewApp(1, Sauth::authenticableClient($_ENV['APP_KEY'])->id); //Un 1 por que 1 es de croquette
         model('CroquetteUserModel')->newCroquetteUser(Sauth::authenticableClient($_ENV['APP_KEY'])->id, $row->id);
@@ -95,4 +113,37 @@ class CroquetteController extends BaseController{
         $this->sendResponseBelongsToUser($idCroquette, $token);
         $this->CroquetteModelUser()->setStateOff($idCroquette);
     }
+
+
+
+    public function connectServerCroquette(string $sendData = null, $block = false){
+        $socket = @stream_socket_client(
+            "tcp://".$this->host(), 
+            $errno, 
+            $errstr, 
+            30);
+    
+        if(!$socket){
+            return arrayToObject([
+                'res' => false,
+                'message' => "No se pudo conectar a ".$this->host()." ($errno): $errstr"
+            ]);
+        }
+    
+        if($sendData !== null){
+            fwrite($socket, "SERVER_APP:$sendData");
+        }
+    
+        $response = arrayToObject([
+            'res' => true,
+            'message' => fread($socket, 1024)
+        ]);
+    
+        if ($block) {
+            fclose($socket); // Cierra la conexión si $block es true
+        }
+    
+        return $response;
+    }
+    
 }

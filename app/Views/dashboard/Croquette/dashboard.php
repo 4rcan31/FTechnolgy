@@ -32,12 +32,11 @@ layouts();
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <?php pageHending('Croquette'); ?>
+                    <?php pageHending('Croquette', false, 'Desconectar y desanclar'); ?>
 
                     <!-- Content Row -->
                     <div class="row">
 
-                        <!-- Earnings (Monthly) Card Example -->
                         <?php 
                             card('Kilo gramos dispensados', '50 kg', 'cat');
                             cardWithGraphic('Comida', 40, 'cookie-bite', 'info');
@@ -54,35 +53,28 @@ layouts();
                     <div class="row">
                    
                         <?php 
-                            $html = '<form class="form-login" method="POST" action="'.routePublic("api/v1/signal/croquette/sendfood").'">
+                            card('Dispensar comida en tiempo real', Modal::returnButtonModal('Dispensar'), 'drumstick-bite', 'dark', 1);
+                            Modal::create('Dispensar en tiempo real', '<form class="form-login" method="POST" action="'.routePublic("api/v1/signal/croquette/sendfood").'">
                             '.TokenCsrf::getInput().'
                             <b><label for="Emal">Cantidad (KG)</label></b>
                                 <input class="form-control" type="number" name="cantidad" id="User" placeholder="Ingresa la cantidad en kg" />
                             <br />
-                            <button type="submit" class="btn btn-primary">
-                               Enviar
-                            </button>
-                        </form>';
-                            card('Dispensar comida en tiempo real', Modal::returnButtonModal('Dispensar'), 'drumstick-bite', 'dark', 1);
-                            Modal::create('Dispensar en tiempo real', $html);
+                        </form>', "Enviar");
 
 
-
-
-                            $html = '<form class="form-login" method="POST" action="'.routePublic("api/v1/signal/croquette/sendfood").'">
-                                    '.TokenCsrf::getInput().'
-                                    <b><label for="Date">Date</label></b>
-                                    <input class="form-control" type="date" name="cantidad" id="User" placeholder="Ingresa la cantidad en kg" />
-                                        <br />
-                                    <b><label for="hour">Hora</label></b>
-                                        <input class="form-control" type="time" name="cantidad" id="User" placeholder="Ingresa la cantidad en kg" />
-                                    <br />
-                                    <button type="submit" class="btn btn-primary">
-                                    Enviar
-                                    </button>
-                                </form>';
                             card('Programar dispensador', Modal::returnButtonModal('Programar'), 'drumstick-bite', 'dark', 1);
-                            Modal::create('Programar dispensador', $html);
+                            Modal::create('Programar dispensador', '<form class="form-login" method="POST" action="'.routePublic("api/v1/signal/croquette/sendfood").'">
+                            '.TokenCsrf::getInput().'
+                            <b><label for="Date">Date</label></b>
+                            <input class="form-control" type="date" name="cantidad" id="User" placeholder="Ingresa la cantidad en kg" />
+                                <br />
+                            <b><label for="hour">Hora</label></b>
+                                <input class="form-control" type="time" name="cantidad" id="User" placeholder="Ingresa la cantidad en kg" />
+                            <br />
+                            <button type="submit" class="btn btn-primary">
+                            Enviar
+                            </button>
+                        </form>');
                         ?>
                     </div>
 

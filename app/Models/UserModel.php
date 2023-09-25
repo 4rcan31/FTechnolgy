@@ -35,4 +35,28 @@ class UserModel extends BaseModel{
         $this->select(['*'])->from('users')->where('email', $email);
         return $this->execute()->all();
     }
+
+    public function getById(int $id){
+        $this->prepare();
+        $this->select(['*'])->from('users')->where('id', $id);
+        return $this->execute()->all();
+    }
+
+    public function updateName(string $newName, int $idUser){
+        $this->prepare();
+        $this->update('users', [
+            'name' => $newName
+        ])->where('id', $idUser);
+        return $this->execute()->lastId();
+    }
+
+    public function updateAvatar(string $ruteImg, int $idUser){
+        $oldAvatar = $this->getById($idUser)->avatar_rute;
+        $this->prepare();
+        $this->update('users', [
+            'avatar_rute' => $ruteImg
+        ])->where('id', $idUser);
+        $this->execute();
+        return $oldAvatar;
+    }
 }

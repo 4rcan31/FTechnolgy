@@ -64,7 +64,11 @@ Route::group(function(){
    });
 
    Route::get('/profile', function(){
-      view('dashboard/profile');
+      controller('PanelViewsController', 'pageProfile');
+   });
+
+   Route::get('/template', function(){
+      view('dashboard/homeexample');
    });
 
 

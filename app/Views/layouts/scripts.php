@@ -2,9 +2,9 @@
 
 
 function scripts(){
-    NotifierPHP::print(); 
-    NotifierPHP::setValuesInputs();
-    NotifierPHP::destroyData();
+    Form::print(); 
+    Form::setValuesInputs();
+    Form::destroyData();
     echo requiresStaticFiles([
       routePublic('vendor/bootstrap/js/bootstrap.public.bundle.min.js'),
     ]);
@@ -12,9 +12,9 @@ function scripts(){
 
 
 function scriptsPanel(){
-  NotifierPHP::print(); 
-  NotifierPHP::setValuesInputs();
-  NotifierPHP::destroyData();
+  Form::print(); 
+  Form::setValuesInputs();
+  Form::destroyData();
   echo requiresStaticFiles([
     routePublic('vendor/jquery/jquery.min.js'),
     routePublic('vendor/bootstrap/js/bootstrap.bundle.min.js'),

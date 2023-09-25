@@ -17,9 +17,9 @@ layouts();
                 <form class="form-login" method="POST" action="<?php route('/api/v1/auth/login') ?>">
                     <?php 
                         TokenCsrf::input(); 
-                        NotifierPHP::addInput('email', 'text', 'Email', 'form-control', 'Escribe tu email');
-                        NotifierPHP::addInput('password', 'password', 'Contraseña', 'form-control', 'Escribe tu contraseña');
-                        NotifierPHP::PrintInputs();
+                        Form::addInput('email', 'text', 'Email', 'form-control', 'Escribe tu email');
+                        Form::addInput('password', 'password', 'Contraseña', 'form-control', 'Escribe tu contraseña');
+                        Form::PrintInputs();
                     ?>
                       <label for="register">Si no tienes cuenta,
                         <a href="<?php route('/register') ?>">registrate</a></label> <br><br>

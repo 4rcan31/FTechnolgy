@@ -15,9 +15,9 @@ function topBar(){
             ?> </li> <?php
             dividerTopBar();
             userInformation(Route::getData()->user->name, Route::getData()->user->avatar, 
-                            routePublic('panel/profile'),
-                            routePublic('panel/settings'),
-                            routePublic('panel/logs'));
+                            route('panel/profile', false),
+                            route('panel/settings', false),
+                            route('panel/logs', false));
         ?>  </ul> <?php
     ?> </nav> <?php
 }

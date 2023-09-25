@@ -90,5 +90,68 @@ function cardWithGraphic($title, $porcent,$ico, $type = 'primary'){
 }
 
 
+function cardWithTessxt($title, $body, $type = "default", $showButton = false) {
+    $clasheader = ($type == 'basic') ? "py-3" : "";
+    
+    echo '<div class="card shadow mb-4">';
+    echo '<div class="card-header ' . $clasheader . '">';
+    echo '<div class="d-flex justify-content-between align-items-center">';
+    echo '<h6 class="m-0 font-weight-bold text-primary">' . $title . '</h6>';
+    
+    if ($showButton) {
+        echo '<a href="#" class="btn btn-primary btn-icon-split btn-sm">' .
+            '<span class="icon text-white-50"><i class="fas fa-flag"></i></span>' .
+            '<span class="text">Split Button Small</span>' .
+            '</a>';
+    }
+    
+    echo '</div>';
+    echo '</div>';
+    echo '<div class="card-body">';
+    echo $body;
+    echo '</div>';
+    echo '</div>';
+}
+
+function cardWithText($title, $body, $type = "default", $buttonText = "", $modalData = [], $buttonConfig = []) {
+    $clasheader = ($type == 'basic') ? "py-3" : "";
+    
+    echo '<div class="card shadow mb-4">';
+    echo '<div class="card-header ' . $clasheader . '">';
+    echo '<h6 class="m-0 font-weight-bold text-primary">' . $title;
+    
+    // Agrega la clase float-right al botón para alinearlo a la derecha
+    if(!empty($buttonText)){
+        echo Modal::returnButtonModal(null, '<a href="#" class="btn btn-primary btn-icon-split btn-sm float-right">' .
+        '<span class="icon text-white-50"><i class="fas fa-flag"></i></span>' .
+        '<span class="text">' . $buttonText . '</span>' .
+        '</a>');
+    }
+
+    
+    echo '</h6>';
+    echo '</div>';
+    echo '<div class="card-body">';
+    echo $body;
+    echo '</div>';
+    echo '</div>';
+
+
+
+    if(!empty($buttonText)){
+        Modal::create($modalData['title'], $modalData['html'], $modalData['buttonSave']);
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
 
 
