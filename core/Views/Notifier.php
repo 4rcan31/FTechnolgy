@@ -1,7 +1,7 @@
 <?php
 
 
-class NotifierPHP{
+class Form{
 
     public static $inputs;
     public static $data;

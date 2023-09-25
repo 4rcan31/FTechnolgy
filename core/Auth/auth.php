@@ -62,8 +62,9 @@ class Sauth {
         $db->prepare();
         $db->select([$column])->from($table)->where($idColumnName, $id);
 
-        if (!$db->execute()->exist()) {
-            throw new Exception("The user with id $id doesn't exist", 1);
+        if (!$db->execute()->exist()) { //Esto es por que se envio un token con un id, pero ese id no existe
+            Sauth::logoutClient(); //A si que ese token guardado en el cliente se elimina 
+            return false; //Y el middleware retorna false
         }
         $tokenSave = $db->execute()->all()->remember_token;
         if (is_array($tokenSave)) {

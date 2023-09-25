@@ -35,7 +35,7 @@ class Sao{
     }
     private function runAppRequest(){
         import('Http/request.php', false, '/core');
-        Request::capture();
+        Request::capture($this->path);
     }
     private function runAppResponse(){
         import('Http/response.php', false, '/core');

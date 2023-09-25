@@ -15,11 +15,13 @@ function view($html, $data = [], $route = '', $format = 'php'){
 }
 
 
-function route($route){
-    echo routePublic(trim($route, '/'));
+function route($route, $print = true){
+    return $print ? 
+    print(routePublic(trim($route, '/'))) :
+    routePublic(trim($route, '/'));
 }
 
 
-function NotifierPHP(){
+function Form(){
     core('Views/Notifier.php', false);
 }

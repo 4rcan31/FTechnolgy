@@ -19,6 +19,8 @@ class Validate{
             array_push($this->validates, $this->email($campos));
         }else if($rule == 'is'){
             array_push($this->validates, $this->is($campos, $otros));
+        }else if($rule == 'in'){
+            array_push($this->validates, $this->in($otros, $campos));
         }else{
             res('Not validate named: '.$rule);
         }
@@ -26,6 +28,10 @@ class Validate{
 
     private function email($campos){
         return $this->contain($campos, ['@']);
+    }
+
+    private function in($nedle, $array){
+        return in_array($nedle, $array);
     }
 
     private function is(mixed $data, string $type): bool {

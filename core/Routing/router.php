@@ -238,7 +238,9 @@ class Route extends Request{
                     array_shift($matches); 
                     Route::$data = $dataView;
                     !empty($middlewares) ? Route::doMiddlewares($middlewares) : null;
-                    !empty($matches) ? $callback($matches, Request::$data) :  $callback(Request::$data);
+                    !empty($matches) ? $callback(
+                        array_merge($matches, Request::$data)
+                    ) : $callback(Request::$data);
                     break;
                 }else{
                     $err = 405;
