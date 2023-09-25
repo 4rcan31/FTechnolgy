@@ -1,21 +1,21 @@
 <?php
 csrf();
-NotifierPHP();
+Form();
 core('Encrypt/hasher.php', false);
 
 class AuthController extends BaseController{
 
 
     public function register($request){
-        NotifierPHP::setInputs($request);
-        if(!TokenCsrf::validateToken($request)){ NotifierPHP::send('/register', ['Su Session expiro'], 'Error'); }
+        Form::setInputs($request);
+        if(!TokenCsrf::validateToken($request)){ Form::send('/register', ['Su Session expiro'], 'Error'); }
         $validate = validate($request);
         $validate->rule('required', ['email', 'user', 'password', 'PasswordConfirm', 'name']); 
         $validate->rule('email', ['email']);
-        if(!$validate->validate()){ NotifierPHP::send('/register', $validate->err(), 'Error'); }
+        if(!$validate->validate()){ Form::send('/register', $validate->err(), 'Error'); }
         $user = model('UserModel');
-        if($user->existUserByEmail($validate->input('email'))){ NotifierPHP::send('/login', ['Ya estas registrado, logueate!'], 'Error');}
-        if($validate->input('password') != $validate->input('PasswordConfirm')){ NotifierPHP::send('/register', ['Las contrasenas no son iguales'], 'Error');}
+        if($user->existUserByEmail($validate->input('email'))){ Form::send('/login', ['Ya estas registrado, logueate!'], 'Error');}
+        if($validate->input('password') != $validate->input('PasswordConfirm')){ Form::send('/register', ['Las contrasenas no son iguales'], 'Error');}
         $idUser = $user->insertNewUser(
             $validate->input('email'),
             $validate->input('name'),
@@ -33,7 +33,7 @@ class AuthController extends BaseController{
             'name' => $row->name,
             'avatar' => $row->avatar_serve.$row->avatar_rute
         ],$_ENV['APP_KEY']);
-        NotifierPHP::send('/panel/dashboard', ['Se ha registrado correctamente!'], 'Notice');
+        Form::send('/panel/dashboard', ['Se ha registrado correctamente!'], 'Notice');
         return;
     }
 
@@ -41,29 +41,29 @@ class AuthController extends BaseController{
         $idUserClient = Sauth::getPayLoadTokenClient(Request::$cookies['session'], $_ENV['APP_KEY'], 'id');
         Sauth::logoutClient();
         Sauth::logoutServer('users', 'remember_token', $idUserClient);
-        NotifierPHP::send('/', ['Se cerro session correctamente'], 'Notice');
+        Form::send('/', ['Se cerro session correctamente'], 'Notice');
         return;
     }
 
 
     public function login($request){
-        NotifierPHP::setInputs($request);
-        if(!TokenCsrf::validateToken($request)){ NotifierPHP::send('/register', ['Su Session expiro'], 'Error'); }
+        Form::setInputs($request);
+        if(!TokenCsrf::validateToken($request)){ Form::send('/register', ['Su Session expiro'], 'Error'); }
         $validate = validate($request);
         $validate->rule('required', ['email', 'password']); 
         $validate->rule('email', ['email']);
-        if(!$validate->validate()){ NotifierPHP::send('/login', $validate->err(), 'Error'); }
+        if(!$validate->validate()){ Form::send('/login', $validate->err(), 'Error'); }
         $user = model('UserModel');
-        if(!$user->existUserByEmail($validate->input('email'))){ NotifierPHP::send('/register', ['Aun no estas registrado, registrate!'], 'Error');}
+        if(!$user->existUserByEmail($validate->input('email'))){ Form::send('/register', ['Aun no estas registrado, registrate!'], 'Error');}
         $row = $user->getByEmail($validate->input('email'));
-        if(!Hasher::verify($validate->input('password'), $row->password)){ NotifierPHP::send('/login', ['Las credenciales no son correctas'], 'Error'); }
+        if(!Hasher::verify($validate->input('password'), $row->password)){ Form::send('/login', ['Las credenciales no son correctas'], 'Error'); }
         Sauth::NewAuthServerSave('users', 'remember_token', $row->id);
         Sauth::NewAuthClient([
             'id' => $row->id,
             'name' => $row->name,
             'avatar' => $row->avatar_serve.$row->avatar_rute
         ],$_ENV['APP_KEY']);
-        NotifierPHP::send('/panel/dashboard', ['Te has logeado correctamente!'], 'Notice');
+        Form::send('/panel/dashboard', ['Te has logeado correctamente!'], 'Notice');
         return;
     }
 }
