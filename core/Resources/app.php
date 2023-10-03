@@ -99,6 +99,19 @@ class File {
             return false;
         }
     }
+
+    public static function isInDirectory($file, $directory) {
+        $file = realpath($file);
+        $directory = realpath($directory);
+    
+        if ($file === false || $directory === false) {
+            return false; // Al menos una de las rutas no es válida
+        }
+    
+        // Comprobar si $file está dentro de $directory o es igual a $directory
+        return strpos($file, $directory) === 0;
+    }
+    
     
     
     

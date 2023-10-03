@@ -7,6 +7,8 @@ class DataBase extends Connection{
     public $data = [];
     public $responseSQL;
     public $judgmentExecuted;
+    public $querys = [];
+
 
 
     public function connection(){
@@ -16,6 +18,10 @@ class DataBase extends Connection{
     public function prepare(){
         $this->query = '';
         $this->data = [];
+    }
+
+    public function nameDataBase(){
+        return $this->query('SELECT DATABASE() AS dbname')->fetch()['dbname'];
     }
 
     public function select($colums = [], $all = true){
@@ -147,14 +153,18 @@ class DataBase extends Connection{
             'data' => $this->data
         ];
     }
+    public function getQuerys(){
+        return $this->querys;
+    }
 
     //Esta funcion es la que ejecuta una query
     public function query(String $query, $data = []){
+        array_push($this->querys, $this->queryString());
         return $this->executeSql($query, $data);
     }
 
     public function executeSql(String $query, $data){
-        $responseSQL = $this->connection->prepare($query);
+        $responseSQL = $this->connection()->prepare($query);
         if($responseSQL){
             if($responseSQL->execute($data)){
                 return $responseSQL;
@@ -205,6 +215,6 @@ class DataBase extends Connection{
     }
 
     public function lastId(){
-        return $this->connection->lastInsertId(); //No entiendo muy bien por que esta funcion nesesita la conexion y no la respuesta sql como las demas funciones
+        return $this->connection()->lastInsertId(); //No entiendo muy bien por que esta funcion nesesita la conexion y no la respuesta sql como las demas funciones
     }
 }

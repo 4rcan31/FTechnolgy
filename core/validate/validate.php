@@ -2,7 +2,7 @@
 
 
 class Validate{
-    public $datos;
+    public $datos = [];
     public $validates = [];
     public $msg = [];
 
@@ -20,7 +20,9 @@ class Validate{
         }else if($rule == 'is'){
             array_push($this->validates, $this->is($campos, $otros));
         }else if($rule == 'in'){
-            array_push($this->validates, $this->in($otros, $campos));
+            array_push($this->validates, $this->in($campos, $otros));
+        }else if($rule == 'numeric'){
+            array_push($this->validates, $this->numeric($campos));
         }else{
             res('Not validate named: '.$rule);
         }
@@ -30,9 +32,21 @@ class Validate{
         return $this->contain($campos, ['@']);
     }
 
-    private function in($nedle, $array){
-        return in_array($nedle, $array);
+    private function numeric($campo){
+        return isset($this->datos[$campo]) && is_numeric($this->datos[$campo]);
     }
+
+
+    private function in($needle, $array = null) {
+        $haystack = ($array === null) ? $this->datos : $array;
+    
+        if (is_array($needle)) {
+            return count(array_intersect($needle, $haystack)) > 0;
+        } else {
+            return in_array($needle, $haystack);
+        }
+    }
+    
 
     private function is(mixed $data, string $type): bool {
         if ($type === 'number') {
@@ -82,6 +96,7 @@ class Validate{
                 break;
             }
         }
+        $this->setForNewValidate();
         return true;
     }
 
@@ -94,5 +109,10 @@ class Validate{
 
     public function err(){
         return $this->msg;
+    }
+
+    public function setForNewValidate(){
+        $this->msg = [];
+        $this->validates = [];
     }
 }

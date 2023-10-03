@@ -40,6 +40,12 @@ Jenu::command('make:migration', function(){
 
 
 Jenu::command('execute:migrations', function(){
+    if (!empty((new Database)->query("SHOW TABLES")->fetchAll(PDO::FETCH_COLUMN))) {
+        Jenu::warn("Your database has pre-installed tables, executing migrations:fresh");
+        Jenu::execute('migrations:fresh');
+        return;
+    }
+    
     $alreadyExecutedClasses = [];
     $migrationFiles = getDirsFilesByDirectory(Jenu::baseDir().'/app/Database/migrations/');
     foreach ($migrationFiles as $file) {
@@ -61,23 +67,47 @@ Jenu::command('execute:migrations', function(){
     }
 }, 'Install Tables to the Database', 'Sao:Data Base');
 
+Jenu::command('drop:tables', function(){
+    $db = new Database;
+    $tablesQuery = $db->query("SHOW TABLES")->fetchAll(PDO::FETCH_COLUMN);
+    if(empty($tablesQuery)){ Jenu::error("The database does not have tables");}
+    $confirmation = Jenu::condition("Are you sure you want to delete all tables from the database? (type YES or NO)");
+    if ($confirmation) {
+        Jenu::print("Waiting for 5 seconds. To cancel, press CTRL+C.");
+        sleep(5);
+        $dbName = $db->nameDataBase();
+        foreach ($tablesQuery as $table) {
+            $db->query("DROP TABLE IF EXISTS `$table`");
+            Jenu::warn("Table '$table' has been dropped.");
+        }
+        Jenu::warn("All tables have been deleted from the '$dbName' database.");
+    } else {
+        Jenu::warn("Operation aborted.");
+    }
+}, 'Drop all tables to the DataBase', 'Sao:Data Base');
+
 
 Jenu::command('migrations:fresh', function(){
-    if(!Jenu::condition("Are you sure you want to delete all the tables? (type YES or NO)")){ 
+    if (!Jenu::condition("Are you sure you want to delete all tables? (Type YES or NO)")) { 
         Jenu::warn("The 'migrations:fresh' operation was canceled");
-        die;
-    }
-    $db = new Database;
-    $tables = $db->query("SELECT GROUP_CONCAT('`', table_name, '`') AS tables
-    FROM information_schema.tables
-    WHERE table_schema = '".$_ENV['DB_DATABASE']."'")->fetch(PDO::FETCH_ASSOC)['tables'];
-    if($tables == null){
-        Jenu::warn("There are no tables in the database");
         return;
     }
-    $db->query("DROP TABLE IF EXISTS $tables");
+
+    $db = new Database;
+    $tablesQuery = $db->query("SHOW TABLES")->fetchAll(PDO::FETCH_COLUMN);
+    
+    if (empty($tablesQuery)) {
+        Jenu::warn("There are no tables in the database");
+    } else {
+        foreach ($tablesQuery as $table) {
+            $db->query("DROP TABLE IF EXISTS `$table`");
+            Jenu::warn("Table '$table' has been dropped.");
+        }
+    }
+
     Jenu::execute('execute:migrations');
 }, 'Reinstall the database', 'Sao:Data Base');
+
 
 
 Jenu::command('serve', function($args){
@@ -123,6 +153,45 @@ Jenu::command('make:token', function($args){
     isset($args[0]) ?  Jenu::success("The generated token is: ".bin2hex(random_bytes($args[0]))) :
                            Jenu::success("The generated token is: ".bin2hex(random_bytes(32)));
 }, 'Generate tokens string', 'Sao:String');
+
+
+Jenu::command('get:database', function(){
+    $return = '';
+    $database = new DataBase;
+    $namedb = $database->nameDataBase();
+    $tables = $database->query('SHOW TABLES')->fetchAll();
+    
+    foreach ($tables as $tableInfo) {
+        $tableName = $tableInfo["Tables_in_$namedb"];
+        
+        // Obtener la estructura de la tabla
+        $schemaResult = $database->query("SHOW CREATE TABLE $tableName")->fetch();
+        if (!empty($schemaResult)) {
+            $schema = $schemaResult[1] . ";\n\n";
+            $return .= $schema;
+        }
+        
+        // Obtener los datos de la tabla
+        $dataResult = $database->query("SELECT * FROM $tableName")->fetchAll();
+        if (!empty($dataResult)) {
+            $return .= "-- Datos de la tabla $tableName:\n";
+            foreach ($dataResult as $row) {
+                $return .= "INSERT INTO $tableName (";
+                $values = array();
+                foreach ($row as $key => $value) {
+                    $return .= "`$key`, ";
+                    $values[] = "'$value'";
+                }
+                $return = rtrim($return, ', ');
+                $return .= ") VALUES (" . implode(', ', $values) . ");\n";
+            }
+            $return .= "\n";
+        }
+    }
+    
+    echo $return;
+    
+}, "Get all query of install Data Base", 'Sao:Data Base');
 
 
 

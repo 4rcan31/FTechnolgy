@@ -3,6 +3,14 @@
 
 function view($html, $data = [], $route = '', $format = 'php'){
     try {
+        print("
+        <!--
+            Powered by Sao
+            GitHub: https://github.com/4rcan31/Sao
+        
+            Developed by: 4rcane31
+        -->    
+        ");
         core('Views', false);
         ViewData::setData($data);
         // Asegúrate de que $route esté configurado correctamente según tus necesidades.

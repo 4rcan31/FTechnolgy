@@ -223,6 +223,7 @@ class Route extends Request{
     }
 
     public static function run(){
+        //prettyPrint(Route::$routes); die;
         for($i = 0; count(Route::$routes) > $i; $i++){
             $route = Route::$routes[$i]['route'];
             $callback = Route::$routes[$i]['function'];
