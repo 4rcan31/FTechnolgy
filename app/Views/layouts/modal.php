@@ -73,15 +73,16 @@ class Modal{
         <?php
         if($buttonExitText){
             ?> 
-                <script>
-                    const buttonSend = document.getElementById(<?php echo json_encode($idButton) ?>);
-                    const form = document.getElementById(<?php echo json_encode($idForm) ?>);
-                    buttonSend.addEventListener('click', function(event) {
-                        event.preventDefault();
-                        form.submit();
-                    });
-                </script>
+            <script>
+                const buttonSend_<?php echo $idButton ?> = document.getElementById(<?php echo json_encode($idButton) ?>);
+                const form_<?php echo $idForm ?> = document.getElementById(<?php echo json_encode($idForm) ?>);
+                buttonSend_<?php echo $idButton ?>.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    form_<?php echo $idForm ?>.submit();
+                });
+            </script>
             <?php
+            
         }
     }
 

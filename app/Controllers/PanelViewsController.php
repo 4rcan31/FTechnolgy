@@ -12,6 +12,14 @@ class PanelViewsController extends BaseController{
         return model('UserModel');
     }
 
+    /**
+    * @return PetsModel
+    */
+    public function pets(){
+        return model('PetsModel');
+    }
+
+
 
     public function userProfileData(){
         if(isset(Request::$cookies['session'])){
@@ -33,11 +41,78 @@ class PanelViewsController extends BaseController{
         return [];
     }
 
+    public function profilePet(){
+        return $this->pets()->getAllByIdUser(Route::getData()->user->id);
+    }
+
+    public function profileUser(){
+        return $this->userModel()->getById(Route::getData()->user->id);
+    }
+
+    public function builtMessageAge($age){
+        $messageAge = 'Tu mascota tiene ';
+        if ($age['years'] > 0) {
+            $messageAge .= $age['years'] . ' año' . ($age['years'] > 1 ? 's' : '') . ', ';
+        }
+        if ($age['months'] > 0) {
+            $messageAge .= $age['months'] . ' mes' . ($age['months'] > 1 ? 'es' : '') . ', ';
+        }
+        if ($age['days'] > 0) {
+            $messageAge .= " y ".$age['days'] . ' día' . ($age['days'] > 1 ? 's' : '') . ' ';
+        }
+        $messageAge .= 'de edad.';
+        return $messageAge;
+    }
+
 
     public function pageProfile(){
-        view('dashboard/profile', $this->userModel()->getById(
-            Route::getData()->user->id
-        ));
+        $defaultMessagePetProfile = "Aun no has configurado los datos de tu mascota";
+        $defaultImg = $this->profileUser()->avatar_serve . $this->profileUser()->avatar_rute;
+        $profilePet = $this->profilePet();
+        $name = ($profilePet !== false && $profilePet->name !== null) ?
+        $profilePet->name : $defaultMessagePetProfile;
+        $specie = ($profilePet !== false && $profilePet->species !== null) ?
+        $profilePet->species : $defaultMessagePetProfile;
+        $breed = ($profilePet !== false && $profilePet->breed !== null) ?
+        $profilePet->breed : $defaultMessagePetProfile;
+        $birthdate = ($profilePet !== false && $profilePet->birthdate !== null) ?
+        $profilePet->birthdate : $defaultMessagePetProfile;
+        $age = ($birthdate !== $defaultMessagePetProfile) ? 
+        $this->builtMessageAge(
+            import('Time/time.php', true, '/core')->calculateAgeFromBirthdate(date("Y-m-d", strtotime($birthdate)))
+        ) :
+        $defaultMessagePetProfile." (Este dato se actualizara automáticamente cuando pongas la fecha de nacimiento)";
+        $gender = ($profilePet !== false && $profilePet->gender !== null) ? 
+        $profilePet->gender : $defaultMessagePetProfile;
+        $color = ($profilePet !== false && $profilePet->color !== null) ? 
+        $profilePet->color : $defaultMessagePetProfile;
+        $weight = ($profilePet !== false && $profilePet->weight !== null) ? 
+        $profilePet->weight." kg" : $defaultMessagePetProfile;
+        $avatar = ($profilePet !== false && $profilePet->avatar_serve !== null && $profilePet->avatar_rute !== null) ? 
+        $profilePet->avatar_serve . $profilePet->avatar_rute : $defaultImg;
+        
+        $genderOptions = ['Male', 'Female', 'Other'];
+        $selectedGender = $gender;
+        $genderSelectOptions = '';
+        foreach ($genderOptions as $option) {
+            $isSelected = $option === $selectedGender ? 'selected' : '';
+            $genderSelectOptions .= "<option value='$option' $isSelected>$option</option>";
+        }
+        view('dashboard/profile', arrayToObject([
+            'user' => $this->profileUser(),
+            'pet' => [
+                'name' => $name,
+                'specie' => $specie,
+                'breed' => $breed,
+                'birthdate' => $birthdate,
+                'age' => $age,
+                'gender' => $gender,
+                'color' => $color,
+                'weight' => $weight,
+                'avatar' => $avatar,
+                'genderSelectOptions' => $genderSelectOptions
+            ]
+        ]));
     }
     
 
@@ -101,7 +176,6 @@ class PanelViewsController extends BaseController{
             File::setHost(serve($_ENV['APP_ADDRESS'].":".$_ENV['APP_PORT']));
             if(File::upload()){
                 $ruteImageOld = $this->userModel()->updateAvatar(File::lastFileUploadInfo('rute:upload'), $idUser);
-                File::delete($ruteImageOld, '/public');
                 Server::redirect('/panel/profile');
             }
             Form::send('/panel/profile', ['Ocurrio un error al subir la imagen.'], 'Error'); 

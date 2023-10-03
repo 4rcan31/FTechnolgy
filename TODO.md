@@ -4,7 +4,7 @@
 
 - **Soporte para Múltiples Croquettes**: Permite que un usuario pueda tener más de un croquette conectado a la app.
 
-- **Edición de Perfil de la Mascota**: Implementa la funcionalidad que permita a los usuarios editar los perfiles de sus mascotas.
+- **Edición de Perfil de la Mascota**: Implementa la funcionalidad que permita a los usuarios editar los perfiles de sus mascotas. (LISTO)
 
 # Problemas de Seguridad
 

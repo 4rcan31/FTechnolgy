@@ -39,7 +39,8 @@ class CroquetteUserModel extends BaseModel{
     public function stateByIdUser(int $idUser){
         $this->prepare();
         $this->select(["state"])->from('croquette_user')->where('id_user', $idUser);
-        return $this->execute()->all()->state === 1 ? true : false;
+        $response = $this->execute()->all();
+        return $response && isset($response->state) ? $response->state === 1 : false;
     }
 
     public function userHoldsCroquette(int $idUser){

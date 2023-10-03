@@ -12,7 +12,7 @@ class users extends Migration {
                 password VARCHAR(255) NOT NULL,
                 remember_token VARCHAR(255),
                 avatar_serve VARCHAR(255) DEFAULT "' . serve($_ENV['APP_ADDRESS'].":".$_ENV['APP_PORT']) . '",
-                avatar_rute VARCHAR(255) DEFAULT "assets/images/panel/undraw_profile_2.svg",
+                avatar_rute VARCHAR(255) DEFAULT "assets/images/Logo.jpg",
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )');
             import('Encrypt/hasher.php', false, '/core');

@@ -2,14 +2,10 @@
 
 
 Route::group(function(){
-    Route::group(function(){
-        Route::post('edit/profile/%idUser/%type', function ($request) {
-            controller('PanelViewsController', 'editProfile', $request);
-        });
-    })->prefix('/auth')->middlewares(['AuthMiddleware@session']);
 
 
     Route::group(function(){
+
         Route::post('/register', function($request){
             controller('AuthController', 'register', $request);
         });
@@ -22,7 +18,16 @@ Route::group(function(){
             controller('AuthController', 'logout');
         });
 
-    
+        Route::post('edit/profile/%idUser/%type', function ($request) {
+            controller('PanelViewsController', 'editProfile', $request);
+        })->middlewares(['AuthMiddleware@session']);
+
+        
+        Route::post('edit/pet/%idUser/%type', function ($request) {
+            controller('PetController', 'edit', $request);
+        })->middlewares(['AuthMiddleware@session']);
+
+
     })->prefix('/auth');
 
 
