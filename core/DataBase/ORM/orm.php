@@ -66,6 +66,11 @@ class DataBase extends Connection{
         return $this;
     }
 
+    public function orderBy($query){
+        $this->query = $this->query.' ORDER BY '.$query;
+        return $this;
+    }
+
     public function where($colum, $field, $condition = '='){
         $query = ' WHERE '.$colum." ".$condition." ?";
         array_push($this->data, $field);
@@ -125,22 +130,26 @@ class DataBase extends Connection{
         return $this;
     }
 
-    public function update(String $table, Array $datos = []){
-        if(empty($datos)){
+    public function update(string $table, array $data = []){
+        if (empty($data)) {
             throw new Exception('You have not specified the data.');
             return false;
         }
-        $query = " UPDATE ".$table." SET ";
-        $updateData = ' ';
-        foreach($datos as $colums => $values){
-            array_push($this->data, $values);
-            $updateData = $updateData." ".$colums." = ?";
+    
+        $query = "UPDATE {$table} SET ";
+        $updateData = [];
+        
+        foreach ($data as $column => $value) {
+            array_push($this->data, $value);
+            $updateData[] = "{$column} = ?";
         }
-        $query = $query.$updateData;
-        $this->query = $this->query.$query;
+        
+        $query .= implode(', ', $updateData);
+        $this->query = $query;
+        
         return $this;
     }
-
+    
     public function delete(String $table){
         $query = ' DELETE FROM '.$table;
         $this->query = $this->query.$query;

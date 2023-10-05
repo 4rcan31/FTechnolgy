@@ -10,7 +10,7 @@ class Validate{
         $this->datos = $datos;    
     }
 
-    public function rule($rule, $campos, mixed $otros = null){
+    public function rule($rule, array $campos, mixed $otros = null){
         if($rule === 'required'){
             array_push($this->validates, $this->required($campos));
         }else if($rule === 'contain'){
@@ -23,6 +23,8 @@ class Validate{
             array_push($this->validates, $this->in($campos, $otros));
         }else if($rule == 'numeric'){
             array_push($this->validates, $this->numeric($campos));
+        }else if($rule == 'phone'){
+            array_push($this->validates, $this->phoneNumber($campos));
         }else{
             res('Not validate named: '.$rule);
         }
@@ -79,6 +81,9 @@ class Validate{
     public function contain($sentenses, $contains){
         foreach($sentenses as $sentense){
             $input = $this->input($sentense);
+            if(!$input){
+                return false;
+            }
             foreach($contains as $contain){
                 if(!str_contains($input, $contain)){
                     array_push($this->msg, "$sentense no contiene $contain");
@@ -88,6 +93,31 @@ class Validate{
         }
         return true;
     }
+
+
+    function phoneNumber($phones) {
+        $cleanedPhones = array_map(function($index) {
+            $phone = $this->input($index);
+            if (!$phone) {
+                return false;
+            }
+            // Elimina todos los caracteres que no sean números o el signo "+"
+            $cleanPhone = preg_replace('/[^0-9+]/', '', $phone);
+            return $cleanPhone;
+        }, $phones);
+    
+        // Verifica si todos los números de teléfono son válidos
+        $isValid = array_reduce($cleanedPhones, function($isValid, $cleanPhone) {
+            if ($cleanPhone === false) {
+                return false; // Si uno de los números no se pudo obtener, consideramos que no es válido.
+            }
+            // Comprueba si el número de teléfono tiene el formato correcto
+            return $isValid && preg_match('/^\+?[0-9]+$/', $cleanPhone) === 1;
+        }, true);
+    
+        return $isValid;
+    }
+    
 
     public function validate(){
         foreach($this->validates as $validate){
@@ -104,7 +134,8 @@ class Validate{
         if(isset($this->datos[$index])){
             return $this->datos[$index];
         }
-        throw new Exception('El indice: "'.$index.'" no existe.'); 
+        return false;
+       /*  throw new Exception('El indice: "'.$index.'" no existe.');  */
     }  
 
     public function err(){

@@ -222,8 +222,9 @@ class Route extends Request{
         var_dump("Request URI desde test: ".Request::$uri);
     }
 
-    public static function run(){
-        //prettyPrint(Route::$routes); die;
+     public static function run(){
+       // Route::debug();
+       // prettyPrint(Route::$routes); die;
         for($i = 0; count(Route::$routes) > $i; $i++){
             $route = Route::$routes[$i]['route'];
             $callback = Route::$routes[$i]['function'];
@@ -252,7 +253,7 @@ class Route extends Request{
         }
       
 
-        if($err !== false){
+         if($err !== false){
             for($i = 0; count(Route::$err) > $i; $i++){
                 if(Route::$err[$i]['error'] === $err){
                     Route::$err[$i]['callable']();
@@ -260,6 +261,8 @@ class Route extends Request{
                 }
             }
             res($err);
-        }
-    } 
+        } 
+    }  
+    
+
 }

@@ -7,7 +7,7 @@ function controller($controller, $function, $data = 'nulldata'){
      try{
          return $controller->{$function}();
      }catch(\Throwable $th){
-         throw new Exception('La funcion '.$function." espera parametros que no fueron definidos.");
+         throw new Exception("Error in Controller: $th");
          return;
      }
     }else{
