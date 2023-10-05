@@ -17,20 +17,18 @@ class Modal{
     public static function returnButtonModal($body, $newButton = null, $print = false){
         self::$id = 'modal_token_'.token(2);
     
-            // Encuentra la primera etiqueta de apertura de una etiqueta HTML
-            preg_match('/<[^>]+>/', $newButton, $matches);
-            if (!empty($matches)) {
-                // Agrega el atributo data-target al primer elemento encontrado
-                $newButton = str_replace($matches[0], str_replace(">", ' data-target="#'.self::$id.'" data-toggle="modal" >', $matches[0]), $newButton);
-            } else {
-                // Si no se encuentra ninguna etiqueta HTML, crea un enlace <a> con los atributos data-target y data-toggle
-                $newButton = '<a class="dropdown-item btn btn-primary btn-icon-split btn-sm float-rsight" data-toggle="modal" data-target="#'.self::$id.'">
+        // Encuentra la primera etiqueta de apertura de una etiqueta HTML
+        if ($newButton !== null) {
+            $newButton = preg_replace('/<\s*(\w+)\s*/', '<$1 data-target="#'.self::$id.'" data-toggle="modal" ', $newButton, 1);
+        } else {
+            // Si no se encuentra ninguna etiqueta HTML, crea un enlace <a> con los atributos data-target y data-toggle
+            $newButton = '<a class="dropdown-item btn btn-primary btn-icon-split btn-sm float-rsight" data-toggle="modal" data-target="#'.self::$id.'">
                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                 '.$body.'
             </a>';
-            }
+        }
 
-            return $print ? print($newButton) : $newButton;
+        return $print ? print($newButton) : $newButton;
     }
 
     public static function returnButtonModal2($body, $newButton = null){
