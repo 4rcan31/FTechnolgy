@@ -6,9 +6,9 @@
 
 3. **Soporte para Múltiples Croquettes**: Habilitar la capacidad para que los usuarios conecten varios dispositivos Croquette a la aplicación, mejorando la experiencia del usuario.
 
-4. **Flujo de Compra de Croquette desde la Tienda**: Implementar la funcionalidad que permitirá a los usuarios realizar compras de productos Croquette directamente desde la aplicación, facilitando la adquisición de nuevos dispositivos.
+4. **Flujo de Compra de Croquette desde la Tienda**: Implementar la funcionalidad que permitirá a los usuarios realizar compras de productos Croquette directamente desde la aplicación, facilitando la adquisición de nuevos dispositivos. **(LISTO)** *5 de octubre 2023*
 
-5. **Acceso a la Tienda desde el Panel**: Agregar una sección que permita a los usuarios acceder a la tienda de productos Croquette desde el panel de control, brindándoles una experiencia completa.
+5. **Acceso a la Tienda desde el Panel**: Agregar una sección que permita a los usuarios acceder a la tienda de productos Croquette desde el panel de control, brindándoles una experiencia completa. **(LISTO)** *5 de octubre 2023*
 
 6. **Acceso a las Preguntas Frecuentes (FAQ) desde el Panel**: Incorporar un enlace que proporcione acceso rápido a las preguntas frecuentes (FAQ) desde el panel de control, mejorando la disponibilidad de información útil para los usuarios.
 

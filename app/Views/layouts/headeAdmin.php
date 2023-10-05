@@ -13,7 +13,8 @@ function headPanel($title){
         <title><?php echo $title ?></title>
         <?php requiresStaticFiles([
             routePublic('vendor/fontawesome-free/css/all.min.css'),
-            routePublic('assets/css/sb-admin-2.min.css')
+            routePublic('assets/css/sb-admin-2.min.css'),
+            routePublic('vendor/datatables/dataTables.bootstrap4.min.css')
         ]) ?>
     </head>
 <?php

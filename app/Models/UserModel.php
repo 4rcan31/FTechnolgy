@@ -59,4 +59,20 @@ class UserModel extends BaseModel{
         $this->execute();
         return $oldAvatar;
     }
+
+    public function updatePhone(string $phone, int $idUser){
+        $this->prepare();
+        $this->update('users', [
+            'phone_number' => $phone
+        ])->where('id', $idUser);
+        return $this->execute()->lastId();
+    }
+
+    public function updateAddress(string $address, int $idUser){
+        $this->prepare();
+        $this->update('users', [
+            'address' => $address
+        ])->where('id', $idUser);
+        return $this->execute()->lastId();
+    }
 }

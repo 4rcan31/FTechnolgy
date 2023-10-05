@@ -1,6 +1,8 @@
 <?php
+/* 
 
-
+    Iconos: https://fontawesome.com/v5/search?o=r&m=free
+*/
 
 function sidebar(){
     ?>  <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar"> <?php
@@ -19,11 +21,17 @@ function sidebar(){
     }
     divider();
     HeadingNavItem('Utilidades');
-    navItem('Logs', 'fas fa-fw fa-list', '/panel/logs');
-    navItem('Configuracion', 'fas fa-fw fa-wrench', '/panel/settings');
+    Route::getData()->order ? navItem(
+        'Ordenes',
+        'fas fa-fw fa-cash-register',
+        'panel/orders'
+    ) : null;
+    navItem('Store', 'fas fa-fw fa-store', '/panel/store');
+    /* navItem('Logs', 'fas fa-fw fa-list', '/panel/logs'); */
+    /* navItem('Configuracion', 'fas fa-fw fa-wrench', '/panel/settings'); */
     navItem('Profile', 'fas fa-fw fa-user', '/panel/profile');
     navItem('Estado Server', 'fas fa-fw fa-server', 'panel/statusservices');
-    navItem('doctemplate', 'fas fa-fw fa-test', 'panel/template');
+    /* navItem('doctemplate', 'fas fa-fw fa-test', 'panel/template'); */
     sidebarToggler();
     //sidebarMessage('Conecta a croquette', 'BOTON', 'TES');
     ?> </ul> <?php

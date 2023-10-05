@@ -61,6 +61,29 @@ Route::group(function(){
         
     })->prefix('/signal/croquette');
 
+
+    Route::group(function(){
+
+        Route::post('/buy/%idProduct', function ($request) {
+            controller('storeController', 'newOrder', $request);
+        });
+
+
+
+    })->prefix('/store')->middlewares(['AuthMiddleware@session']);
+
+
+    /* 
+        Si, se que poner esta ruta aca (/cancel/%idProduct) no tiene tanto sentido, pudiera meterlo dentro del grupo que esta arriba
+        pero no se por que carajos tengo un bug en el enrutador de Sao  cuando hago eso (
+            No esta poniendo el prefix /store
+        )
+        Estoy cansado jefe :c
+    */
+    Route::post('/cancel/%idProduct', function ($request) {
+        controller('ordersController', 'cancelOrder', $request);
+    })->prefix('/store')->middlewares(['AuthMiddleware@session']);;
+
     
 })->prefix('/api/v1');
 

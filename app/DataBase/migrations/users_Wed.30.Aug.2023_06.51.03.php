@@ -11,7 +11,9 @@ class users extends Migration {
                 user VARCHAR(255) NOT NULL,
                 password VARCHAR(255) NOT NULL,
                 remember_token VARCHAR(255),
-                avatar_serve VARCHAR(255) DEFAULT "' . serve($_ENV['APP_ADDRESS'].":".$_ENV['APP_PORT']) . '",
+                phone_number VARCHAR(255) DEFAULT ("Aun no has llenado tu teléfono"),
+                address TEXT DEFAULT ("Aun no has llenado tu dirección"),
+                avatar_serve VARCHAR(255) DEFAULT "' . serve($_ENV['APP_ADDRESS'] . ":" . $_ENV['APP_PORT']) . '",
                 avatar_rute VARCHAR(255) DEFAULT "assets/images/Logo.jpg",
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )');
@@ -23,6 +25,8 @@ class users extends Migration {
                 'user' => 'Admin'
             ]);
             $this->execute();
+
+            //Nota: https://stackoverflow.com/questions/38433603/mysql2error-blob-text-geometry-or-json-column-body-cant-have-a-default-v
         });
     }
         

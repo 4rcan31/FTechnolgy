@@ -71,6 +71,14 @@ Route::group(function(){
       view('dashboard/homeexample');
    });
 
+   Route::get('/store', function(){
+      controller('PanelViewsController', 'store');
+   });
+
+   Route::get('/orders', function(){
+      controller('PanelViewsController', 'ordersView');
+   });
+
 
 })->prefix('/panel')->middlewares(['AuthMiddleware@session'])->setData(controller('PanelViewsController', 'userProfileData'));
 

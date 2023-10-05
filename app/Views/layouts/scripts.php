@@ -22,6 +22,8 @@ function scriptsPanel(){
     routePublic('assets/js/sb-admin-2.min.js'),
     routePublic('vendor/chart.js/Chart.min.js'),
     routePublic('assets/js/demo/chart-area-demo.js'),
-    routePublic('assets/js/demo/chart-pie-demo.js')
+    routePublic('assets/js/demo/chart-pie-demo.js'),
+    routePublic('vendor/datatables/jquery.dataTables.min.js'),
+    routePublic('vendor/datatables/dataTables.bootstrap4.min.js')
   ]);
 }

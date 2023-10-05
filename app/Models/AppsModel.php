@@ -27,4 +27,10 @@ class AppsModel extends BaseModel{
         $this->select(['*'])->from('apps');
         return $this->execute()->all('fetchAll');
     }
+
+    public function getProductById(int $idProduct){
+        $this->prepare();
+        $this->select(['*'])->from('apps')->where('id', $idProduct);
+        return $this->execute()->all();
+    }
 }

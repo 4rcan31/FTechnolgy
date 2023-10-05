@@ -19,6 +19,28 @@ class PanelViewsController extends BaseController{
         return model('PetsModel');
     }
 
+    /**
+    * @return AppsModel
+    */
+    public function apps(){
+        return model('AppsModel');
+    }
+
+    /**
+    * @return OrdersModel
+    */
+    public function order(){
+        return model('OrdersModel');
+    }
+
+        /**
+    * @return CommetsOrderCEO
+    */
+    public function CommetsOrderCEO(){
+        return model('CommetsOrderCEO');
+    }
+
+
 
 
     public function userProfileData(){
@@ -36,6 +58,7 @@ class PanelViewsController extends BaseController{
             return arrayToObject([
                 'apps' => $appNames,
                 'user' => $user,
+                'order' => $this->order()->existById($this->clientAuth()->id)
             ]);
         }
         return [];
@@ -48,6 +71,12 @@ class PanelViewsController extends BaseController{
     public function profileUser(){
         return $this->userModel()->getById(Route::getData()->user->id);
     }
+
+    
+    public function clientAuth(){
+        return Sauth::getPayLoadTokenClient(Request::$cookies['session'], $_ENV['APP_KEY']);
+    }
+
 
     public function builtMessageAge($age){
         $messageAge = 'Tu mascota tiene ';
@@ -175,10 +204,52 @@ class PanelViewsController extends BaseController{
             if(!File::setFile($request['avatar'])){ Form::send('/panel/profile', ['Tu archivo es invalido!'], 'Error'); }
             File::setHost(serve($_ENV['APP_ADDRESS'].":".$_ENV['APP_PORT']));
             if(File::upload()){
-                $ruteImageOld = $this->userModel()->updateAvatar(File::lastFileUploadInfo('rute:upload'), $idUser);
+                $this->userModel()->updateAvatar(File::lastFileUploadInfo('rute:upload'), $idUser);
                 Server::redirect('/panel/profile');
             }
             Form::send('/panel/profile', ['Ocurrio un error al subir la imagen.'], 'Error'); 
+        }else if($event == "address"){
+            $validate = validate($request);
+            $validate->rule('required', ['address']);
+            if(!$validate->validate()){ Form::send('/panel/profile', ['Tienes que rellenar tu direccion'], 'Error'); }
+            $this->userModel()->updateAddress(
+                $validate->input('address'),
+                $this->clientAuth()->id
+            );
+             Server::redirect('/panel/profile');
+        }else if($event == 'phone'){
+            $validate = validate($request);
+            $validate->rule('required', ['phone_number']);
+            $validate->rule('phone', ['phone_number']);
+            if(!$validate->validate()){Form::send('/panel/profile', ['Tienes que rellenar tu numero'], 'Error');}
+            $this->userModel()->updatePhone(
+                $validate->input('phone_number'),
+                $this->clientAuth()->id
+            );
+             Server::redirect('/panel/profile');
+        }else{
+            Form::send('/panel/profile', ["El evento $event no existe, has mofidificado el html"], 'Error');
         }
+    }
+
+    public function store(){
+        view('dashboard/store', $this->apps()->get());
+    }
+
+    public function ordersView(){
+        $orders = $this->order()->getByIdUser(
+            $this->clientAuth()->id
+        );
+       
+    
+        foreach($orders as $index => $order){
+            $orders->{$index}->product = $this->apps()->getProductById($order->product_id);
+            $orders->{$index}->commets =  $this->CommetsOrderCEO()->getCommetsByIdOrder($order->id);
+        }
+        /* 
+            Justo aca es donde serviria hacer un inner join xD pero Sao aun no soporta 
+            relaciones en las migraciones nada mas, pero en su orm si
+        */
+        view('dashboard/orders', $orders);
     }
 }

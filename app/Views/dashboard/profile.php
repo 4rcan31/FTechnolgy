@@ -78,6 +78,39 @@ csrf();
                                     <?php cardWithText("Creacion de cuenta", $profiles->user->created_at) ?>
                                 </div>
                             </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <?php cardWithText("Telefono", $profiles->user->phone_number, 'default', 'Editar', [
+                                        'title' => "Editar nombre",
+                                        'html' => '<form action="' . route('api/v1/auth/edit/profile/' . $profiles->user->id . '/' . "phone", false) . '" method="POST">
+                                                    <div class="form-group">
+                                                        '.TokenCsrf::getInput().'
+                                                        <label for="newName">Nuevo Telefono</label>
+                                                        <input type="text" class="form-control" id="newName" name="phone_number">
+                                                    </div>
+                                                </form>',
+                                        'buttonSave' => 'Editar'
+                                    ]); ?>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <?php cardWithText("Direccion", $profiles->user->address, 'default', 'Editar', [
+                                        'title' => "Editar nombre",
+                                        'html' => '<form action="' . route('api/v1/auth/edit/profile/' . $profiles->user->id . '/' . "address", false) . '" method="POST">
+                                                    <div class="form-group">
+                                                        '.TokenCsrf::getInput().'
+                                                        <label for="newName">Nueva direccion</label>
+                                                        <textarea id="address" name="address" class="form-control" name="address" required></textarea>
+                                                    </div>
+                                                </form>',
+                                        'buttonSave' => 'Editar'
+                                    ]); ?>
+                                </div>
+                            </div>
+
                         </div>
 
 

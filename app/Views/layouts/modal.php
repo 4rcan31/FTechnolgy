@@ -6,19 +6,17 @@ class Modal{
     public static $id;
     
 
-    public static function buttonModal($body){
+    public static function buttonModal($body, $executeModal = false, $modalConfig = []){
         echo self::returnButtonModal($body);
+        $executeModal ? self::create(
+            $modalConfig['title'],
+            $modalConfig['html']
+        ) : null;
     }
 
-    public static function returnButtonModal($body, $newButton = null){
+    public static function returnButtonModal($body, $newButton = null, $print = false){
         self::$id = 'modal_token_'.token(2);
     
-        if ($newButton === null) {
-            $newButton = '<a class="dropdown-item btn btn-primary btn-icon-split btn-sm float-rsight" data-toggle="modal" data-target="#'.self::$id.'">
-                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                        '.$body.'
-                    </a>';
-        } else {
             // Encuentra la primera etiqueta de apertura de una etiqueta HTML
             preg_match('/<[^>]+>/', $newButton, $matches);
             if (!empty($matches)) {
@@ -31,23 +29,45 @@ class Modal{
                 '.$body.'
             </a>';
             }
-        }
+
+            return $print ? print($newButton) : $newButton;
+    }
+
+    public static function returnButtonModal2($body, $newButton = null){
+        self::$id = 'modal_token_'.token(2);
         
-        return $newButton;
+        // Verifica si $body es una cadena no nula y contiene un formato HTML
+        if ($body !== null && preg_match('/<[^>]+>/', $body)) {
+            // Agrega los atributos data-toggle y data-target al contenido HTML de $body
+            $body = preg_replace('/<[^>]+>/', '$0 data-toggle="modal" data-target="#'.self::$id.'"', $body);
+        } else {
+            // Si $body es nulo o no contiene formato HTML, utiliza el contenido por defecto
+            $body = '<a class="dropdown-item btn btn-primary btn-icon-split btn-sm float-right" data-toggle="modal" data-target="#'.self::$id.'">
+                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                '.$body.'
+            </a>';
+        }
+    
+        return $body;
     }
     
+    
+
     
     
     
 
 
     public static function create($title, $htmlBody, $buttonSaveText = false, $buttonExitText = 'Cerrar'){
-        $idForm = "id_form_".token(32); 
-        $idButton = "id_button_".token(32);
-        preg_match('/<[^>]+>/', $htmlBody, $matches);
-        if(!empty($matches)){
-           $htmlBody = str_replace($matches[0], str_replace(">", ' id="'.$idForm.'" >', $matches[0]),$htmlBody);
-        }
+        $idForm = "id_form_".token(5); 
+        $idButton = "id_button_".token(5);
+        /* 
+            Este código busca un formulario dentro de todo el contenido HTML en $htmlBody. Si se encuentra un formulario,
+            agrega un atributo "id" a ese formulario. Si no se encuentra un formulario, agrega el atributo "id" a la primera etiqueta HTML que encuentre.
+        */
+        $htmlBody = strpos($htmlBody, '<form') !== false ? 
+        preg_replace('/<form([^>]*)>/', '<form$1 id="' . $idForm . '">', $htmlBody, 1) : 
+        preg_replace('/<[^>]+>/', '$0 id="' . $idForm . '"', $htmlBody, 1);
         ?>        
             <div class="modal fade" id="<?php echo self::$id ?>" tabindex="-1" role="dialog" aria-labelledby="<?php echo self::$id ?>Title" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -84,11 +104,6 @@ class Modal{
             <?php
             
         }
-    }
-
-
-    public function getIdButtonSaveModal(){
-        return 'idButton'.self::$id;
     }
 
 }

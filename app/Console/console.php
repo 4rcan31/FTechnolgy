@@ -100,6 +100,41 @@ Jenu::command('croquettes:online', function(){
         $port = Jenu::get(1, 'Fill port', '8081');
         Jenu::executeNodeProcess("Server/croquette.js $host $port");
     }, 'Run Croquette server with Node.js (Still in development) WARNING: This command doesn\'t work fine', 'FTechnology:Croquette'); 
+
+    Jenu::command('test', function(){
+        function validarNumeroTelefono($telefono){
+                // Patrón para un número de teléfono en formato internacional, como +1234567890
+                $telefonoLimpio = preg_replace('/[^0-9+]/', '', $telefono);
+                $patron = '/^\+\d{1,}$/';
+
+                // Comprueba si el teléfono coincide con el patrón
+                return preg_match($patron, $telefonoLimpio) === 1;
+            }
+
+
+            function phoneNumber($phones) {
+                $cleanedPhones = array_map(function($phone) {
+                    return preg_replace('/[^0-9+]/', '', $phone);
+                }, $phones);
+                $validPhones = array_filter($cleanedPhones, function($cleanPhone) {
+                    return preg_match('/^\+?[0-9]+$/', $cleanPhone) === 1;
+                });
+                return count($validPhones) === count($phones);
+            }
+
+            var_dump(phoneNumber([
+                "+503 7737 0329",
+                "+5037737 0329",
+                "+503 77370329",
+                '+50377370329'
+            ]));
+
+/*             var_dump(validarNumeroTelefono("+503 7737 0329"));
+            var_dump(validarNumeroTelefono("+5037737 0329"));
+            var_dump(validarNumeroTelefono("+503 77370329"));
+            var_dump(validarNumeroTelefono("+50377370329"));
+            var_dump(validarNumeroTelefono("+50377370329")); */
+    });
     
     
 
