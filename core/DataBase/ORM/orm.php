@@ -116,6 +116,18 @@ class DataBase extends Connection{
         $this->query = $this->query.$query;
     }
 
+    public function whereIn(string $colum, array $values) {
+        if (empty($values)) {
+            throw new Exception('You have not specified any values for the IN clause.');
+        }
+    
+        $placeholders = implode(', ', array_fill(0, count($values), '?'));
+    
+        $this->query .= "WHERE $colum IN ($placeholders)";
+        $this->data = array_merge($this->data, $values);
+    }
+    
+
     public function count($colums = []){
         if(empty($colums)){
             $query = ' COUNT(*)';
@@ -129,6 +141,8 @@ class DataBase extends Connection{
         $this->query = $this->query.$query;
         return $this;
     }
+
+
 
     public function update(string $table, array $data = []){
         if (empty($data)) {
