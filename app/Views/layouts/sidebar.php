@@ -10,15 +10,29 @@ function sidebar(){
     divider('my-0');
     navItem('DashBoard', 'fas fa-fw fa-tachometer-alt', 'panel/dashboard');
     
-    if(!empty(objectToArray(Route::getData()->apps))){
+    $appData = Route::getData()->apps;
+    if (!empty($appData)) {
+        $croquettesRoutes = [];
+        foreach (Route::getData()->croquettes as $n => $croquette) {
+            $croquettesRoutes["Dashboard " . ($n + 1)] = "panel/croquette/$croquette->token";
+        }
         divider();
         HeadingNavItem('Apps conectadas');
-        foreach(Route::getData()->apps as $id => $nameApps){
-            collapse($nameApps, 'Administracion:', [
+        foreach ($appData as $idCollapse => $app) {
+            $app->name == 'Croquette' ? 
+            collapse($app->name, 'Administración:', $croquettesRoutes, 'fas fa-fw fa-dog', $idCollapse) : 
+            collapse($app->name, 'Administración:', [
                 'Dashboard' => 'panel/croquette',
-             ], 'fas fa-fw fa-dog', $id);
+            ], 'fas fa-fw fa-dog', $idCollapse);
+
+            /* 
+                Nota: El else no ocurrirá por el momento, ya que no hay ninguna app con otro nombre
+                todavía, pero en caso de que existan otras apps en el futuro, se debe guardar la ruta de su
+                Dashboard en la base de datos para que sea dinámico.
+            */
         }
     }
+    
     divider();
     HeadingNavItem('Utilidades');
     Route::getData()->order ? navItem(

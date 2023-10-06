@@ -3,6 +3,7 @@
 
 class CroquetteModel extends BaseModel{
 
+    private $table = 'croquettes_auths';
 
     function existByToken($token){
         $this->prepare();
@@ -29,6 +30,13 @@ class CroquetteModel extends BaseModel{
         $this->select(['id'])->from('croquettes_auths')->where('token', $token);
         return $this->execute()->all()->id;
     }
+
+    public function getById(int $idCroquette){
+        $this->prepare();
+        $this->select(['*'])->from($this->table)->where('id', $idCroquette);
+        return $this->execute()->all();
+    }
+
 
 
 }

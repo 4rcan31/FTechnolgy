@@ -23,7 +23,7 @@ class storeController extends BaseController{
         }
         $this->order()->new(
             $this->clientAuth()->id,
-            $validate->input(0), //Esto es el id del producto
+            $validate->input(0), //Esto es el id del producto (Equivale al id de la app)
             $validate->input('email'),
             $validate->input('address'),
             $validate->input('phone'),

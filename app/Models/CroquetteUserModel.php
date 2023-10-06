@@ -2,7 +2,7 @@
 
 class CroquetteUserModel extends BaseModel{
 
-
+    private $table = 'croquette_user';
 
     public function newCroquetteUser($idUser, $idCroquette){
         $this->prepare();
@@ -47,5 +47,11 @@ class CroquetteUserModel extends BaseModel{
         $this->prepare();
         $this->select(['*'])->from('croquette_user')->where('id_user', $idUser);
         return $this->execute()->exist();
+    }
+
+    public function getByIdUser(int $idUser){
+        $this->prepare();
+        $this->select(['*'])->from($this->table)->where('id_user', $idUser);
+        return $this->execute()->all('fetchAll');
     }
 }

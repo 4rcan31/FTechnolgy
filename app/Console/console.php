@@ -7,6 +7,13 @@ Jenu::command('serve:chat', function(){
     Jenu::executeNodeProcess("Server/server.js $port");
 }, 'Run chat server test', 'FTechnology:Test'); 
 
+Jenu::command('test2', function(){
+    $db = new DataBase;
+
+    $db->select(['columa1', 'columa2'])->from('tablaname')->where('columna1', 1)->and("columa32", 5);
+  var_dump($db->queryString());
+}, 'Run chat server test', 'FTechnology:Test'); 
+
 Jenu::command('croquettes:auth', function(){
     $db = new DataBase;
     $db->select(['*'])->from('croquettes_auths');

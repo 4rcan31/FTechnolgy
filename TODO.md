@@ -4,7 +4,7 @@
 
 2. **Programar el código para el Arduino (funcionamiento con la app, internet)**: Desarrollar el código que permitirá a Croquette funcionar en conjunto con la aplicación para la dispensación de alimentos a través de Internet.
 
-3. **Soporte para Múltiples Croquettes**: Habilitar la capacidad para que los usuarios conecten varios dispositivos Croquette a la aplicación, mejorando la experiencia del usuario.
+3. **Soporte para Múltiples Croquettes**: Habilitar la capacidad para que los usuarios conecten varios dispositivos Croquette a la aplicación, mejorando la experiencia del usuario.  **(LISTO)** *6 de octubre 2023*
 
 4. **Flujo de Compra de Croquette desde la Tienda**: Implementar la funcionalidad que permitirá a los usuarios realizar compras de productos Croquette directamente desde la aplicación, facilitando la adquisición de nuevos dispositivos. **(LISTO)** *5 de octubre 2023*
 

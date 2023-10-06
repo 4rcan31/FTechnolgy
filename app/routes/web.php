@@ -47,8 +47,8 @@ Route::group(function(){
       controller('PanelViewsController', 'home');
    });
 
-   Route::get('/croquette', function(){
-      view('dashboard/Croquette/dashboard');
+   Route::get('/croquette/%token', function($request){
+      controller('CroquetteController', 'view', $request);
    });
 
    Route::get('/statusservices', function(){

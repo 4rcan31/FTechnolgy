@@ -37,8 +37,8 @@ Route::group(function(){
 
 
     Route::group(function(){
-        Route::post('/sendfood', function(){
-            res('sending food...');
+        Route::post('/sendfood', function($request){
+            controller('CroquetteController', 'sendFood', $request);
         });
 
 

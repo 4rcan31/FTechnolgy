@@ -19,6 +19,13 @@ class CroquetteController extends BaseController{
         return model('CroquetteUserModel');
     }
 
+    /**
+     * @return AppsUserModel
+     */
+    private function AppsUserModel() {
+        return model('AppsUserModel');
+    }
+
     public function host(){
         return $_ENV['APP_SERVER_CROQUETTE_HOST'].":".$_ENV['APP_SERVER_CROQUETTE_PORT'];
     }
@@ -39,13 +46,27 @@ class CroquetteController extends BaseController{
         );
     }
 
+    public function view($request){
+        $validate = validate($request);
+        $validate->rule('required', [0]);
+        $this->validateFieldsWithRedirection(['Esa url esta mal'], '/panel/croquette', $validate);
+        $data = ['token' => $validate->input(0)];
+        view('dashboard/Croquette/dashboard', $data);
+    }
+
 
     public function connect($token){
         $croquette = $this->CroquetteModel();
         if(!$croquette->existByToken($token)){ Form::send('/', ["El codigo QR esta alterado, o esta roto, comuniquenos a nosotros si cree que se trata de un error"], 'Error');}
-        $row = $croquette->getByToken($token);
-        model('AppsUserModel')->insertNewApp(1, Sauth::authenticableClient($_ENV['APP_KEY'])->id); //Un 1 por que 1 es de croquette
-        model('CroquetteUserModel')->newCroquetteUser(Sauth::authenticableClient($_ENV['APP_KEY'])->id, $row->id);
+        if(!$this->AppsUserModel()->existAppWithIdUser( //Que solamente se inserte la app para ese usuario en el caso que aun no tiene esa app
+            $this->clientAuth()->id
+        )){
+            $this->AppsUserModel()->insertNewApp(1, $this->clientAuth()->id); //Un 1 por que 1 es de croquette
+        }   
+        $this->CroquetteModelUser()->newCroquetteUser(
+            $this->clientAuth()->id,
+            $this->CroquetteModel()->getByToken($token)->id
+        );
         $croquette->setInUse($token);
         Server::redirect('panel/dashboard');
     }
@@ -145,5 +166,17 @@ class CroquetteController extends BaseController{
     
         return $response;
     }
+
+
+    public function sendFood($request){
+        $this->validateCsrfTokenWithRedirection($request, '/panel/croquette');
+        $validate = validate($request);
+        $validate->rule('required', ['cantidad', 'croquetteToken']);
+        $this->validateFieldsWithRedirection(['Tienes que rellanar todos los campos'], '/panel/croquette', $validate);
+       // $this->connectServerCroquette('senfood:');
+        res($request);
+    }
+
+    
     
 }

@@ -37,11 +37,12 @@ layouts();
                     <!-- Content Row -->
                     <div class="row">
                         <?php 
+                        prettyPrint(Route::getData()->croquettes);
                         if(empty(objectToArray(Route::getData()->apps))){
                             card('Ninguna app conectada', 'Hola '.Route::getData()->user->name.", aun no tienes ninguna app conectada a FTecnology", 'paw', 'warning', 1);
                         }else{
-                            foreach(Route::getData()->apps as $nameApps){
-                                card($nameApps, $nameApps, 'paw', 'info', 1);
+                            foreach(Route::getData()->apps as $app){
+                                card($app->name, $app->name, 'paw', 'info', 1);
                             }
                         }
                         ?>  

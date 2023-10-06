@@ -10,6 +10,12 @@ class AppsModel extends BaseModel{
         return $this->execute()->all();
     }
 
+    public function getAppsByIdAp(int $idApp){
+        $this->prepare();
+        $this->select(['*'])->from('apps')->where('id', $idApp);
+        return $this->execute()->all('fetchAll');
+    }
+
     public function getAppsByIdApp($id){   
         $this->prepare();
         $this->select(['*'])->from('apps')->where('id', $id);
@@ -33,4 +39,12 @@ class AppsModel extends BaseModel{
         $this->select(['*'])->from('apps')->where('id', $idProduct);
         return $this->execute()->all();
     }
+
+    public function getAppsByUserIds(array $userIds){
+        $this->prepare();
+        $this->select(['*'])->from('apps')->whereIn('user_id', $userIds);
+        return $this->execute()->all('fetchAll');
+    }
+    
+    
 }

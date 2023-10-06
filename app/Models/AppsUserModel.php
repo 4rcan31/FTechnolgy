@@ -19,4 +19,10 @@ class AppsUserModel extends BaseModel{
         $this->select(['id'])->from('apps_user')->where('id_user', $id);
         return $this->execute()->all('fetchAll');
     }
+
+    public function existAppWithIdUser(int $idUser){
+        $this->prepare();
+        $this->select(['id'])->from('apps_user')->where('id_user', $idUser);
+        return $this->execute()->exist();
+    }
 }

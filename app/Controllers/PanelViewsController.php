@@ -40,29 +40,59 @@ class PanelViewsController extends BaseController{
         return model('CommetsOrderCEO');
     }
 
+    /**
+    * @return CroquetteUserModel
+    */
+    public function CroquetteUserModel(){
+        return model('CroquetteUserModel');
+    }
+
+    /**
+    * @return CroquetteModel
+    */
+    public function CroquetteModel(){
+        return model('CroquetteModel');
+    }
+
+    
+    /**
+    * @return AppsUserModel
+    */
+    public function AppsUserModel(){
+        return model('AppsUserModel');
+    }
+
+
+    
+
 
 
 
     public function userProfileData(){
-        if(isset(Request::$cookies['session'])){
-            $authenticableClient = Sauth::authenticableClient($_ENV['APP_KEY']);
-            $idsApps = model('AppsUserModel')->getAppsIdByIdUser($authenticableClient->id);
-            $user = $this->userModel()->getById($authenticableClient->id); //Esto devuelve un objeto
+            $idsApps = $this->AppsUserModel()->getAppsIdByIdUser(
+                $this->clientAuth()->id
+            );
+            $user = $this->userModel()->getById(
+                $this->clientAuth()->id
+            ); //Esto devuelve un objeto
             $user->avatar = $user->avatar_serve.$user->avatar_rute;
-            $appNames = [];
-            
+            $apps = []; 
             foreach($idsApps as $idApp){
-               $appNames[] = model('AppsModel')->getAppsNameByIdApp($idApp->id)->name;
+               $apps[] = $this->apps()->getAppsByIdApp($idApp->id);
             }
-    
+            $croquettes = [];
+            foreach($this->CroquetteUserModel()->getByIdUser($this->clientAuth()->id) as $croquette){
+                $croquettes[] = $this->CroquetteModel()->getById($croquette->id_croquette);
+            }
             return arrayToObject([
-                'apps' => $appNames,
+                'apps' => $apps,
                 'user' => $user,
-                'order' => $this->order()->existById($this->clientAuth()->id)
+                'order' => $this->order()->existById($this->clientAuth()->id),
+                'croquettes' => $croquettes
             ]);
-        }
-        return [];
     }
+
+    
 
     public function profilePet(){
         return $this->pets()->getAllByIdUser(Route::getData()->user->id);
