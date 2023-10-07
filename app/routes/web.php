@@ -81,6 +81,13 @@ Route::group(function(){
 
 
 })->prefix('/panel')->middlewares(['AuthMiddleware@session'])->setData(controller('PanelViewsController', 'userProfileData'));
+/* 
+   La función 'setData' se utiliza con un dato de sesión específico del servidor en el contexto del controlador de vistas 'PanelViewsController'. 
+   Es importante considerar que si esta ruta se llama desde otro lugar donde dicho dato de sesión
+   no esté disponible en la solicitud (request), podría generar un error, ya que el dato de sesión no existirá en ese contexto. Para evitar problemas,
+   es necesario verificar la existencia de este dato de sesión antes de utilizarlo en el controlador.
+*/
+
 
 
 Route::error(403, function(){

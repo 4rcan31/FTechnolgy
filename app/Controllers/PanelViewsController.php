@@ -69,6 +69,16 @@ class PanelViewsController extends BaseController{
 
 
     public function userProfileData(){
+
+            require_once "../app/middlewares/AuthMiddleware.php";
+            if (!isset(Request::$cookies['session']) || !(new AuthMiddleware)->session()) {
+                /* 
+                    Creo que esta es una de las cosas más chungas que he hecho xD
+                    pero por el momento, esto funcionará de esta manera. Lo pongo por la validación 
+                    que expliqué en el archivo routes/web.php.
+                */
+                return [];
+            }
             $idsApps = $this->AppsUserModel()->getAppsIdByIdUser(
                 $this->clientAuth()->id
             );

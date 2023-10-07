@@ -15,6 +15,9 @@ class AuthMiddleware{
             return false;
         }
         $idUserClient = Sauth::getPayLoadTokenClient(Request::$cookies['session'], $_ENV['APP_KEY'], 'id');
+        if(!$idUserClient){
+            return false;
+        }
         return Sauth::middlewareAuthServerAndClient(
             Request::$cookies['session'],
             $_ENV['APP_KEY'],

@@ -37,16 +37,22 @@ class Sauth {
 
 
 
-    public static function getPayLoadTokenClient(string $tokenRequest, string $key, string $input = ''){
-        $tokenRequest = urldecode($tokenRequest);
-        import('DataBase/ORM/orm.php', false, '/core');
-        $tokenDecrypt = import('Encrypt/encrypt.php', true, '/core')->decrypt($tokenRequest, $key); //Esto devuelve un json
-        $tokenDecrypt = json_decode($tokenDecrypt); //Aca se convierte a un array o objeto, no recuerdo xd
-        return isset($tokenDecrypt->payload->$input) ?
-        $tokenDecrypt->payload->$input :
-        $tokenDecrypt->payload;
-    
+    public static function getPayLoadTokenClient(string $tokenRequest, string $key, string $input = '') {
+        try {
+            $tokenRequest = urldecode($tokenRequest);
+            $encrypt = import('Encrypt/encrypt.php', true, '/core');
+            $tokenDecrypt = $encrypt->decrypt($tokenRequest, $key);
+            $tokenDecrypt = json_decode($tokenDecrypt);
+            if($tokenDecrypt === null) {
+                return false;
+            }
+            $payload = $tokenDecrypt->payload;
+            return $input !== '' && property_exists($payload, $input) ? $payload->$input : $payload;
+        } catch (Exception $th) {
+            return false;
+        }
     }
+    
 
     
 

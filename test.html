@@ -1,1453 +1,1109 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <!--         <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet"> -->
-    <title>Profile</title>
-    <link
-      rel="stylesheet"
-      href="http://127.0.0.1:8080/vendor/fontawesome-free/css/all.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="http://127.0.0.1:8080/assets/css/sb-admin-2.min.css"
-    />
-  </head>
-
-  <body id="page-top">
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-      <!-- Sidebar -->
-      <ul
-        class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
-        id="accordionSidebar"
-      >
-        <a
-          class="sidebar-brand d-flex align-items-center justify-content-center"
-          href="http://127.0.0.1:8080/panel/dashboard"
-        >
-          <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-paw"></i>
-          </div>
-          <div class="sidebar-brand-text mx-3">FTecnology</div>
-        </a>
-        <hr class="sidebar-divider my-0" />
-        <li class="nav-item">
-          <a class="nav-link" href="http://127.0.0.1:8080/panel/dashboard">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>DashBoard</span></a
-          >
-        </li>
-        <hr class="sidebar-divider" />
-        <div class="sidebar-heading">Utilidades</div>
-
-        <li class="nav-item">
-          <a class="nav-link" href="http://127.0.0.1:8080/panel/logs">
-            <i class="fas fa-fw fa-list"></i>
-            <span>Logs</span></a
-          >
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="http://127.0.0.1:8080/panel/settings">
-            <i class="fas fa-fw fa-wrench"></i>
-            <span>Configuracion</span></a
-          >
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="http://127.0.0.1:8080/panel/profile">
-            <i class="fas fa-fw fa-user"></i>
-            <span>Profile</span></a
-          >
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="http://127.0.0.1:8080/panel/statusservices">
-            <i class="fas fa-fw fa-server"></i>
-            <span>Estado Server</span></a
-          >
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="http://127.0.0.1:8080/panel/template">
-            <i class="fas fa-fw fa-test"></i>
-            <span>doctemplate</span></a
-          >
-        </li>
-
-        <div class="text-center d-none d-md-inline">
-          <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
-      </ul>
-      <!-- End of Sidebar -->
-
-      <!-- Content Wrapper -->
-      <div id="content-wrapper" class="d-flex flex-column">
-        <!-- Main Content -->
-        <div id="content">
-          <!-- Topbar -->
-          <nav
-            class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
-          >
-            <button
-              id="sidebarToggleTop"
-              class="btn btn-link d-md-none rounded-circle mr-3"
-            >
-              <i class="fa fa-bars"></i>
-            </button>
-
-            <form
-              class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
-            >
-              <div class="input-group">
-                <input
-                  type="text"
-                  class="form-control bg-light border-0 small"
-                  placeholder="Search for..."
-                  aria-label="Search"
-                  aria-describedby="basic-addon2"
-                />
-                <div class="input-group-append">
-                  <button class="btn btn-primary" type="button">
-                    <i class="fas fa-search fa-sm"></i>
-                  </button>
-                </div>
-              </div>
-            </form>
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item dropdown no-arrow d-sm-none">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="searchDropdown"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <i class="fas fa-search fa-fw"></i>
-                </a>
-                <!-- Dropdown - Messages -->
-                <div
-                  class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                  aria-labelledby="searchDropdown"
-                >
-                  <form class="form-inline mr-auto w-100 navbar-search">
-                    <div class="input-group">
-                      <input
-                        type="text"
-                        class="form-control bg-light border-0 small"
-                        placeholder="Search for..."
-                        aria-label="Search"
-                        aria-describedby="basic-addon2"
-                      />
-                      <div class="input-group-append">
-                        <button class="btn btn-primary" type="button">
-                          <i class="fas fa-search fa-sm"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </li>
-
-              <li class="nav-item dropdown no-arrow mx-1">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="alertsDropdown"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <i class="fas fa-bell fa-fw"></i>
-                  <!-- Counter - Alerts -->
-                  <span class="badge badge-danger badge-counter">2+</span>
-                </a>
-                <div
-                  class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                  aria-labelledby="alertsDropdown"
-                >
-                  <h6 class="dropdown-header">Alert center</h6>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                      <div class="icon-circle bg-primary">
-                        <i class="fas fa-exclamation-triangle text-white"></i>
-                      </div>
-                    </div>
-                    <div>
-                      <div class="small text-gray-500">December</div>
-                      <span class="font-weight-bold">Esto es una alerta</span>
-                    </div>
-                  </a>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                      <div class="icon-circle bg-primary">
-                        <i class="fas fa-donate text-white"></i>
-                      </div>
-                    </div>
-                    <div>
-                      <div class="small text-gray-500">tes time</div>
-                      <span class="font-weight-bold"
-                        >Esto es una prueba en monedas</span
-                      >
-                    </div>
-                  </a>
-                </div>
-              </li>
-              <div class="topbar-divider d-none d-sm-block"></div>
-              <li class="nav-item dropdown no-arrow">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="userDropdown"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <span class="mr-2 d-none d-lg-inline text-gray-600 small"
-                    >Admin</span
-                  >
-                  <img
-                    class="img-profile rounded-circle"
-                    src="http://127.0.0.1:8080/uploads/2eb7eb1685456f4fb66e6a37d22af0219670a50d2414bd5b3c01674b3c63020b.png"
-                  />
-                </a>
-                <!-- Dropdown - User Information -->
-                <div
-                  class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                  aria-labelledby="userDropdown"
-                >
-                  <a
-                    class="dropdown-item"
-                    href="http://127.0.0.1:8080/panel/profile"
-                  >
-                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Profile
-                  </a>
-                  <a
-                    class="dropdown-item"
-                    href="http://127.0.0.1:8080/panel/settings"
-                  >
-                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Settings
-                  </a>
-                  <a
-                    class="dropdown-item"
-                    href="http://127.0.0.1:8080/panel/logs"
-                  >
-                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Activity Log
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <a
-                    class="dropdown-item"
-                    href="#"
-                    data-toggle="modal"
-                    data-target="#logoutModal"
-                  >
-                    <i
-                      class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"
-                    ></i>
-                    Logout
-                  </a>
-                </div>
-              </li>
-            </ul>
-          </nav>
-          <!-- End of Topbar -->
-
-          <!-- Begin Page Content -->
-          <div class="container-fluid">
-            <!-- Page Heading -->
-
-            <div class="row">
-              <!-- Perfil de usuario -->
-              <div class="col-lg-6 border-right">
-                <div
-                  class="d-sm-flex align-items-center justify-content-between mb-4"
-                >
-                  <h1 class="h3 mb-0 text-gray-800">Perfil Usuario</h1>
-                </div>
-                <div class="row">
-                  <div class="col-lg-4">
-                    <div class="card shadow mb-4">
-                      <div class="card-header">
-                        <h6 class="m-0 font-weight-bold text-primary">
-                          Avatar<a
-                            href="#"
-                            class="btn btn-primary btn-icon-split btn-sm float-right"
-                            data-target="#modal_token_8f66"
-                            data-toggle="modal"
-                            ><span class="icon text-white-50"
-                              ><i class="fas fa-flag"></i></span
-                            ><span class="text">Editar</span></a
-                          >
-                        </h6>
-                      </div>
-                      <div class="card-body">
-                        <img
-                          src="http://127.0.0.1:8080/uploads/2eb7eb1685456f4fb66e6a37d22af0219670a50d2414bd5b3c01674b3c63020b.png"
-                          alt=""
-                          height="168px"
-                        />
-                      </div>
-                    </div>
-                    <div
-                      class="modal fade"
-                      id="modal_token_8f66"
-                      tabindex="-1"
-                      role="dialog"
-                      aria-labelledby="modal_token_8f66Title"
-                      aria-hidden="true"
-                    >
-                      <div
-                        class="modal-dialog modal-dialog-centered"
-                        role="document"
-                      >
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5
-                              class="modal-title"
-                              id="modal_token_8f66LongTitle"
-                            >
-                              Editar Avatar
-                            </h5>
-                            <button
-                              type="button"
-                              class="close"
-                              data-dismiss="modal"
-                              aria-label="Close"
-                            >
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <form
-                              action="http://127.0.0.1:8080/api/v1/auth/edit/profile/1/avatar"
-                              method="POST"
-                              enctype="multipart/form-data"
-                              id="id_form_23ff573626241170be59519dcc12219bcbdd2bcb48aabe74b4ed81e36891bb6f"
-                            >
-                              <div class="form-group">
-                                <input
-                                  type="hidden"
-                                  name="csrf_token"
-                                  value="33e1d2201ba2ee279733284d8da7f006dc0fe88add77fa321280ecb8be7628f0"
-                                />
-                                <label for="newName">Elige una imagen</label>
-                                <input
-                                  type="file"
-                                  class="form-control"
-                                  name="avatar"
-                                />
-                              </div>
-                            </form>
-                          </div>
-                          <div class="modal-footer">
-                            <button
-                              type="button"
-                              class="btn btn-secondary"
-                              data-dismiss="modal"
-                              id="idButtonmodal_token_8f66"
-                            >
-                              Cerrar
-                            </button>
-                            <button
-                              type="button"
-                              class="btn btn-primary"
-                              id="id_button_1cb9eca0bf2db13245386ea9a1bf2feb7496a53fb93a7c3a748bc0da7ec3fa3e"
-                            >
-                              Editar
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <script>
-                      const buttonSend_id_button_1cb9eca0bf2db13245386ea9a1bf2feb7496a53fb93a7c3a748bc0da7ec3fa3e =
-                        document.getElementById(
-                          "id_button_1cb9eca0bf2db13245386ea9a1bf2feb7496a53fb93a7c3a748bc0da7ec3fa3e"
-                        );
-                      const form_id_form_23ff573626241170be59519dcc12219bcbdd2bcb48aabe74b4ed81e36891bb6f =
-                        document.getElementById(
-                          "id_form_23ff573626241170be59519dcc12219bcbdd2bcb48aabe74b4ed81e36891bb6f"
-                        );
-                      buttonSend_id_button_1cb9eca0bf2db13245386ea9a1bf2feb7496a53fb93a7c3a748bc0da7ec3fa3e.addEventListener(
-                        "click",
-                        function (event) {
-                          event.preventDefault();
-                          form_id_form_23ff573626241170be59519dcc12219bcbdd2bcb48aabe74b4ed81e36891bb6f.submit();
-                        }
-                      );
-                    </script>
-                  </div>
-                  <div class="col-lg-8">
-                    <div class="card shadow mb-4">
-                      <div class="card-header">
-                        <h6 class="m-0 font-weight-bold text-primary">Email</h6>
-                      </div>
-                      <div class="card-body">admin@a.co</div>
-                    </div>
-                    <div class="card shadow mb-4">
-                      <div class="card-header">
-                        <h6 class="m-0 font-weight-bold text-primary">
-                          Nombre<a
-                            href="#"
-                            class="btn btn-primary btn-icon-split btn-sm float-right"
-                            data-target="#modal_token_cb9f"
-                            data-toggle="modal"
-                            ><span class="icon text-white-50"
-                              ><i class="fas fa-flag"></i></span
-                            ><span class="text">Editar</span></a
-                          >
-                        </h6>
-                      </div>
-                      <div class="card-body">Admin</div>
-                    </div>
-                    <div
-                      class="modal fade"
-                      id="modal_token_cb9f"
-                      tabindex="-1"
-                      role="dialog"
-                      aria-labelledby="modal_token_cb9fTitle"
-                      aria-hidden="true"
-                    >
-                      <div
-                        class="modal-dialog modal-dialog-centered"
-                        role="document"
-                      >
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5
-                              class="modal-title"
-                              id="modal_token_cb9fLongTitle"
-                            >
-                              Editar nombre
-                            </h5>
-                            <button
-                              type="button"
-                              class="close"
-                              data-dismiss="modal"
-                              aria-label="Close"
-                            >
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <form
-                              action="http://127.0.0.1:8080/api/v1/auth/edit/profile/1/name"
-                              method="POST"
-                              id="id_form_87801eaa2316a9cad592a18b030952a4e69bf352ee7abf987a25bfa0327f3ba2"
-                            >
-                              <div class="form-group">
-                                <input
-                                  type="hidden"
-                                  name="csrf_token"
-                                  value="33e1d2201ba2ee279733284d8da7f006dc0fe88add77fa321280ecb8be7628f0"
-                                />
-                                <label for="newName">Nuevo nombre</label>
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  id="newName"
-                                  name="name"
-                                />
-                              </div>
-                            </form>
-                          </div>
-                          <div class="modal-footer">
-                            <button
-                              type="button"
-                              class="btn btn-secondary"
-                              data-dismiss="modal"
-                              id="idButtonmodal_token_cb9f"
-                            >
-                              Cerrar
-                            </button>
-                            <button
-                              type="button"
-                              class="btn btn-primary"
-                              id="id_button_f9685505857d81e63480749b64a3f706e24615712286f77f7e61ffa597b21fdd"
-                            >
-                              Editar
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <script>
-                      const buttonSend_id_button_f9685505857d81e63480749b64a3f706e24615712286f77f7e61ffa597b21fdd =
-                        document.getElementById(
-                          "id_button_f9685505857d81e63480749b64a3f706e24615712286f77f7e61ffa597b21fdd"
-                        );
-                      const form_id_form_87801eaa2316a9cad592a18b030952a4e69bf352ee7abf987a25bfa0327f3ba2 =
-                        document.getElementById(
-                          "id_form_87801eaa2316a9cad592a18b030952a4e69bf352ee7abf987a25bfa0327f3ba2"
-                        );
-                      buttonSend_id_button_f9685505857d81e63480749b64a3f706e24615712286f77f7e61ffa597b21fdd.addEventListener(
-                        "click",
-                        function (event) {
-                          event.preventDefault();
-                          form_id_form_87801eaa2316a9cad592a18b030952a4e69bf352ee7abf987a25bfa0327f3ba2.submit();
-                        }
-                      );
-                    </script>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-lg-12">
-                    <div class="card shadow mb-4">
-                      <div class="card-header">
-                        <h6 class="m-0 font-weight-bold text-primary">
-                          Username
-                        </h6>
-                      </div>
-                      <div class="card-body">Admin</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-lg-12">
-                    <div class="card shadow mb-4">
-                      <div class="card-header">
-                        <h6 class="m-0 font-weight-bold text-primary">
-                          Creacion de cuenta
-                        </h6>
-                      </div>
-                      <div class="card-body">2023-10-02 15:17:03</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Perfil de mascota -->
-              <div class="col-lg-6">
-                <div
-                  class="d-sm-flex align-items-center justify-content-between mb-4"
-                >
-                  <h1 class="h3 mb-0 text-gray-800">Perfil Mascota</h1>
-                </div>
-                <div class="row">
-                  <div class="col-lg-4">
-                    <div class="card shadow mb-4">
-                      <div class="card-header">
-                        <h6 class="m-0 font-weight-bold text-primary">
-                          Avatar<a
-                            href="#"
-                            class="btn btn-primary btn-icon-split btn-sm float-right"
-                            data-target="#modal_token_802d"
-                            data-toggle="modal"
-                            ><span class="icon text-white-50"
-                              ><i class="fas fa-flag"></i></span
-                            ><span class="text">Editar</span></a
-                          >
-                        </h6>
-                      </div>
-                      <div class="card-body">
-                        <img
-                          src="http://127.0.0.1:8080/uploads/2eb7eb1685456f4fb66e6a37d22af0219670a50d2414bd5b3c01674b3c63020b.png"
-                          alt=""
-                          height="168px"
-                        />
-                      </div>
-                    </div>
-                    <div
-                      class="modal fade"
-                      id="modal_token_802d"
-                      tabindex="-1"
-                      role="dialog"
-                      aria-labelledby="modal_token_802dTitle"
-                      aria-hidden="true"
-                    >
-                      <div
-                        class="modal-dialog modal-dialog-centered"
-                        role="document"
-                      >
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5
-                              class="modal-title"
-                              id="modal_token_802dLongTitle"
-                            >
-                              Editar Avatar de mascota
-                            </h5>
-                            <button
-                              type="button"
-                              class="close"
-                              data-dismiss="modal"
-                              aria-label="Close"
-                            >
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <form
-                              action="http://127.0.0.1:8080/api/v1/auth/edit/pet/1/avatar"
-                              method="POST"
-                              enctype="multipart/form-data"
-                              id="id_form_ddc24540e49594ffdbd96fd38392bf38f0d5e62e5fdebca000ad77c446c73160"
-                            >
-                              <div class="form-group">
-                                <input
-                                  type="hidden"
-                                  name="csrf_token"
-                                  value="33e1d2201ba2ee279733284d8da7f006dc0fe88add77fa321280ecb8be7628f0"
-                                />
-                                <label for="newName">Elige una imagen</label>
-                                <input
-                                  type="file"
-                                  class="form-control"
-                                  name="avatar"
-                                />
-                              </div>
-                            </form>
-                          </div>
-                          <div class="modal-footer">
-                            <button
-                              type="button"
-                              class="btn btn-secondary"
-                              data-dismiss="modal"
-                              id="idButtonmodal_token_802d"
-                            >
-                              Cerrar
-                            </button>
-                            <button
-                              type="button"
-                              class="btn btn-primary"
-                              id="id_button_dbf7c9bc088cd72ccb088555c2e1da994afcb7471a79d11eb9e1b9c7533940cd"
-                            >
-                              Guardar
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <script>
-                      const buttonSend_id_button_dbf7c9bc088cd72ccb088555c2e1da994afcb7471a79d11eb9e1b9c7533940cd =
-                        document.getElementById(
-                          "id_button_dbf7c9bc088cd72ccb088555c2e1da994afcb7471a79d11eb9e1b9c7533940cd"
-                        );
-                      const form_id_form_ddc24540e49594ffdbd96fd38392bf38f0d5e62e5fdebca000ad77c446c73160 =
-                        document.getElementById(
-                          "id_form_ddc24540e49594ffdbd96fd38392bf38f0d5e62e5fdebca000ad77c446c73160"
-                        );
-                      buttonSend_id_button_dbf7c9bc088cd72ccb088555c2e1da994afcb7471a79d11eb9e1b9c7533940cd.addEventListener(
-                        "click",
-                        function (event) {
-                          event.preventDefault();
-                          form_id_form_ddc24540e49594ffdbd96fd38392bf38f0d5e62e5fdebca000ad77c446c73160.submit();
-                        }
-                      );
-                    </script>
-                  </div>
-                  <div class="col-lg-8">
-                    <div class="card shadow mb-4">
-                      <div class="card-header">
-                        <h6 class="m-0 font-weight-bold text-primary">
-                          Nombre<a
-                            href="#"
-                            class="btn btn-primary btn-icon-split btn-sm float-right"
-                            data-target="#modal_token_531f"
-                            data-toggle="modal"
-                            ><span class="icon text-white-50"
-                              ><i class="fas fa-flag"></i></span
-                            ><span class="text">Editar</span></a
-                          >
-                        </h6>
-                      </div>
-                      <div class="card-body">
-                        Aun no has configurado los datos de tu mascota
-                      </div>
-                    </div>
-                    <div
-                      class="modal fade"
-                      id="modal_token_531f"
-                      tabindex="-1"
-                      role="dialog"
-                      aria-labelledby="modal_token_531fTitle"
-                      aria-hidden="true"
-                    >
-                      <div
-                        class="modal-dialog modal-dialog-centered"
-                        role="document"
-                      >
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5
-                              class="modal-title"
-                              id="modal_token_531fLongTitle"
-                            >
-                              Editar nombre de la mascota
-                            </h5>
-                            <button
-                              type="button"
-                              class="close"
-                              data-dismiss="modal"
-                              aria-label="Close"
-                            >
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <form
-                              action="http://127.0.0.1:8080/api/v1/auth/edit/pet/1/name"
-                              method="POST"
-                              id="id_form_c81466f9a8ac58a4a9a8c3f2996b890796392967c714cc0c4b5ea79e9cc7bb11"
-                            >
-                              <div class="form-group">
-                                <input
-                                  type="hidden"
-                                  name="csrf_token"
-                                  value="33e1d2201ba2ee279733284d8da7f006dc0fe88add77fa321280ecb8be7628f0"
-                                />
-                                <label for="newName">Nuevo nombre</label>
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  id="newName"
-                                  name="name"
-                                />
-                              </div>
-                            </form>
-                          </div>
-                          <div class="modal-footer">
-                            <button
-                              type="button"
-                              class="btn btn-secondary"
-                              data-dismiss="modal"
-                              id="idButtonmodal_token_531f"
-                            >
-                              Cerrar
-                            </button>
-                            <button
-                              type="button"
-                              class="btn btn-primary"
-                              id="id_button_6bf5f3e28a24d1459b22c3b50b9ef265fa8abe987a17e192e8e4ad0ff74aa0ad"
-                            >
-                              Editar
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <script>
-                      const buttonSend_id_button_6bf5f3e28a24d1459b22c3b50b9ef265fa8abe987a17e192e8e4ad0ff74aa0ad =
-                        document.getElementById(
-                          "id_button_6bf5f3e28a24d1459b22c3b50b9ef265fa8abe987a17e192e8e4ad0ff74aa0ad"
-                        );
-                      const form_id_form_c81466f9a8ac58a4a9a8c3f2996b890796392967c714cc0c4b5ea79e9cc7bb11 =
-                        document.getElementById(
-                          "id_form_c81466f9a8ac58a4a9a8c3f2996b890796392967c714cc0c4b5ea79e9cc7bb11"
-                        );
-                      buttonSend_id_button_6bf5f3e28a24d1459b22c3b50b9ef265fa8abe987a17e192e8e4ad0ff74aa0ad.addEventListener(
-                        "click",
-                        function (event) {
-                          event.preventDefault();
-                          form_id_form_c81466f9a8ac58a4a9a8c3f2996b890796392967c714cc0c4b5ea79e9cc7bb11.submit();
-                        }
-                      );
-                    </script>
-                    <div class="card shadow mb-4">
-                      <div class="card-header">
-                        <h6 class="m-0 font-weight-bold text-primary">
-                          Especie<a
-                            href="#"
-                            class="btn btn-primary btn-icon-split btn-sm float-right"
-                            data-target="#modal_token_6813"
-                            data-toggle="modal"
-                            ><span class="icon text-white-50"
-                              ><i class="fas fa-flag"></i></span
-                            ><span class="text">Editar</span></a
-                          >
-                        </h6>
-                      </div>
-                      <div class="card-body">
-                        Aun no has configurado los datos de tu mascota
-                      </div>
-                    </div>
-                    <div
-                      class="modal fade"
-                      id="modal_token_6813"
-                      tabindex="-1"
-                      role="dialog"
-                      aria-labelledby="modal_token_6813Title"
-                      aria-hidden="true"
-                    >
-                      <div
-                        class="modal-dialog modal-dialog-centered"
-                        role="document"
-                      >
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5
-                              class="modal-title"
-                              id="modal_token_6813LongTitle"
-                            >
-                              Editar especie de la mascota
-                            </h5>
-                            <button
-                              type="button"
-                              class="close"
-                              data-dismiss="modal"
-                              aria-label="Close"
-                            >
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <form
-                              action="http://127.0.0.1:8080/api/v1/auth/edit/pet/1/species"
-                              method="POST"
-                              id="id_form_011b1e73f3da8239853f82b8f1bcb26c001327dd3e7c5aeaef3198c6203906ae"
-                            >
-                              <div class="form-group">
-                                <input
-                                  type="hidden"
-                                  name="csrf_token"
-                                  value="33e1d2201ba2ee279733284d8da7f006dc0fe88add77fa321280ecb8be7628f0"
-                                />
-                                <label for="newSpecies">Nueva especie</label>
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  id="newSpecies"
-                                  name="species"
-                                />
-                              </div>
-                            </form>
-                          </div>
-                          <div class="modal-footer">
-                            <button
-                              type="button"
-                              class="btn btn-secondary"
-                              data-dismiss="modal"
-                              id="idButtonmodal_token_6813"
-                            >
-                              Cerrar
-                            </button>
-                            <button
-                              type="button"
-                              class="btn btn-primary"
-                              id="id_button_fbda696d4f3abf5f6ac293bb8517778e610706cd1f0cfe76bc5a0943a46c3159"
-                            >
-                              Editar
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <script>
-                      const buttonSend_id_button_fbda696d4f3abf5f6ac293bb8517778e610706cd1f0cfe76bc5a0943a46c3159 =
-                        document.getElementById(
-                          "id_button_fbda696d4f3abf5f6ac293bb8517778e610706cd1f0cfe76bc5a0943a46c3159"
-                        );
-                      const form_id_form_011b1e73f3da8239853f82b8f1bcb26c001327dd3e7c5aeaef3198c6203906ae =
-                        document.getElementById(
-                          "id_form_011b1e73f3da8239853f82b8f1bcb26c001327dd3e7c5aeaef3198c6203906ae"
-                        );
-                      buttonSend_id_button_fbda696d4f3abf5f6ac293bb8517778e610706cd1f0cfe76bc5a0943a46c3159.addEventListener(
-                        "click",
-                        function (event) {
-                          event.preventDefault();
-                          form_id_form_011b1e73f3da8239853f82b8f1bcb26c001327dd3e7c5aeaef3198c6203906ae.submit();
-                        }
-                      );
-                    </script>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-lg-12">
-                    <div class="card shadow mb-4">
-                      <div class="card-header">
-                        <h6 class="m-0 font-weight-bold text-primary">Edad</h6>
-                      </div>
-                      <div class="card-body">
-                        Aun no has configurado los datos de tu mascota (Cuando
-                        pongas la fecha de nacimiento de tu mascota, este dato
-                        se actualizara)
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-lg-12">
-                    <div class="card shadow mb-4">
-                      <div class="card-header">
-                        <h6 class="m-0 font-weight-bold text-primary">
-                          Género<a
-                            href="#"
-                            class="btn btn-primary btn-icon-split btn-sm float-right"
-                            data-target="#modal_token_2721"
-                            data-toggle="modal"
-                            ><span class="icon text-white-50"
-                              ><i class="fas fa-flag"></i></span
-                            ><span class="text">Editar</span></a
-                          >
-                        </h6>
-                      </div>
-                      <div class="card-body">
-                        Aun no has configurado los datos de tu mascota
-                      </div>
-                    </div>
-                    <div
-                      class="modal fade"
-                      id="modal_token_2721"
-                      tabindex="-1"
-                      role="dialog"
-                      aria-labelledby="modal_token_2721Title"
-                      aria-hidden="true"
-                    >
-                      <div
-                        class="modal-dialog modal-dialog-centered"
-                        role="document"
-                      >
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5
-                              class="modal-title"
-                              id="modal_token_2721LongTitle"
-                            >
-                              Editar género de la mascota
-                            </h5>
-                            <button
-                              type="button"
-                              class="close"
-                              data-dismiss="modal"
-                              aria-label="Close"
-                            >
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <form
-                              action="http://127.0.0.1:8080/api/v1/auth/edit/pet/1/gender"
-                              method="POST"
-                              id="id_form_115b8cf75c7c2f209273d067cccfa35093e336700d7e4e2d0b920d6bf93daed2"
-                            >
-                              <div class="form-group">
-                                <input
-                                  type="hidden"
-                                  name="csrf_token"
-                                  value="33e1d2201ba2ee279733284d8da7f006dc0fe88add77fa321280ecb8be7628f0"
-                                />
-                                <label for="newGender">Nuevo género</label>
-                                <select
-                                  class="form-control"
-                                  id="newGender"
-                                  name="gender"
-                                >
-                                  <option value="Male">Male</option>
-                                  <option value="Female">Female</option>
-                                  <option value="Other">Other</option>
-                                </select>
-                              </div>
-                            </form>
-                          </div>
-                          <div class="modal-footer">
-                            <button
-                              type="button"
-                              class="btn btn-secondary"
-                              data-dismiss="modal"
-                              id="idButtonmodal_token_2721"
-                            >
-                              Cerrar
-                            </button>
-                            <button
-                              type="button"
-                              class="btn btn-primary"
-                              id="id_button_aed771142ff07d0e05172f9275e60306799fe27c5ce7558919bf62ce22774e4f"
-                            >
-                              Editar
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <script>
-                      const buttonSend_id_button_aed771142ff07d0e05172f9275e60306799fe27c5ce7558919bf62ce22774e4f =
-                        document.getElementById(
-                          "id_button_aed771142ff07d0e05172f9275e60306799fe27c5ce7558919bf62ce22774e4f"
-                        );
-                      const form_id_form_115b8cf75c7c2f209273d067cccfa35093e336700d7e4e2d0b920d6bf93daed2 =
-                        document.getElementById(
-                          "id_form_115b8cf75c7c2f209273d067cccfa35093e336700d7e4e2d0b920d6bf93daed2"
-                        );
-                      buttonSend_id_button_aed771142ff07d0e05172f9275e60306799fe27c5ce7558919bf62ce22774e4f.addEventListener(
-                        "click",
-                        function (event) {
-                          event.preventDefault();
-                          form_id_form_115b8cf75c7c2f209273d067cccfa35093e336700d7e4e2d0b920d6bf93daed2.submit();
-                        }
-                      );
-                    </script>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-lg-12">
-                    <div class="card shadow mb-4">
-                      <div class="card-header">
-                        <h6 class="m-0 font-weight-bold text-primary">
-                          Raza<a
-                            href="#"
-                            class="btn btn-primary btn-icon-split btn-sm float-right"
-                            data-target="#modal_token_dd18"
-                            data-toggle="modal"
-                            ><span class="icon text-white-50"
-                              ><i class="fas fa-flag"></i></span
-                            ><span class="text">Editar</span></a
-                          >
-                        </h6>
-                      </div>
-                      <div class="card-body">
-                        Aun no has configurado los datos de tu mascota
-                      </div>
-                    </div>
-                    <div
-                      class="modal fade"
-                      id="modal_token_dd18"
-                      tabindex="-1"
-                      role="dialog"
-                      aria-labelledby="modal_token_dd18Title"
-                      aria-hidden="true"
-                    >
-                      <div
-                        class="modal-dialog modal-dialog-centered"
-                        role="document"
-                      >
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5
-                              class="modal-title"
-                              id="modal_token_dd18LongTitle"
-                            >
-                              Editar raza de la mascota
-                            </h5>
-                            <button
-                              type="button"
-                              class="close"
-                              data-dismiss="modal"
-                              aria-label="Close"
-                            >
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <form
-                              action="http://127.0.0.1:8080/api/v1/auth/edit/pet/1/breed"
-                              method="POST"
-                              id="id_form_b6f502c9ddf696615984f5d7af30f0bdfd9c67657d6fa1b19366829a414d219d"
-                            >
-                              <div class="form-group">
-                                <input
-                                  type="hidden"
-                                  name="csrf_token"
-                                  value="33e1d2201ba2ee279733284d8da7f006dc0fe88add77fa321280ecb8be7628f0"
-                                />
-                                <label for="newBreed">Nueva raza</label>
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  id="newBreed"
-                                  name="breed"
-                                />
-                              </div>
-                            </form>
-                          </div>
-                          <div class="modal-footer">
-                            <button
-                              type="button"
-                              class="btn btn-secondary"
-                              data-dismiss="modal"
-                              id="idButtonmodal_token_dd18"
-                            >
-                              Cerrar
-                            </button>
-                            <button
-                              type="button"
-                              class="btn btn-primary"
-                              id="id_button_6557066f9a64cdfcfacd1bf01d8fcf35ef4cf8c50e160a51a92bbcc2dcc6c526"
-                            >
-                              Editar
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <script>
-                      const buttonSend_id_button_6557066f9a64cdfcfacd1bf01d8fcf35ef4cf8c50e160a51a92bbcc2dcc6c526 =
-                        document.getElementById(
-                          "id_button_6557066f9a64cdfcfacd1bf01d8fcf35ef4cf8c50e160a51a92bbcc2dcc6c526"
-                        );
-                      const form_id_form_b6f502c9ddf696615984f5d7af30f0bdfd9c67657d6fa1b19366829a414d219d =
-                        document.getElementById(
-                          "id_form_b6f502c9ddf696615984f5d7af30f0bdfd9c67657d6fa1b19366829a414d219d"
-                        );
-                      buttonSend_id_button_6557066f9a64cdfcfacd1bf01d8fcf35ef4cf8c50e160a51a92bbcc2dcc6c526.addEventListener(
-                        "click",
-                        function (event) {
-                          event.preventDefault();
-                          form_id_form_b6f502c9ddf696615984f5d7af30f0bdfd9c67657d6fa1b19366829a414d219d.submit();
-                        }
-                      );
-                    </script>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-lg-12">
-                    <div class="card shadow mb-4">
-                      <div class="card-header">
-                        <h6 class="m-0 font-weight-bold text-primary">
-                          Color<a
-                            href="#"
-                            class="btn btn-primary btn-icon-split btn-sm float-right"
-                            data-target="#modal_token_2c76"
-                            data-toggle="modal"
-                            ><span class="icon text-white-50"
-                              ><i class="fas fa-flag"></i></span
-                            ><span class="text">Editar</span></a
-                          >
-                        </h6>
-                      </div>
-                      <div class="card-body">
-                        Aun no has configurado los datos de tu mascota
-                      </div>
-                    </div>
-                    <div
-                      class="modal fade"
-                      id="modal_token_2c76"
-                      tabindex="-1"
-                      role="dialog"
-                      aria-labelledby="modal_token_2c76Title"
-                      aria-hidden="true"
-                    >
-                      <div
-                        class="modal-dialog modal-dialog-centered"
-                        role="document"
-                      >
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5
-                              class="modal-title"
-                              id="modal_token_2c76LongTitle"
-                            >
-                              Editar color de la mascota
-                            </h5>
-                            <button
-                              type="button"
-                              class="close"
-                              data-dismiss="modal"
-                              aria-label="Close"
-                            >
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <form
-                              action="http://127.0.0.1:8080/api/v1/auth/edit/pet/1/color"
-                              method="POST"
-                              id="id_form_80458ac33e8b91fcc38a72fcdb0f5d1f580f3f860535ba30b3452ff76e43f199"
-                            >
-                              <div class="form-group">
-                                <input
-                                  type="hidden"
-                                  name="csrf_token"
-                                  value="33e1d2201ba2ee279733284d8da7f006dc0fe88add77fa321280ecb8be7628f0"
-                                />
-                                <label for="newColor">Nuevo color</label>
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  id="newColor"
-                                  name="color"
-                                />
-                              </div>
-                            </form>
-                          </div>
-                          <div class="modal-footer">
-                            <button
-                              type="button"
-                              class="btn btn-secondary"
-                              data-dismiss="modal"
-                              id="idButtonmodal_token_2c76"
-                            >
-                              Cerrar
-                            </button>
-                            <button
-                              type="button"
-                              class="btn btn-primary"
-                              id="id_button_1736919dcfcc2dd549a5d70f6b07acdfb19b75a122e50034e192371fd22349b7"
-                            >
-                              Editar
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <script>
-                      const buttonSend_id_button_1736919dcfcc2dd549a5d70f6b07acdfb19b75a122e50034e192371fd22349b7 =
-                        document.getElementById(
-                          "id_button_1736919dcfcc2dd549a5d70f6b07acdfb19b75a122e50034e192371fd22349b7"
-                        );
-                      const form_id_form_80458ac33e8b91fcc38a72fcdb0f5d1f580f3f860535ba30b3452ff76e43f199 =
-                        document.getElementById(
-                          "id_form_80458ac33e8b91fcc38a72fcdb0f5d1f580f3f860535ba30b3452ff76e43f199"
-                        );
-                      buttonSend_id_button_1736919dcfcc2dd549a5d70f6b07acdfb19b75a122e50034e192371fd22349b7.addEventListener(
-                        "click",
-                        function (event) {
-                          event.preventDefault();
-                          form_id_form_80458ac33e8b91fcc38a72fcdb0f5d1f580f3f860535ba30b3452ff76e43f199.submit();
-                        }
-                      );
-                    </script>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-lg-12">
-                    <div class="card shadow mb-4">
-                      <div class="card-header">
-                        <h6 class="m-0 font-weight-bold text-primary">
-                          Fecha de Nacimiento<a
-                            href="#"
-                            class="btn btn-primary btn-icon-split btn-sm float-right"
-                            data-target="#modal_token_7a07"
-                            data-toggle="modal"
-                            ><span class="icon text-white-50"
-                              ><i class="fas fa-flag"></i></span
-                            ><span class="text">Editar</span></a
-                          >
-                        </h6>
-                      </div>
-                      <div class="card-body">
-                        Aun no has configurado los datos de tu mascota
-                      </div>
-                    </div>
-                    <div
-                      class="modal fade"
-                      id="modal_token_7a07"
-                      tabindex="-1"
-                      role="dialog"
-                      aria-labelledby="modal_token_7a07Title"
-                      aria-hidden="true"
-                    >
-                      <div
-                        class="modal-dialog modal-dialog-centered"
-                        role="document"
-                      >
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5
-                              class="modal-title"
-                              id="modal_token_7a07LongTitle"
-                            >
-                              Editar fecha de nacimiento de la mascota
-                            </h5>
-                            <button
-                              type="button"
-                              class="close"
-                              data-dismiss="modal"
-                              aria-label="Close"
-                            >
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <form
-                              action="http://127.0.0.1:8080/api/v1/auth/edit/pet/1/birthdate"
-                              method="POST"
-                              id="id_form_dab8eb1eaaa8f93dbf1afa4565c9812fade8663bb732c40d8e09784c09d72072"
-                            >
-                              <div class="form-group">
-                                <input
-                                  type="hidden"
-                                  name="csrf_token"
-                                  value="33e1d2201ba2ee279733284d8da7f006dc0fe88add77fa321280ecb8be7628f0"
-                                />
-                                <label for="newBirthdate"
-                                  >Nueva fecha de nacimiento</label
-                                >
-                                <input
-                                  type="date"
-                                  class="form-control"
-                                  id="newBirthdate"
-                                  name="birthdate"
-                                />
-                              </div>
-                            </form>
-                          </div>
-                          <div class="modal-footer">
-                            <button
-                              type="button"
-                              class="btn btn-secondary"
-                              data-dismiss="modal"
-                              id="idButtonmodal_token_7a07"
-                            >
-                              Cerrar
-                            </button>
-                            <button
-                              type="button"
-                              class="btn btn-primary"
-                              id="id_button_e057ae13680ab311933abee9c0ff980fd550c437fb00af35632cfada424095ab"
-                            >
-                              Editar
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <script>
-                      const buttonSend_id_button_e057ae13680ab311933abee9c0ff980fd550c437fb00af35632cfada424095ab =
-                        document.getElementById(
-                          "id_button_e057ae13680ab311933abee9c0ff980fd550c437fb00af35632cfada424095ab"
-                        );
-                      const form_id_form_dab8eb1eaaa8f93dbf1afa4565c9812fade8663bb732c40d8e09784c09d72072 =
-                        document.getElementById(
-                          "id_form_dab8eb1eaaa8f93dbf1afa4565c9812fade8663bb732c40d8e09784c09d72072"
-                        );
-                      buttonSend_id_button_e057ae13680ab311933abee9c0ff980fd550c437fb00af35632cfada424095ab.addEventListener(
-                        "click",
-                        function (event) {
-                          event.preventDefault();
-                          form_id_form_dab8eb1eaaa8f93dbf1afa4565c9812fade8663bb732c40d8e09784c09d72072.submit();
-                        }
-                      );
-                    </script>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- /.container-fluid -->
-        </div>
-        <!-- End of Main Content -->
-
-        <!-- Footer -->
-
-        <footer class="sticky-footer bg-white">
-          <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-              <span>Copyright &copy; Your Website 2021</span>
-            </div>
-          </div>
-        </footer>
-        <!-- End of Footer -->
-      </div>
-      <!-- End of Content Wrapper -->
-    </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-      <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <!-- Logout Modal-->
-    <div
-      class="modal fade"
-      id="logoutModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Listo para irse?</h5>
-            <button
-              class="close"
-              type="button"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-
-          <form method="POST" action="http://127.0.0.1:8080/api/v1/auth/logout">
-            <input
-              type="hidden"
-              name="csrf_token"
-              value="33e1d2201ba2ee279733284d8da7f006dc0fe88add77fa321280ecb8be7628f0"
-            />
-            <div class="modal-body">
-              Seleccione "Cerrar sesión" a continuación si está listo para
-              finalizar su sesión actual.
-            </div>
-            <div class="modal-footer">
-              <button
-                class="btn btn-secondary"
-                type="button"
-                data-dismiss="modal"
-              >
-                Cancelar
-              </button>
-              <button type="submit" class="btn btn-primary">
-                Cerrar session
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <script
-      type="text/javascript"
-      src="http://127.0.0.1:8080/vendor/jquery/jquery.min.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="http://127.0.0.1:8080/vendor/bootstrap/js/bootstrap.bundle.min.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="http://127.0.0.1:8080/vendor/jquery-easing/jquery.easing.min.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="http://127.0.0.1:8080/assets/js/sb-admin-2.min.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="http://127.0.0.1:8080/vendor/chart.js/Chart.min.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="http://127.0.0.1:8080/assets/js/demo/chart-area-demo.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="http://127.0.0.1:8080/assets/js/demo/chart-pie-demo.js"
-    ></script>
-  </body>
-</html>
+Ruta ejecutada: /api/v1/signal/croquette/servercroquettemiddleware/setStatusConnection
+Metodo ejecutado: POST
+Arbol de rutas:
+array(30) {
+  [0]=>
+  array(8) {
+    ["idRoute"]=>
+    int(1)
+    ["route"]=>
+    string(9) "/register"
+    ["function"]=>
+    object(Closure)#4 (1) {
+      ["parameter"]=>
+      array(1) {
+        ["$request"]=>
+        string(10) ""
+      }
+    }
+    ["method"]=>
+    string(4) "POST"
+    ["middlewares"]=>
+    array(0) {
+    }
+    ["prefix"]=>
+    array(2) {
+      [0]=>
+      string(5) "/auth"
+      [1]=>
+      string(7) "/api/v1"
+    }
+    ["data"]=>
+    array(0) {
+    }
+    ["idGroup"]=>
+    array(3) {
+      [0]=>
+      int(1)
+      [1]=>
+      int(5)
+      [2]=>
+      int(7)
+    }
+  }
+  [1]=>
+  array(8) {
+    ["idRoute"]=>
+    int(2)
+    ["route"]=>
+    string(6) "/login"
+    ["function"]=>
+    object(Closure)#7 (1) {
+      ["parameter"]=>
+      array(1) {
+        ["$request"]=>
+        string(10) ""
+      }
+    }
+    ["method"]=>
+    string(4) "POST"
+    ["middlewares"]=>
+    array(0) {
+    }
+    ["prefix"]=>
+    array(2) {
+      [0]=>
+      string(5) "/auth"
+      [1]=>
+      string(7) "/api/v1"
+    }
+    ["data"]=>
+    array(0) {
+    }
+    ["idGroup"]=>
+    array(3) {
+      [0]=>
+      int(1)
+      [1]=>
+      int(5)
+      [2]=>
+      int(7)
+    }
+  }
+  [2]=>
+  array(8) {
+    ["idRoute"]=>
+    int(3)
+    ["route"]=>
+    string(7) "/logout"
+    ["function"]=>
+    object(Closure)#5 (0) {
+    }
+    ["method"]=>
+    string(4) "POST"
+    ["middlewares"]=>
+    array(0) {
+    }
+    ["prefix"]=>
+    array(2) {
+      [0]=>
+      string(5) "/auth"
+      [1]=>
+      string(7) "/api/v1"
+    }
+    ["data"]=>
+    array(0) {
+    }
+    ["idGroup"]=>
+    array(3) {
+      [0]=>
+      int(1)
+      [1]=>
+      int(5)
+      [2]=>
+      int(7)
+    }
+  }
+  [3]=>
+  array(8) {
+    ["idRoute"]=>
+    int(4)
+    ["route"]=>
+    string(27) "/edit/profile/%idUser/%type"
+    ["function"]=>
+    object(Closure)#8 (1) {
+      ["parameter"]=>
+      array(1) {
+        ["$request"]=>
+        string(10) ""
+      }
+    }
+    ["method"]=>
+    string(4) "POST"
+    ["middlewares"]=>
+    array(1) {
+      [0]=>
+      array(1) {
+        [0]=>
+        string(22) "AuthMiddleware@session"
+      }
+    }
+    ["prefix"]=>
+    array(2) {
+      [0]=>
+      string(5) "/auth"
+      [1]=>
+      string(7) "/api/v1"
+    }
+    ["data"]=>
+    array(0) {
+    }
+    ["idGroup"]=>
+    array(3) {
+      [0]=>
+      int(1)
+      [1]=>
+      int(5)
+      [2]=>
+      int(7)
+    }
+  }
+  [4]=>
+  array(8) {
+    ["idRoute"]=>
+    int(5)
+    ["route"]=>
+    string(23) "/edit/pet/%idUser/%type"
+    ["function"]=>
+    object(Closure)#13 (1) {
+      ["parameter"]=>
+      array(1) {
+        ["$request"]=>
+        string(10) ""
+      }
+    }
+    ["method"]=>
+    string(4) "POST"
+    ["middlewares"]=>
+    array(1) {
+      [0]=>
+      array(1) {
+        [0]=>
+        string(22) "AuthMiddleware@session"
+      }
+    }
+    ["prefix"]=>
+    array(2) {
+      [0]=>
+      string(5) "/auth"
+      [1]=>
+      string(7) "/api/v1"
+    }
+    ["data"]=>
+    array(0) {
+    }
+    ["idGroup"]=>
+    array(3) {
+      [0]=>
+      int(1)
+      [1]=>
+      int(5)
+      [2]=>
+      int(7)
+    }
+  }
+  [5]=>
+  array(8) {
+    ["idRoute"]=>
+    int(6)
+    ["route"]=>
+    string(12) "/sendMessage"
+    ["function"]=>
+    object(Closure)#11 (1) {
+      ["parameter"]=>
+      array(1) {
+        ["$request"]=>
+        string(10) ""
+      }
+    }
+    ["method"]=>
+    string(4) "POST"
+    ["middlewares"]=>
+    array(0) {
+    }
+    ["prefix"]=>
+    array(1) {
+      [0]=>
+      string(7) "/api/v1"
+    }
+    ["data"]=>
+    array(0) {
+    }
+    ["idGroup"]=>
+    array(2) {
+      [0]=>
+      int(5)
+      [1]=>
+      int(7)
+    }
+  }
+  [6]=>
+  array(8) {
+    ["idRoute"]=>
+    int(7)
+    ["route"]=>
+    string(9) "/sendfood"
+    ["function"]=>
+    object(Closure)#12 (1) {
+      ["parameter"]=>
+      array(1) {
+        ["$request"]=>
+        string(10) ""
+      }
+    }
+    ["method"]=>
+    string(4) "POST"
+    ["middlewares"]=>
+    array(0) {
+    }
+    ["prefix"]=>
+    array(2) {
+      [0]=>
+      string(17) "/signal/croquette"
+      [1]=>
+      string(7) "/api/v1"
+    }
+    ["data"]=>
+    array(0) {
+    }
+    ["idGroup"]=>
+    array(3) {
+      [0]=>
+      int(3)
+      [1]=>
+      int(5)
+      [2]=>
+      int(7)
+    }
+  }
+  [7]=>
+  array(8) {
+    ["idRoute"]=>
+    int(8)
+    ["route"]=>
+    string(15) "/connect/%token"
+    ["function"]=>
+    object(Closure)#63 (1) {
+      ["parameter"]=>
+      array(1) {
+        ["$token"]=>
+        string(10) ""
+      }
+    }
+    ["method"]=>
+    string(3) "GET"
+    ["middlewares"]=>
+    array(1) {
+      [0]=>
+      array(1) {
+        [0]=>
+        string(22) "AuthMiddleware@session"
+      }
+    }
+    ["prefix"]=>
+    array(2) {
+      [0]=>
+      string(17) "/signal/croquette"
+      [1]=>
+      string(7) "/api/v1"
+    }
+    ["data"]=>
+    array(0) {
+    }
+    ["idGroup"]=>
+    array(3) {
+      [0]=>
+      int(3)
+      [1]=>
+      int(5)
+      [2]=>
+      int(7)
+    }
+  }
+  [8]=>
+  array(8) {
+    ["idRoute"]=>
+    int(9)
+    ["route"]=>
+    string(20) "/setStatusConnection"
+    ["function"]=>
+    object(Closure)#61 (1) {
+      ["parameter"]=>
+      array(1) {
+        ["$request"]=>
+        string(10) ""
+      }
+    }
+    ["method"]=>
+    string(4) "POST"
+    ["middlewares"]=>
+    array(1) {
+      [0]=>
+      array(1) {
+        [0]=>
+        string(40) "AuthMiddleware@middlewareServerCroquette"
+      }
+    }
+    ["prefix"]=>
+    array(3) {
+      [0]=>
+      string(26) "/servercroquettemiddleware"
+      [1]=>
+      string(17) "/signal/croquette"
+      [2]=>
+      string(7) "/api/v1"
+    }
+    ["data"]=>
+    array(0) {
+    }
+    ["idGroup"]=>
+    array(4) {
+      [0]=>
+      int(2)
+      [1]=>
+      int(3)
+      [2]=>
+      int(5)
+      [3]=>
+      int(7)
+    }
+  }
+  [9]=>
+  array(8) {
+    ["idRoute"]=>
+    int(10)
+    ["route"]=>
+    string(24) "/newDisconnection/%token"
+    ["function"]=>
+    object(Closure)#60 (1) {
+      ["parameter"]=>
+      array(1) {
+        ["$token"]=>
+        string(10) ""
+      }
+    }
+    ["method"]=>
+    string(4) "POST"
+    ["middlewares"]=>
+    array(1) {
+      [0]=>
+      array(1) {
+        [0]=>
+        string(40) "AuthMiddleware@middlewareServerCroquette"
+      }
+    }
+    ["prefix"]=>
+    array(3) {
+      [0]=>
+      string(26) "/servercroquettemiddleware"
+      [1]=>
+      string(17) "/signal/croquette"
+      [2]=>
+      string(7) "/api/v1"
+    }
+    ["data"]=>
+    array(0) {
+    }
+    ["idGroup"]=>
+    array(4) {
+      [0]=>
+      int(2)
+      [1]=>
+      int(3)
+      [2]=>
+      int(5)
+      [3]=>
+      int(7)
+    }
+  }
+  [10]=>
+  array(8) {
+    ["idRoute"]=>
+    int(11)
+    ["route"]=>
+    string(15) "/buy/%idProduct"
+    ["function"]=>
+    object(Closure)#6 (1) {
+      ["parameter"]=>
+      array(1) {
+        ["$request"]=>
+        string(10) ""
+      }
+    }
+    ["method"]=>
+    string(4) "POST"
+    ["middlewares"]=>
+    array(1) {
+      [0]=>
+      array(1) {
+        [0]=>
+        string(22) "AuthMiddleware@session"
+      }
+    }
+    ["prefix"]=>
+    array(2) {
+      [0]=>
+      string(6) "/store"
+      [1]=>
+      string(7) "/api/v1"
+    }
+    ["data"]=>
+    array(0) {
+    }
+    ["idGroup"]=>
+    array(3) {
+      [0]=>
+      int(4)
+      [1]=>
+      int(5)
+      [2]=>
+      int(7)
+    }
+  }
+  [11]=>
+  array(8) {
+    ["idRoute"]=>
+    int(12)
+    ["route"]=>
+    string(18) "/cancel/%idProduct"
+    ["function"]=>
+    object(Closure)#62 (1) {
+      ["parameter"]=>
+      array(1) {
+        ["$request"]=>
+        string(10) ""
+      }
+    }
+    ["method"]=>
+    string(4) "POST"
+    ["middlewares"]=>
+    array(1) {
+      [0]=>
+      array(1) {
+        [0]=>
+        string(22) "AuthMiddleware@session"
+      }
+    }
+    ["prefix"]=>
+    array(2) {
+      [0]=>
+      string(6) "/store"
+      [1]=>
+      string(7) "/api/v1"
+    }
+    ["data"]=>
+    array(0) {
+    }
+    ["idGroup"]=>
+    array(2) {
+      [0]=>
+      int(5)
+      [1]=>
+      int(7)
+    }
+  }
+  [12]=>
+  array(8) {
+    ["idRoute"]=>
+    int(13)
+    ["route"]=>
+    string(1) "/"
+    ["function"]=>
+    object(Closure)#58 (0) {
+    }
+    ["method"]=>
+    string(3) "GET"
+    ["middlewares"]=>
+    array(0) {
+    }
+    ["prefix"]=>
+    array(0) {
+    }
+    ["data"]=>
+    array(0) {
+    }
+    ["idGroup"]=>
+    array(1) {
+      [0]=>
+      int(7)
+    }
+  }
+  [13]=>
+  array(8) {
+    ["idRoute"]=>
+    int(14)
+    ["route"]=>
+    string(8) "/contact"
+    ["function"]=>
+    object(Closure)#9 (0) {
+    }
+    ["method"]=>
+    string(3) "GET"
+    ["middlewares"]=>
+    array(0) {
+    }
+    ["prefix"]=>
+    array(0) {
+    }
+    ["data"]=>
+    array(0) {
+    }
+    ["idGroup"]=>
+    array(1) {
+      [0]=>
+      int(7)
+    }
+  }
+  [14]=>
+  array(8) {
+    ["idRoute"]=>
+    int(15)
+    ["route"]=>
+    string(8) "/aboutus"
+    ["function"]=>
+    object(Closure)#59 (0) {
+    }
+    ["method"]=>
+    string(3) "GET"
+    ["middlewares"]=>
+    array(0) {
+    }
+    ["prefix"]=>
+    array(0) {
+    }
+    ["data"]=>
+    array(0) {
+    }
+    ["idGroup"]=>
+    array(1) {
+      [0]=>
+      int(7)
+    }
+  }
+  [15]=>
+  array(8) {
+    ["idRoute"]=>
+    int(16)
+    ["route"]=>
+    string(4) "/faq"
+    ["function"]=>
+    object(Closure)#57 (0) {
+    }
+    ["method"]=>
+    string(3) "GET"
+    ["middlewares"]=>
+    array(0) {
+    }
+    ["prefix"]=>
+    array(0) {
+    }
+    ["data"]=>
+    array(0) {
+    }
+    ["idGroup"]=>
+    array(1) {
+      [0]=>
+      int(7)
+    }
+  }
+  [16]=>
+  array(8) {
+    ["idRoute"]=>
+    int(17)
+    ["route"]=>
+    string(6) "/store"
+    ["function"]=>
+    object(Closure)#56 (0) {
+    }
+    ["method"]=>
+    string(3) "GET"
+    ["middlewares"]=>
+    array(0) {
+    }
+    ["prefix"]=>
+    array(0) {
+    }
+    ["data"]=>
+    array(0) {
+    }
+    ["idGroup"]=>
+    array(1) {
+      [0]=>
+      int(7)
+    }
+  }
+  [17]=>
+  array(8) {
+    ["idRoute"]=>
+    int(18)
+    ["route"]=>
+    string(15) "/see/%productID"
+    ["function"]=>
+    object(Closure)#55 (1) {
+      ["parameter"]=>
+      array(1) {
+        ["$request"]=>
+        string(10) ""
+      }
+    }
+    ["method"]=>
+    string(3) "GET"
+    ["middlewares"]=>
+    array(0) {
+    }
+    ["prefix"]=>
+    array(0) {
+    }
+    ["data"]=>
+    array(0) {
+    }
+    ["idGroup"]=>
+    array(1) {
+      [0]=>
+      int(7)
+    }
+  }
+  [18]=>
+  array(8) {
+    ["idRoute"]=>
+    int(19)
+    ["route"]=>
+    string(6) "/login"
+    ["function"]=>
+    object(Closure)#54 (0) {
+    }
+    ["method"]=>
+    string(3) "GET"
+    ["middlewares"]=>
+    array(0) {
+    }
+    ["prefix"]=>
+    array(0) {
+    }
+    ["data"]=>
+    array(0) {
+    }
+    ["idGroup"]=>
+    array(1) {
+      [0]=>
+      int(7)
+    }
+  }
+  [19]=>
+  array(8) {
+    ["idRoute"]=>
+    int(20)
+    ["route"]=>
+    string(9) "/register"
+    ["function"]=>
+    object(Closure)#53 (0) {
+    }
+    ["method"]=>
+    string(3) "GET"
+    ["middlewares"]=>
+    array(0) {
+    }
+    ["prefix"]=>
+    array(0) {
+    }
+    ["data"]=>
+    array(0) {
+    }
+    ["idGroup"]=>
+    array(1) {
+      [0]=>
+      int(7)
+    }
+  }
+  [20]=>
+  array(8) {
+    ["idRoute"]=>
+    int(21)
+    ["route"]=>
+    string(3) "/ws"
+    ["function"]=>
+    object(Closure)#52 (0) {
+    }
+    ["method"]=>
+    string(3) "GET"
+    ["middlewares"]=>
+    array(0) {
+    }
+    ["prefix"]=>
+    array(0) {
+    }
+    ["data"]=>
+    array(0) {
+    }
+    ["idGroup"]=>
+    array(1) {
+      [0]=>
+      int(7)
+    }
+  }
+  [21]=>
+  array(8) {
+    ["idRoute"]=>
+    int(22)
+    ["route"]=>
+    string(10) "/dashboard"
+    ["function"]=>
+    object(Closure)#48 (0) {
+    }
+    ["method"]=>
+    string(3) "GET"
+    ["middlewares"]=>
+    array(1) {
+      [0]=>
+      array(1) {
+        [0]=>
+        string(22) "AuthMiddleware@session"
+      }
+    }
+    ["prefix"]=>
+    array(1) {
+      [0]=>
+      string(6) "/panel"
+    }
+    ["data"]=>
+    array(1) {
+      [0]=>
+      array(1) {
+        ["test"]=>
+        int(1)
+      }
+    }
+    ["idGroup"]=>
+    array(2) {
+      [0]=>
+      int(6)
+      [1]=>
+      int(7)
+    }
+  }
+  [22]=>
+  array(8) {
+    ["idRoute"]=>
+    int(23)
+    ["route"]=>
+    string(17) "/croquette/%token"
+    ["function"]=>
+    object(Closure)#43 (1) {
+      ["parameter"]=>
+      array(1) {
+        ["$request"]=>
+        string(10) ""
+      }
+    }
+    ["method"]=>
+    string(3) "GET"
+    ["middlewares"]=>
+    array(1) {
+      [0]=>
+      array(1) {
+        [0]=>
+        string(22) "AuthMiddleware@session"
+      }
+    }
+    ["prefix"]=>
+    array(1) {
+      [0]=>
+      string(6) "/panel"
+    }
+    ["data"]=>
+    array(1) {
+      [0]=>
+      array(1) {
+        ["test"]=>
+        int(1)
+      }
+    }
+    ["idGroup"]=>
+    array(2) {
+      [0]=>
+      int(6)
+      [1]=>
+      int(7)
+    }
+  }
+  [23]=>
+  array(8) {
+    ["idRoute"]=>
+    int(24)
+    ["route"]=>
+    string(15) "/statusservices"
+    ["function"]=>
+    object(Closure)#44 (0) {
+    }
+    ["method"]=>
+    string(3) "GET"
+    ["middlewares"]=>
+    array(1) {
+      [0]=>
+      array(1) {
+        [0]=>
+        string(22) "AuthMiddleware@session"
+      }
+    }
+    ["prefix"]=>
+    array(1) {
+      [0]=>
+      string(6) "/panel"
+    }
+    ["data"]=>
+    array(1) {
+      [0]=>
+      array(1) {
+        ["test"]=>
+        int(1)
+      }
+    }
+    ["idGroup"]=>
+    array(2) {
+      [0]=>
+      int(6)
+      [1]=>
+      int(7)
+    }
+  }
+  [24]=>
+  array(8) {
+    ["idRoute"]=>
+    int(25)
+    ["route"]=>
+    string(5) "/logs"
+    ["function"]=>
+    object(Closure)#47 (0) {
+    }
+    ["method"]=>
+    string(3) "GET"
+    ["middlewares"]=>
+    array(1) {
+      [0]=>
+      array(1) {
+        [0]=>
+        string(22) "AuthMiddleware@session"
+      }
+    }
+    ["prefix"]=>
+    array(1) {
+      [0]=>
+      string(6) "/panel"
+    }
+    ["data"]=>
+    array(1) {
+      [0]=>
+      array(1) {
+        ["test"]=>
+        int(1)
+      }
+    }
+    ["idGroup"]=>
+    array(2) {
+      [0]=>
+      int(6)
+      [1]=>
+      int(7)
+    }
+  }
+  [25]=>
+  array(8) {
+    ["idRoute"]=>
+    int(26)
+    ["route"]=>
+    string(9) "/settings"
+    ["function"]=>
+    object(Closure)#46 (0) {
+    }
+    ["method"]=>
+    string(3) "GET"
+    ["middlewares"]=>
+    array(1) {
+      [0]=>
+      array(1) {
+        [0]=>
+        string(22) "AuthMiddleware@session"
+      }
+    }
+    ["prefix"]=>
+    array(1) {
+      [0]=>
+      string(6) "/panel"
+    }
+    ["data"]=>
+    array(1) {
+      [0]=>
+      array(1) {
+        ["test"]=>
+        int(1)
+      }
+    }
+    ["idGroup"]=>
+    array(2) {
+      [0]=>
+      int(6)
+      [1]=>
+      int(7)
+    }
+  }
+  [26]=>
+  array(8) {
+    ["idRoute"]=>
+    int(27)
+    ["route"]=>
+    string(8) "/profile"
+    ["function"]=>
+    object(Closure)#31 (0) {
+    }
+    ["method"]=>
+    string(3) "GET"
+    ["middlewares"]=>
+    array(1) {
+      [0]=>
+      array(1) {
+        [0]=>
+        string(22) "AuthMiddleware@session"
+      }
+    }
+    ["prefix"]=>
+    array(1) {
+      [0]=>
+      string(6) "/panel"
+    }
+    ["data"]=>
+    array(1) {
+      [0]=>
+      array(1) {
+        ["test"]=>
+        int(1)
+      }
+    }
+    ["idGroup"]=>
+    array(2) {
+      [0]=>
+      int(6)
+      [1]=>
+      int(7)
+    }
+  }
+  [27]=>
+  array(8) {
+    ["idRoute"]=>
+    int(28)
+    ["route"]=>
+    string(9) "/template"
+    ["function"]=>
+    object(Closure)#42 (0) {
+    }
+    ["method"]=>
+    string(3) "GET"
+    ["middlewares"]=>
+    array(1) {
+      [0]=>
+      array(1) {
+        [0]=>
+        string(22) "AuthMiddleware@session"
+      }
+    }
+    ["prefix"]=>
+    array(1) {
+      [0]=>
+      string(6) "/panel"
+    }
+    ["data"]=>
+    array(1) {
+      [0]=>
+      array(1) {
+        ["test"]=>
+        int(1)
+      }
+    }
+    ["idGroup"]=>
+    array(2) {
+      [0]=>
+      int(6)
+      [1]=>
+      int(7)
+    }
+  }
+  [28]=>
+  array(8) {
+    ["idRoute"]=>
+    int(29)
+    ["route"]=>
+    string(6) "/store"
+    ["function"]=>
+    object(Closure)#35 (0) {
+    }
+    ["method"]=>
+    string(3) "GET"
+    ["middlewares"]=>
+    array(1) {
+      [0]=>
+      array(1) {
+        [0]=>
+        string(22) "AuthMiddleware@session"
+      }
+    }
+    ["prefix"]=>
+    array(1) {
+      [0]=>
+      string(6) "/panel"
+    }
+    ["data"]=>
+    array(1) {
+      [0]=>
+      array(1) {
+        ["test"]=>
+        int(1)
+      }
+    }
+    ["idGroup"]=>
+    array(2) {
+      [0]=>
+      int(6)
+      [1]=>
+      int(7)
+    }
+  }
+  [29]=>
+  array(8) {
+    ["idRoute"]=>
+    int(30)
+    ["route"]=>
+    string(7) "/orders"
+    ["function"]=>
+    object(Closure)#34 (0) {
+    }
+    ["method"]=>
+    string(3) "GET"
+    ["middlewares"]=>
+    array(1) {
+      [0]=>
+      array(1) {
+        [0]=>
+        string(22) "AuthMiddleware@session"
+      }
+    }
+    ["prefix"]=>
+    array(1) {
+      [0]=>
+      string(6) "/panel"
+    }
+    ["data"]=>
+    array(1) {
+      [0]=>
+      array(1) {
+        ["test"]=>
+        int(1)
+      }
+    }
+    ["idGroup"]=>
+    array(2) {
+      [0]=>
+      int(6)
+      [1]=>
+      int(7)
+    }
+  }
+}
