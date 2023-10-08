@@ -37,7 +37,7 @@ layouts();
                     <!-- Content Row -->
                     <div class="row">
                         <?php 
-                        prettyPrint(Route::getData()->croquettes);
+                        //prettyPrint(Route::getData()->croquettes);
                         if(empty(objectToArray(Route::getData()->apps))){
                             card('Ninguna app conectada', 'Hola '.Route::getData()->user->name.", aun no tienes ninguna app conectada a FTecnology", 'paw', 'warning', 1);
                         }else{

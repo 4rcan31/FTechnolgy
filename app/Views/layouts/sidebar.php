@@ -11,7 +11,7 @@ function sidebar(){
     navItem('DashBoard', 'fas fa-fw fa-tachometer-alt', 'panel/dashboard');
     
     $appData = Route::getData()->apps;
-    if (!empty($appData)) {
+    if (!empty((array)$appData)) {
         $croquettesRoutes = [];
         foreach (Route::getData()->croquettes as $n => $croquette) {
             $croquettesRoutes["Dashboard " . ($n + 1)] = "panel/croquette/$croquette->token";
@@ -40,7 +40,7 @@ function sidebar(){
         'fas fa-fw fa-cash-register',
         'panel/orders'
     ) : null;
-    navItem('Store', 'fas fa-fw fa-store', '/panel/store');
+    navItem('Tienda', 'fas fa-fw fa-store', '/panel/store');
     /* navItem('Logs', 'fas fa-fw fa-list', '/panel/logs'); */
     /* navItem('Configuracion', 'fas fa-fw fa-wrench', '/panel/settings'); */
     navItem('Profile', 'fas fa-fw fa-user', '/panel/profile');
