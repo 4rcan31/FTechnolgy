@@ -26,9 +26,14 @@ class CroquetteController extends BaseController{
         return model('AppsUserModel');
     }
 
-    public function host(){
-        return $_ENV['APP_SERVER_CROQUETTE_HOST'].":".$_ENV['APP_SERVER_CROQUETTE_PORT'];
+    /**
+     * @return exceptionServerCroquetteModel
+     */
+    private function exceptionServerCroquetteModel() {
+        return model('exceptionServerCroquetteModel');
     }
+
+
 
     public function clientAuth(){
         return Sauth::getPayLoadTokenClient(Request::$cookies['session'], $_ENV['APP_KEY']);
@@ -50,8 +55,10 @@ class CroquetteController extends BaseController{
         $validate = validate($request);
         $validate->rule('required', [0]);
         $this->validateFieldsWithRedirection(['Esa url esta mal'], '/panel/croquette', $validate);
-        $data = ['token' => $validate->input(0)];
-        view('dashboard/Croquette/dashboard', $data);
+        view('dashboard/Croquette/dashboard', arrayToObject([
+            'token' => $validate->input(0),
+            'state' => $this->getConnectionStatusByTokenCroquette($validate->input(0))
+        ]));
     }
 
 
@@ -78,6 +85,13 @@ class CroquetteController extends BaseController{
             'token' => $token
         ]);
     }
+
+    public function ping(){
+        $reponse = $this->newCommandSendCroquette('ping');
+        return isset($reponse->message->response) &&
+                $reponse->message->response == 'pong';
+    }
+    
 
 
     private function verifyToken($token){
@@ -137,7 +151,7 @@ class CroquetteController extends BaseController{
 
 
 
-    public function connectServerCroquette(string $sendData = null, $block = false){
+    public function connectServerCroquette(Array $sendData = null, $block = false){
         $socket = @stream_socket_client(
             "tcp://".$this->host(), 
             $errno, 
@@ -152,14 +166,22 @@ class CroquetteController extends BaseController{
         }
     
         if($sendData !== null){
-            fwrite($socket, "SERVER_APP:$sendData");
+           // fwrite($socket, "SERVER_APP:$sendData");
+            $sendData = array_merge([
+                'typeApp' => 'SERVER_APP'
+            ], $sendData);
+            fwrite($socket, json_encode($sendData));
         }
-    
+
+        $response = fread($socket, 1024);
+        $decodeJson = json_decode($response);
+        
         $response = arrayToObject([
             'res' => true,
-            'message' => fread($socket, 1024)
+            'isJson' => ($decodeJson !== null),
+            'message' => ($decodeJson !== null) ? $decodeJson : $response
         ]);
-    
+        
         if ($block) {
             fclose($socket); // Cierra la conexión si $block es true
         }
@@ -167,15 +189,150 @@ class CroquetteController extends BaseController{
         return $response;
     }
 
+    public function newCommandSendCroquette(string $command, Array $data = []){
+        return $this->connectServerCroquette(array_merge([
+            'command' => $command
+        ], $data), true);
+    }
 
-    public function sendFood($request){
-        $this->validateCsrfTokenWithRedirection($request, '/panel/croquette');
+
+    public function sendFood($request) {
+        $tokenCroquette = $request['tokenCroquette'] ?? null;
+        $redirection = '/panel/croquette/' . $tokenCroquette;
+    
+        if (!$this->CroquetteModel()->existByToken($tokenCroquette)) {
+            Form::send('/', ["Alteraste el código HTML"], 'Error');
+        }
         $validate = validate($request);
-        $validate->rule('required', ['cantidad', 'croquetteToken']);
-        $this->validateFieldsWithRedirection(['Tienes que rellanar todos los campos'], '/panel/croquette', $validate);
-       // $this->connectServerCroquette('senfood:');
+        $this->validateCsrfTokenWithRedirection($request, $redirection);
+        $validate->rule('required', ['cantidad', 'tokenCroquette']);
+        $this->validateFieldsWithRedirection(['Tienes que rellenar todos los campos'], $redirection, $validate);
+        if (!is_numeric($validate->input('cantidad'))) {
+            Form::send($redirection, ['Has modificado el HTML. La cantidad no es un número.'], 'Error');
+        }
+        if($this->ping()){
+            $response = $this->newCommandSendCroquette('sendfood', [
+                'tokenCroquette' => $tokenCroquette,
+                'cantidad' => $validate->input('cantidad')
+            ]);
+            $status = isset($response->message->state) &&
+            $response->message->state ? 
+            "ok" : 'bad';
+            server::redirect($redirection."?status=$status&message=".base64_encode($response->message->response));
+        }else{
+            Form::send('/panel/statusservices', ['Lo sentimos, el servidor de comunicación de Croquette está caído :c'], 'Error');
+        }
+    }
+
+    public function scheduleQuantity($request) {
+        $tokenCroquette = $request['tokenCroquette'] ?? null;
+        $redirection = '/panel/croquette/' . $tokenCroquette;
+    
+        // Check if Croquette exists
+        if (!$this->CroquetteModel()->existByToken($tokenCroquette)) {
+            Form::send('/', ["Alteraste el código HTML"], 'Error');
+            return;
+        }
+    
+        $validate = validate($request);
+    
+        // Validate CSRF token
+        $this->validateCsrfTokenWithRedirection($request, $redirection);
+    
+        // Define required fields
+        $requiredFields = ['fecha', 'hora', 'tokenCroquette', 'cantidad'];
+    
+        // Validate required fields
+        $validate->rule('required', $requiredFields);
+        if (!$validate->validate()) {
+            Form::send($redirection, ['Tienes que rellenar todos los campos'], 'Error');
+            return;
+        }
+    
+        // Validate cantidad and hora as numeric values
+        if (!is_numeric($validate->input('cantidad'))) {
+            Form::send($redirection, ['Has modificado el HTML. La cantidad no es un número.'], 'Error');
+            return;
+        }
+    
+        // Validate fecha as a valid date
+        $date = new DateTime($validate->input('fecha'));
+        $date = date_format($date, 'Y-m-d');
+        if (!$this->validateDate($date)) {
+            Form::send($redirection, ['La fecha no es válida'], 'Error');
+            return;
+        }
+    
+        // Validate hora as a valid time in 'H:i' format
+        if (!$this->validateTime($validate->input('hora'), 'H:i')) {
+            Form::send($redirection, ['La hora no es válida'], 'Error');
+            return;
+        }
+    
+        // All validations passed
+    
+        // Check server availability
+        if ($this->ping()) {
+                $response = $this->newCommandSendCroquette('scheduleQuantity', [
+                    'date' => $date,
+                    'tokenCroquette' => $tokenCroquette,
+                    'time' => $validate->input('hora'),
+                    'cantidad' => $validate->input('cantidad'),
+                ]);
+                $status = isset($response->message->response) &&
+                $response->message->response ? 
+                "ok" : 'bad';
+                server::redirect($redirection."?status=$status&message=".base64_encode($response->message->response));
+        } else {
+            // Server is down
+            Form::send('/panel/statusservices', ['Lo sentimos, el servidor de comunicación de Croquette está caído :c'], 'Error');
+        }
+    }
+    
+
+    /* 
+        Sé que los métodos validateDate y validateTime no deberían ir aquí,
+        deberían ir en el validador de Sao, pero es que, viejo, no tengo 
+        tiempo ahora para estar tocando cables internos de Sao xd
+    */
+
+    public function validateDate($date, $dateFormat = 'Y-m-d', $posterior = true) {
+        $currentDate = date($dateFormat);
+        if (!strtotime($date) || ($posterior && $date < $currentDate) || (!$posterior && $date > $currentDate)) {
+            return false; 
+        }
+    
+        return true;
+    }
+
+    public function validateTime($time, $formatTime = 'H:i:s') {
+        $timestamp = strtotime($time);
+        if ($timestamp === false || date($formatTime, $timestamp) !== $time) {
+            return false; 
+        }
+        return true; 
+    }
+
+
+    public function getConnectionStatusByTokenCroquette(string $tokenCroquette){
+        return $this->CroquetteModelUser()->getStateConnectionByIdCroquette(
+            $this->CroquetteModel()->getIdByToken($tokenCroquette)
+        );
+    }
+
+    public function serverShutdownEvent($request){
+        $validate = validate($request);
+        $this->exceptionServerCroquetteModel()->newException(
+           $validate->input('message'),
+           $validate->input('error'),
+           $validate->input('clientIp') ? $validate->input('clientIp') : null,
+           $validate->input('host').":".$validate->input('port'),
+           $validate->input('infoExtra') ? $validate->input('infoExtra') : null
+        );
+        $this->CroquetteModelUser()->setStateOffAllCroquettes();
         res($request);
     }
+
 
     
     

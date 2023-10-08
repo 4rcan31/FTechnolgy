@@ -1,6 +1,6 @@
 # Tareas Pendientes
 
-1. **Terminar de programar el protocolo de comunicación de Croquette**: Finalizar la implementación del protocolo de comunicación para garantizar la interacción correcta entre el dispositivo Croquette y la aplicación.
+1. **Terminar de programar el protocolo de comunicación de Croquette**: Finalizar la implementación del protocolo de comunicación para garantizar la interacción correcta entre el dispositivo Croquette y la aplicación. **(LISTO)** *7 de octubre 2023*
 
 2. **Programar el código para el Arduino (funcionamiento con la app, internet)**: Desarrollar el código que permitirá a Croquette funcionar en conjunto con la aplicación para la dispensación de alimentos a través de Internet.
 
@@ -14,7 +14,7 @@
 
 7. **Guía de Instalación**: Crear una sección que permita a los usuarios consultar una guía de instalación desde el panel de control, asegurando una configuración exitosa de Croquette.
 
-8. **Crear una simulación de Croquette para pruebas**: Desarrollar una simulación de Croquette en Node.js para realizar pruebas exhaustivas y garantizar su correcto funcionamiento.
+8. **Crear una simulación de Croquette para pruebas**: Desarrollar una simulación de Croquette en Node.js para realizar pruebas exhaustivas y garantizar su correcto funcionamiento. **(LISTO)** *7 de octubre 2023*
 
 9. **Soldar el circuito**: Completar el ensamblaje del circuito de Croquette mediante el proceso de soldadura, asegurando una conexión sólida y confiable.
 

@@ -41,6 +41,10 @@ Route::group(function(){
             controller('CroquetteController', 'sendFood', $request);
         });
 
+        Route::post('/schedulequantity', function($request){
+            controller('CroquetteController', 'scheduleQuantity', $request);
+        });
+
 
         Route::get('connect/%token', function ($token) {
             controller('CroquetteController', 'connect', $token[0]);
@@ -55,6 +59,10 @@ Route::group(function(){
     
             Route::post('/newDisconnection/%token', function($token){
                 controller('CroquetteController', 'newDisconnection', $token[0]);
+            });
+
+            Route::post('/servershutdown', function($request){
+                controller('CroquetteController', 'serverShutdownEvent', $request);
             });
         })->prefix('/servercroquettemiddleware')->middlewares(['AuthMiddleware@middlewareServerCroquette']);
 
