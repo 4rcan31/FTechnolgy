@@ -1,6 +1,11 @@
 const DataBase = require('./DataBase');
 const { Server } = require("net");
-const { newConnectionToAppServer, newDisconnectionToAppServer, serverAppConnect } = require('./http');
+const { 
+  newConnectionToAppServer,
+  newDisconnectionToAppServer,
+  serverAppConnect,
+  handleServerShutdown 
+} = require('./http');
 
 
 const listen = (host, port) => {
@@ -12,15 +17,23 @@ const listen = (host, port) => {
     client.setEncoding('utf-8');
 
     client.on('data', (request) => {
-      request.startsWith('SERVER_APP')  ? 
-      serverAppConnect(request, client) : 
-      newConnectionToAppServer(request, client);
+      request = JSON.parse(request);
+      if (request && request.typeApp) {
+        if (request.typeApp === 'SERVER_APP') {
+          serverAppConnect(request, client);
+        } else  if(request.typeApp == 'CROQUETTE_APP'){
+          newConnectionToAppServer(request, client);
+        }
+      } else {
+        console.error('El objeto request no tiene la propiedad "type" o es nulo.');
+      }
     });
 
     client.on("error", (err) => console.error(err));
 
     client.on("close", () => {
       newDisconnectionToAppServer(client);
+
       console.log(`Connection with ${clientAddress} closed`);
     });
   });
@@ -33,6 +46,8 @@ const listen = (host, port) => {
     console.error(err.message);
     process.exit(1);
   });
+
+  handleServerShutdown(server);
 };
 
 const main = () => {
@@ -42,3 +57,14 @@ const main = () => {
 if (require.main === module) {
   main();
 }
+
+
+
+
+
+
+
+
+// Uso:
+// configureServerShutdownHandling(server);
+

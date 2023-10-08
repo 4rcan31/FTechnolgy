@@ -17,6 +17,7 @@ const connect = (host, port) => {
 
   socket.on("connect", () => {
     console.log(`Connected to ${host}:${port}`);
+    console.log("Croquette simulation is on with token: "+tokenCroquette);
 
     /* 
         1. El codigo qr se escanea y se ancla a un usuario (opcional)
@@ -29,7 +30,10 @@ const connect = (host, port) => {
         6. Mantener el boton de up por 10 segundos para conectarse a la app
         7. Croquette envia el token al server middleware y se conecta
     */
-    socket.write(tokenCroquette);
+    socket.write(JSON.stringify({
+      typeApp : 'CROQUETTE_APP',
+      tokenCroquette: tokenCroquette
+    }));
 
 
     socket.on("data", (data) => {

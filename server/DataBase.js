@@ -25,6 +25,7 @@ ClientServer.set('port', "8080");
 ClientServer.set('pathUrlApiCroquette', '/api/v1/signal/croquette/servercroquettemiddleware');
 ClientServer.set('pathUrlsetConnection', '/setStatusConnection');
 ClientServer.set('pathUrlsetDisconnection', '/newDisconnection');
+ClientServer.set('pathUrlHandleServerShutdown', '/servershutdown');
 /* ClientServer.set('urlapi', `${ClientServer.get('host')}/api/v1`);
 ClientServer.set('urlApiSendToken', `${ClientServer.get('urlapi')}/signal/croquette/setStatusConnection`); */
 
