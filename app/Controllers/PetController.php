@@ -51,7 +51,7 @@ class PetController extends BaseController{
             $validate->rule("required", [$field]);
     
             if ($field == 'age' || $field == 'weight') {
-                $validate->rule('numeric', $field);
+                $validate->rule('numeric', $field); //Estro creo que no funciona aun xd
             } elseif ($field == 'gender') {
                 $validate->rule('in', ['Male', 'Female', 'Other']);
             }
