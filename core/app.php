@@ -104,6 +104,7 @@ class Sao{
 
 
     private function runAppSession(){
+        session_name('SAOSESSID');
         session_start();
     }
 

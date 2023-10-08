@@ -17,6 +17,10 @@ class BaseController{
         }
         return;
     }
+
+    public function host(){
+        return $_ENV['APP_SERVER_CROQUETTE_HOST'].":".$_ENV['APP_SERVER_CROQUETTE_PORT'];
+    }
     
     
     
