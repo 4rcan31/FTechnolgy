@@ -45,6 +45,7 @@ function sidebar(){
     /* navItem('Configuracion', 'fas fa-fw fa-wrench', '/panel/settings'); */
     navItem('Profile', 'fas fa-fw fa-user', '/panel/profile');
     navItem('Estado Server', 'fas fa-fw fa-server', 'panel/statusservices');
+    navItem('FAQ', 'fas fa-fw fa-question', 'panel/faq');
     /* navItem('doctemplate', 'fas fa-fw fa-test', 'panel/template'); */
     sidebarToggler();
     //sidebarMessage('Conecta a croquette', 'BOTON', 'TES');

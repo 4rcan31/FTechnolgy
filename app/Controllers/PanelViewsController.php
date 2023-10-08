@@ -62,6 +62,13 @@ class PanelViewsController extends BaseController{
         return model('AppsUserModel');
     }
 
+    /**
+    * @return FAQModel
+    */
+    public function FAQModel(){
+        return model('FAQModel');
+    }
+
 
     
 
@@ -316,5 +323,9 @@ class PanelViewsController extends BaseController{
             relaciones en las migraciones nada mas, pero en su orm si
         */
         view('dashboard/orders', $orders);
+    }
+
+    public function faqView(){
+        view('dashboard/faq', $this->FAQModel()->get());
     }
 }

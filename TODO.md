@@ -1,20 +1,20 @@
 # Tareas Pendientes
 
-1. **Terminar de programar el protocolo de comunicación de Croquette**: Finalizar la implementación del protocolo de comunicación para garantizar la interacción correcta entre el dispositivo Croquette y la aplicación. **(LISTO)** *7 de octubre 2023*
+1. **(LISTO)** *7 de octubre 2023*: **Terminar de programar el protocolo de comunicación de Croquette**: Finalizar la implementación del protocolo de comunicación para garantizar la interacción correcta entre el dispositivo Croquette y la aplicación.
 
 2. **Programar el código para el Arduino (funcionamiento con la app, internet)**: Desarrollar el código que permitirá a Croquette funcionar en conjunto con la aplicación para la dispensación de alimentos a través de Internet.
 
-3. **Soporte para Múltiples Croquettes**: Habilitar la capacidad para que los usuarios conecten varios dispositivos Croquette a la aplicación, mejorando la experiencia del usuario.  **(LISTO)** *6 de octubre 2023*
+3. **(LISTO)** *6 de octubre 2023*: **Soporte para Múltiples Croquettes**: Habilitar la capacidad para que los usuarios conecten varios dispositivos Croquette a la aplicación, mejorando la experiencia del usuario.
 
-4. **Flujo de Compra de Croquette desde la Tienda**: Implementar la funcionalidad que permitirá a los usuarios realizar compras de productos Croquette directamente desde la aplicación, facilitando la adquisición de nuevos dispositivos. **(LISTO)** *5 de octubre 2023*
+4. **(LISTO)** *5 de octubre 2023*: **Flujo de Compra de Croquette desde la Tienda**: Implementar la funcionalidad que permitirá a los usuarios realizar compras de productos Croquette directamente desde la aplicación, facilitando la adquisición de nuevos dispositivos.
 
-5. **Acceso a la Tienda desde el Panel**: Agregar una sección que permita a los usuarios acceder a la tienda de productos Croquette desde el panel de control, brindándoles una experiencia completa. **(LISTO)** *5 de octubre 2023*
+5. **(LISTO)** *5 de octubre 2023*: **Acceso a la Tienda desde el Panel**: Agregar una sección que permita a los usuarios acceder a la tienda de productos Croquette desde el panel de control, brindándoles una experiencia completa. 
 
-6. **Acceso a las Preguntas Frecuentes (FAQ) desde el Panel**: Incorporar un enlace que proporcione acceso rápido a las preguntas frecuentes (FAQ) desde el panel de control, mejorando la disponibilidad de información útil para los usuarios.
+6. **(LISTO)** *8 de octubre 2023*: **Acceso a las Preguntas Frecuentes (FAQ) desde el Panel**: Incorporar un enlace que proporcione acceso rápido a las preguntas frecuentes (FAQ) desde el panel de control, mejorando la disponibilidad de información útil para los usuarios.
 
 7. **Guía de Instalación**: Crear una sección que permita a los usuarios consultar una guía de instalación desde el panel de control, asegurando una configuración exitosa de Croquette.
 
-8. **Crear una simulación de Croquette para pruebas**: Desarrollar una simulación de Croquette en Node.js para realizar pruebas exhaustivas y garantizar su correcto funcionamiento. **(LISTO)** *7 de octubre 2023*
+8. **(LISTO)** *7 de octubre 2023*: **Crear una simulación de Croquette para pruebas**: Desarrollar una simulación de Croquette en Node.js para realizar pruebas exhaustivas y garantizar su correcto funcionamiento.
 
 9. **Soldar el circuito**: Completar el ensamblaje del circuito de Croquette mediante el proceso de soldadura, asegurando una conexión sólida y confiable.
 
@@ -24,7 +24,7 @@
 
 12. **Instalar el circuito de Croquette en las piezas**: Colocar el circuito de Croquette en las piezas impresas para completar la construcción del dispositivo.
 
-13. **Edición de Perfil de la Mascota**: Implementar la funcionalidad que permita a los usuarios editar los perfiles de sus mascotas para proporcionar una experiencia personalizada. **(LISTO)**
+13. **(LISTO)**: **Edición de Perfil de la Mascota**: Implementar la funcionalidad que permita a los usuarios editar los perfiles de sus mascotas para proporcionar una experiencia personalizada. 
 
 
 # Problemas de Seguridad

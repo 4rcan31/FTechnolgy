@@ -79,6 +79,10 @@ Route::group(function(){
       controller('PanelViewsController', 'ordersView');
    });
 
+   Route::get('/faq', function(){
+      controller('PanelViewsController', 'faqView');
+   });
+
 
 })->prefix('/panel')->middlewares(['AuthMiddleware@session'])->setData(controller('PanelViewsController', 'userProfileData'));
 /* 
