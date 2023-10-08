@@ -23,9 +23,9 @@ class ViewsUserAoutSessionController extends BaseController{
 
 
     public function seeProduct($id){
-        $validate = validate($id);
-        $validate->rule('is', $id, 'number');
-        !$validate->validate() ? Server::redirect('/store') : null;
+        if(!is_numeric($id)){
+            Server::redirect('/store');
+        }
         $this->apps()->existById($id) ? 
         view('see', $this->apps()->getAppsByIdApp($id)) :
         Server::redirect('/store');
