@@ -202,28 +202,53 @@ class PanelViewsController extends BaseController{
     
         /** @var CroquetteController $croquette */
         $croquette = import('Controllers/CroquetteController.php');
-        $connection = $croquette->connectServerCroquette('ping', true);
-        $data->server_croquette = $connection->res;
         $data->client_user_holds_client_croquette = $croquette->useHoldClientCroquette();
+        $ping = $croquette->ping();
+
+
+        /* 
+            El método $croquette->getStateCroquetteClientAuth() podría ser eliminado en el futuro.
+            Ahora se ha introducido la posibilidad de asociar varios dispositivos Croquette a un mismo usuario,
+            por lo que carece de sentido mostrar el estado de conexión o desconexión de un Croquette específico
+            en la página de estado de las entidades, ya que un usuario puede tener múltiples Croquettes, no solo uno.
+        */
         $data->client_croquette = $croquette->getStateCroquetteClientAuth();
 
         // Agregamos mensajes según las condiciones, con eventos asociados
         if(!$data->client_user_holds_client_croquette) {
             $data->messages->client_user_holds_client_croquette = "Todavía no posees un croquette.";
         }
-
-        if(!$data->server_croquette) {
-            $data->messages->server_croquette = "El servidor de comunicación de croquette está caído.";
-        }
-
         !$data->client_croquette ? 
         $data->messages->client_croquette = "Aún no has encendido tu croquette" :
         $data->messages->client_croquette = "Tu Croquette está conectado!";
         
+        /* 
+            Ahora, la propiedad '$connection->message' ya no es simplemente una cadena de caracteres,
+            sino un objeto JSON, convertido a objeto PHP. El servidor Croquette construye un JSON de la siguiente manera:
 
-        if ($connection->message === 'pong') {
-            $data->messages->server_croquette = "El servidor de comunicación de croquette está conectado (se recibió un pong).";
-        }
+            {
+                "response": "Mensaje de respuesta del socket",
+                // ... Otras Respuestas Adicionales
+            }
+
+            La clave "response" se mantiene constante en su estructura.
+
+            La clave 'message' no se obtiene directamente del servidor de Croquette; 
+            en realidad, se construye en el método 'connectServerCroquette' de la siguiente manera:
+
+            $response = fread($socket, 1024);
+            $decodeJson = json_decode($response);
+            $response = arrayToObject([
+                'res' => true,
+                'isJson' => ($decodeJson !== null),
+                'message' => ($decodeJson !== null) ? $decodeJson : $response
+            ]);
+        */
+
+        $data->messages->server_croquette = $ping ?
+        "El servidor de comunicación de croquette está conectado (se recibió un pong)." : 
+        "El servidor de comunicación de croquette está caído.";
+        $data->server_croquette = $ping;
         $data->messages->server_app = "La aplicación está funcionando.";
         $data->messages->client_user = "Ya estás conectado.";
 
