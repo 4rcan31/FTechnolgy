@@ -119,12 +119,6 @@ class PanelViewsController extends BaseController{
         return $this->userModel()->getById(Route::getData()->user->id);
     }
 
-    
-    public function clientAuth(){
-        return Sauth::getPayLoadTokenClient(Request::$cookies['session'], $_ENV['APP_KEY']);
-    }
-
-
     public function builtMessageAge($age){
         $messageAge = 'Tu mascota tiene ';
         if ($age['years'] > 0) {

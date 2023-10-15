@@ -9,11 +9,6 @@ class storeController extends BaseController{
         return model('OrdersModel');
     }
 
-    public function clientAuth(){
-        return Sauth::getPayLoadTokenClient(Request::$cookies['session'], $_ENV['APP_KEY']);
-    }
-
-
     public function newOrder($request){
         $this->validateCsrfTokenWithRedirection($request, 'panel/store');
         $validate = validate($request);

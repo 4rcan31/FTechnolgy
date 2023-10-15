@@ -12,13 +12,7 @@ class PetController extends BaseController{
         return model('PetsModel');
     }
 
-
-    public function clientAuth(){
-        return Sauth::getPayLoadTokenClient(Request::$cookies['session'], $_ENV['APP_KEY']);
-    }
-
-
-
+    
     public function edit($request){
         if (!TokenCsrf::validateToken($request)) {
             Form::send('/panel/profile', ['Su sesión expiró'], 'Error');

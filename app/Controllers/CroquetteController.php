@@ -33,12 +33,6 @@ class CroquetteController extends BaseController{
         return model('exceptionServerCroquetteModel');
     }
 
-
-
-    public function clientAuth(){
-        return Sauth::getPayLoadTokenClient(Request::$cookies['session'], $_ENV['APP_KEY']);
-    }
-
     public function useHoldClientCroquette(){
         return $this->CroquetteModelUser()->userHoldsCroquette(
             $this->clientAuth()->id
