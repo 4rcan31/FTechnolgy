@@ -9,6 +9,13 @@ class storeController extends BaseController{
         return model('OrdersModel');
     }
 
+    /**
+     * @return UserModel
+    */
+    private function users() {
+        return model('UserModel');
+    }
+
     public function newOrder($request){
         $this->validateCsrfTokenWithRedirection($request, 'panel/store');
         $validate = validate($request);
@@ -16,6 +23,17 @@ class storeController extends BaseController{
         if(!$validate->validate()){
             Form::send('/panel/store', ['Has modificado el html'], 'Error');
         }
+
+        $profile = $this->users()->getAdressAndPhoneByIdUser(
+            $this->clientAuth()->id
+        );
+        
+        if ($profile->phone_number === null || $profile->address === null) {
+            Form::send('/panel/profile', ['Configura tu número de teléfono o dirección'], 'Error');
+        }
+        
+        
+    
         $this->order()->new(
             $this->clientAuth()->id,
             $validate->input(0), //Esto es el id del producto (Equivale al id de la app)
