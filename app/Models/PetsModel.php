@@ -13,7 +13,7 @@ class PetsModel extends BaseModel{
     public function userConfigPet(int $idUser){
         $this->prepare();
         $this->select(['*'])->from('pets')->where('user_id', $idUser);
-        return $this->execute()->exist();
+        return $this->execute()->exists();
     }
 
     public function insertNewName(string $name, int $idUser){

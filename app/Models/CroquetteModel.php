@@ -8,7 +8,7 @@ class CroquetteModel extends BaseModel{
     function existByToken($token){
         $this->prepare();
         $this->select(['*'])->from('croquettes_auths')->where('token', $token);
-        return $this->execute()->exist();
+        return $this->execute()->exists();
     }
 
     public function getByToken($token){

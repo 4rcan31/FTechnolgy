@@ -25,7 +25,7 @@ class AppsModel extends BaseModel{
     public function existById(int $id){
         $this->prepare();
         $this->select(['id'])->from('apps')->where('id', $id);
-        return $this->execute()->exist();
+        return $this->execute()->exists();
     }
 
     public function get(){   

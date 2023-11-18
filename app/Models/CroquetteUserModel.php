@@ -17,7 +17,7 @@ class CroquetteUserModel extends BaseModel{
     public function belongsToUser(int $idCroquette){
         $this->prepare();
         $this->select(['id_croquette'])->from('croquette_user')->where('id_croquette', $idCroquette);
-        return $this->execute()->exist();
+        return $this->execute()->exists();
     }
 
     public function setStateOn(int $idCroquette){
@@ -46,7 +46,7 @@ class CroquetteUserModel extends BaseModel{
     public function userHoldsCroquette(int $idUser){
         $this->prepare();
         $this->select(['*'])->from('croquette_user')->where('id_user', $idUser);
-        return $this->execute()->exist();
+        return $this->execute()->exists();
     }
 
     public function getByIdUser(int $idUser){

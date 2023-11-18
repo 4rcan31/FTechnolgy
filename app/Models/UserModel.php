@@ -4,7 +4,7 @@
 class UserModel extends BaseModel{
 
 
-
+    public $table = 'users';
 
     public function insertNewUser($email, $name, $user, $password){
         $this->prepare();
@@ -20,7 +20,7 @@ class UserModel extends BaseModel{
     public function existUserByEmail(string $email){
         $this->prepare(); 
         $this->select(['email'])->from('users')->where('email', $email);
-        return $this->execute()->exist();
+        return $this->execute()->exists();
     }
 
 
@@ -74,5 +74,12 @@ class UserModel extends BaseModel{
             'address' => $address
         ])->where('id', $idUser);
         return $this->execute()->lastId();
+    }
+
+    public function getAdressAndPhoneByIdUser(int $idUser){
+        $this->prepare();
+        $this->select(['phone_number', 'address'])
+            ->from($this->table)->where('id', $idUser);
+        return $this->execute()->all();
     }
 }

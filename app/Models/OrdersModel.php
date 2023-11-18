@@ -39,7 +39,7 @@ class OrdersModel extends BaseModel{
     public function existById(int $idUser){
         $this->prepare();
         $this->select(['id'])->from('orders')->where('user_id', $idUser);
-        return $this->execute()->exist();
+        return $this->execute()->exists();
     }
 
     public function getByIdUser(int $idUser) {
@@ -64,7 +64,7 @@ class OrdersModel extends BaseModel{
     public function existOrderById(int $idOrder){
         $this->prepare();
         $this->select(["*"])->from($this->table)->where('id', $idOrder);
-        return $this->execute()->exist();
+        return $this->execute()->exists();
     }
     
 }
