@@ -92,7 +92,7 @@ DB_PASSWORD=
 ### 4. Verificar si la configuración de la base de datos fue exitosa
 
 ```sh
-php jenu comprobate:connection:mysql
+php jenu check:connection:mysql
 ```
 
 ### 5. Ejecutar las migraciones (crear tablas)
