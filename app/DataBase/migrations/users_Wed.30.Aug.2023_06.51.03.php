@@ -11,8 +11,8 @@ class users extends Migration {
                 user VARCHAR(255) NOT NULL,
                 password VARCHAR(255) NOT NULL,
                 remember_token VARCHAR(255),
-                phone_number VARCHAR(255) DEFAULT ("Aun no has llenado tu teléfono"),
-                address TEXT DEFAULT ("Aun no has llenado tu dirección"),
+                phone_number VARCHAR(255) DEFAULT NULL,
+                address TEXT DEFAULT NULL,
                 avatar_serve VARCHAR(255) DEFAULT "' . serve($_ENV['APP_ADDRESS'] . ":" . $_ENV['APP_PORT']) . '",
                 avatar_rute VARCHAR(255) DEFAULT "assets/images/Logo.jpg",
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
