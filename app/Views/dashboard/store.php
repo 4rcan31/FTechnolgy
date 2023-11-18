@@ -65,7 +65,7 @@ csrf();
                                 <label for="email">Correo:</label>
                                 <input type="text" name="email" class="form-control" readonly value="{{ email }}">
                             </div>
-                            <small>Si deseas cambiar estos datos, debes ir a <a href="<?php route('/panel/profile') ?>">Perfil</a></small>
+                            <small><b>NOTA: </b>Si deseas cambiar estos datos, debes ir a <a href="<?php route('/panel/profile') ?>">Perfil</a></small>
                             <div class="form-group">
                                 <label for="direccion">Mensaje adicional</label>
                                 <textarea  name="message" class="form-control"></textarea>
@@ -81,6 +81,8 @@ csrf();
                         <div class="col-lg-12">
                             <?php
                             foreach ($apps as $app) {
+                                $user->address = $user->address ?? "Aun no has llenado tu dirección";
+                                $user->phone_number = $user->phone_number ?? "Aun no has llenado tu teléfono";                                
                                 $html = str_replace('{{ id_producto }}', $app->id, $html);
                                 $html = str_replace('{{ description }}', $app->description, $html);
                                 $html = str_replace('{{ image }}', route($app->avatar_rute, false), $html);

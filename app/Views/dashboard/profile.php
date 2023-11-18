@@ -81,7 +81,7 @@ csrf();
 
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <?php cardWithText("Telefono", $profiles->user->phone_number, 'default', 'Editar', [
+                                    <?php cardWithText("Telefono", $profiles->user->phone_number ?? "Aun no has llenado tu teléfono", 'default', 'Editar', [
                                         'title' => "Editar nombre",
                                         'html' => '<form action="' . route('api/v1/auth/edit/profile/' . $profiles->user->id . '/' . "phone", false) . '" method="POST">
                                                     <div class="form-group">
@@ -97,7 +97,7 @@ csrf();
 
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <?php cardWithText("Direccion", $profiles->user->address, 'default', 'Editar', [
+                                    <?php cardWithText("Direccion", $profiles->user->address ?? "Aun no has llenado tu dirección", 'default', 'Editar', [
                                         'title' => "Editar nombre",
                                         'html' => '<form action="' . route('api/v1/auth/edit/profile/' . $profiles->user->id . '/' . "address", false) . '" method="POST">
                                                     <div class="form-group">
@@ -155,7 +155,7 @@ csrf();
                                     'html' => '<form action="' . route('api/v1/auth/edit/pet/' . $profiles->user->id . '/' . "weight", false) . '" method="POST">
                                                 <div class="form-group">
                                                     '.TokenCsrf::getInput().'
-                                                    <label for="newWeight">Nueva fecha de nacimiento</label>
+                                                    <label for="newWeight">Nuevo peso de la mascota</label>
                                                     <input type="number" class="form-control" id="newWeight" name="weight">
                                                 </div>
                                             </form>',
