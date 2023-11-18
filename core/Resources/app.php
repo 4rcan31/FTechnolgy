@@ -46,7 +46,13 @@ class File {
         self::$size = $file['size'];
         self::$file = $file;
         self::$format = strtolower(pathinfo(self::$nameFile, PATHINFO_EXTENSION));
-        return self::isSafeMimeType(self::$type) && self::isAllowedFormat(self::$format);
+        if (!self::isSafeMimeType(self::$type)) {
+            return false;
+        }
+        if(!self::isAllowedFormat(self::$format)){
+            return false;
+        }
+        return true;
     }
 
     public static function upload($nameFile = null, $ruteServer = 'public/uploads', $ruteHost = '/uploads') {
@@ -110,18 +116,17 @@ class File {
     
     
 
-    public static function lastFileUploadInfo(string $input = null) {
+    public static function lastFileUploadInfo(string $input) {
         if ($input == 'name') {
             return self::$nameFile;
-        } elseif ($input == 'path:updload') { //Esta es la ruta en el servidor (sin el file)
+        } elseif ($input == 'path:updload') {
             return self::$routeFile;
-        }else if($input == 'host:upload'){ //Esta es la ruta en el host (toda la ruta)
+        }else if($input == 'host:upload'){
             return self::$pathHostUpload;
-        }else if($input == 'rute:upload'){ ///Esto es la ruta en el servidor (sin el host)
+        }else if($input == 'rute:upload'){
             return self::$routeHostUpload;
-        }else if($input == null){
-            return get_object_vars(new self());
         }
+        return get_object_vars(new self());
     }
 
     private static function isSafeMimeType($mime) {

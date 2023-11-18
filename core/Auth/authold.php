@@ -84,7 +84,7 @@ class SauthOLD {
         $db = new DataBase;
         $db->prepare();
         $db->select([$colum])->from($table)->where($idColumName, $id);
-        if(!$db->execute()->exist()){
+        if(!$db->execute()->exists()){
             throw new Exception("The user with id ".$id." dont exist", 1);
         }
         $db->prepare();

@@ -1,39 +1,11 @@
 <?php 
 
 
-
-/* class Encrypt {
-    protected $keyDefault = '123';
-
-    public function encrypt($string, $key) {
-        $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('AES-128-CBC'));
-        $ciphertext = openssl_encrypt($string, 'AES-128-CBC', $key, OPENSSL_RAW_DATA, $iv);
-        $hmac = hash_hmac('sha256', $ciphertext, $key, true);
-        return base64_encode($iv . $hmac . $ciphertext);
-    }
-
-    public function decrypt($string, $key) {
-        $decoded = base64_decode($string);
-        $ivlen = openssl_cipher_iv_length('AES-128-CBC');
-        $iv = substr($decoded, 0, $ivlen);
-        $hmac = substr($decoded, $ivlen, 32);
-        $ciphertext = substr($decoded, $ivlen + 32);
-        $original_plaintext = openssl_decrypt($ciphertext, 'AES-128-CBC', $key, OPENSSL_RAW_DATA, $iv);
-        $calcmac = hash_hmac('sha256', $ciphertext, $key, true);
-        if (hash_equals($hmac, $calcmac)) {
-            return $original_plaintext;
-        } else {
-            return "¿Que intentas?";
-        }
-    }
-}
- */
-
  class Encrypt{
     protected $keyDefault = '123';
 
     
-    public function encrypt($string, $key){
+    public function encrypt(string $string, string $key){
         $ivlen = openssl_cipher_iv_length("AES-128-CBC");
         $iv = openssl_random_pseudo_bytes($ivlen);
         $ciphertext_raw = openssl_encrypt(base64_encode($string), 'AES-128-CBC', $key, OPENSSL_RAW_DATA , $iv);
@@ -55,7 +27,7 @@
 
 
     //start decrypt
-    public function decrypt($string, $key){
+    public function decrypt(string $string, string $key){
         $string = $this->decode($string, $key.$this->keyDefault);
         $c = base64_decode($string);
         $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
